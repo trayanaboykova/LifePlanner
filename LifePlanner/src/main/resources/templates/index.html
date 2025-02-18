@@ -1,11 +1,23 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/commons :: head}">
+    <title>LifePlanner</title>
 </head>
 <body>
-<p>Hello World</p>
-<h1>Hello World</h1>
+<header th:replace="~{fragments/commons :: header}"></header>
+
+<main>
+    <h1>Welcome to LifePlanner</h1>
+    <p class="text">
+        Your all-in-one personal organization tool. <br>
+        Track your books, movies, goals, travel plans, recipes, and more — all in one place!</p>
+    <p class="auth-text">
+        Already a member? <a href="/login">Log in</a> <br>
+        New here? <a href="/register">Create an account</a>
+    </p>
+</main>
+
+<footer th:replace="~{fragments/commons :: footer}"></footer>
 </body>
 </html>
