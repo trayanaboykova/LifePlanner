@@ -11,55 +11,66 @@ body {
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
+    background-attachment: fixed;
     height: 100vh;
     display: flex;
     flex-direction: column;
 }
 
-
-
 /* Header Styling */
 header {
     display: flex;
-    justify-content: space-between; /* Aligns home on the left & links on the right */
+    justify-content: space-between; /* Aligns Home on the left & links on the right */
     align-items: center;
     padding: 15px 20px;
 }
 
+/* Navigation bar */
 nav {
     display: flex;
     width: 100%;
     align-items: center;
 }
 
+/* Home link (left side) */
 .home a {
+    display: flex;
+    align-items: center;
+    gap: 8px;
     color: #006891;
     font-size: 40px;
     text-decoration: none;
     font-weight: normal;
-    padding: 75px;
+    padding: 20px;
 }
 
+/* Navigation links (right side) */
 .links {
     list-style: none;
     display: flex;
-    gap: 15px;
+    gap: 30px;
     margin-left: auto;
-    padding: 75px;
+    padding: 20px;
 }
 
+/* Individual link items */
 .links li {
     display: flex;
-    padding: 25px;
+    align-items: center;
 }
 
+/* Links with icons */
 .links a {
+    display: flex;
+    align-items: center;
+    gap: 10px;
     color: #006891;
     text-decoration: none;
     font-size: 25px;
     font-weight: normal;
 }
 
+/* Hover effect */
 .links a:hover {
     font-weight: bold;
 }
@@ -69,11 +80,11 @@ footer {
     margin-top: auto;
     text-align: center;
     padding: 15px 0;
-    color: #693f23;
+    color: white;
     font-size: 25px;
 }
 
-/* Dashboard Styling */
+/* Index page */
 h1 {
     color: #006891;
     text-align: center;
@@ -102,9 +113,7 @@ p {
     text-decoration: underline;
 }
 
-
 /* Register page */
-
 /* Centering the form */
 .register-container {
     display: flex;
@@ -118,10 +127,9 @@ p {
     display: flex;
     flex-direction: column;
     align-items: center;
-    background: rgba(255, 255, 255, 0.1); /* Optional: slight transparency */
     padding: 30px;
-    border-radius: 10px;
-    box-shadow: inset 0 0 20px 0 rgb(0, 104, 145);
+    background: rgba(0, 0, 0, 0.1);
+    border-radius: 3em;
 }
 
 .register-form h3 {
@@ -190,7 +198,6 @@ input:focus {
     text-decoration: underline;
 }
 
-
 .error-message {
     font-size: 15px;
     color: #9f4825;
@@ -198,7 +205,6 @@ input:focus {
 }
 
 /* Login Page */
-
 /* Centering the form */
 .login-container {
     display: flex;
@@ -212,10 +218,9 @@ input:focus {
     display: flex;
     flex-direction: column;
     align-items: center;
-    background: rgba(255, 255, 255, 0.1); /* Optional: slight transparency */
     padding: 30px;
-    border-radius: 10px;
-    box-shadow: inset 0 0 20px 0 rgb(0, 104, 145);
+    background: rgba(0, 0, 0, 0.1);
+    border-radius: 3em;
 }
 
 .login-form h3 {
@@ -290,7 +295,276 @@ input:focus {
     margin-bottom: 1em;
 }
 
+/* Home page */
+nav.homepage-nav {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: space-between;
+    align-content: center;
+    flex-wrap: wrap;
+    flex-direction: row;
+    padding-bottom: 2em;
+}
 
+.homepage p {
+    color: #006891;
+    font-size: 25px;
+    text-decoration: none;
+    font-weight: normal;
+    padding-left: 1em;
+}
 
+ul.links-logout {
+    color: #006891;
+    font-size: 25px;
+    text-decoration: none;
+    list-style: none;
+    font-weight: normal;
+    padding: 0;
+}
 
+.homepage-nav .logout {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.homepage-nav .logout a {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    text-decoration: none;
+    color: #006891;
+    font-size: 25px;
+    font-weight: normal;
+    padding-right: 1em;
+}
+
+.homepage-nav .logout a:hover {
+    font-weight: bold;
+}
+
+.homepage-nav .logout img {
+    width: 45px;
+    height: 45px;
+}
+
+/* Dashboard Layout */
+.dashboard {
+    display: flex;
+}
+
+/* Sidebar */
+.sidebar {
+    width: auto;
+    height: fit-content;
+    /*background: #00689133;*/
+    background: rgba(0, 0, 0, 0.1);
+    border-radius: 3em;
+    color: white;
+    padding: 2.5em;
+    margin: 2em;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.sidebar h2 {
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+/* Profile Section */
+.profile {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.profile img {
+    width: 9em;
+    height: 8em;
+    margin-right: 3.5em;
+    border-radius: 3em;
+}
+
+/* User info section */
+.user-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;  /* Centers the text inside */
+    text-align: center;  /* Prevents overflow */
+    word-wrap: break-word; /* Breaks long words if needed */
+    max-width: 100%; /* Ensures content doesn't exceed container */
+}
+
+.user-info p {
+    margin: 5px;
+    color: white;
+    font-size: 18px;
+}
+
+/* Edit Profile link */
+.user-info a {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    text-decoration: none;
+    color: white;
+    font-size: 18px;
+    font-weight: normal;
+    margin-top: 5px;
+    padding-left: 2em;
+}
+
+/* Edit Profile icon size */
+.user-info a img {
+    width: 45px;
+    height: auto;
+    margin: 0;
+    padding: 0;
+    vertical-align: middle;
+}
+
+/* Hover effect */
+.user-info a:hover {
+    font-weight: bold;
+}
+
+/* Navigation Links */
+.nav-links,
+.admin-links ul {
+    list-style: none;
+    padding: 0;
+    text-decoration: none;
+}
+
+.nav-links li,
+.admin-links li {
+    padding: 10px;
+    text-decoration: none;
+}
+
+.nav-links a,
+.admin-links a {
+    color: white;
+    text-decoration: none;
+    font-size: 16px;
+}
+
+.nav-links li a,
+.admin-links li a {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    text-decoration: none;
+}
+
+.nav-links a:hover,
+.admin-links a:hover {
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.nav-links a img,
+.admin-links a img {
+    width: 45px;
+    height: 45px;
+    margin-right: 0.5em;
+}
+
+.admin-links h3{
+    padding-bottom: 0.5em;
+}
+
+/* Styling for the toggle sections */
+.toggle-section {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    margin-bottom: 10px;
+    padding: 10px;
+    /*cursor: pointer;*/
+}
+
+/* Styling for the dropdown summary (clickable title) */
+.toggle-section summary {
+    font-size: 20px;
+    font-weight: bold;
+    color: white;
+    /*cursor: pointer;*/
+    padding: 10px;
+}
+
+/* Style the links inside the sections */
+.toggle-section ul {
+    list-style: none;
+    padding-left: 20px;
+    margin-top: 5px;
+}
+
+.toggle-section a {
+    text-decoration: none;
+    color: white;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 5px;
+}
+
+/* Add hover effect */
+.toggle-section a:hover {
+    font-weight: bold;
+}
+
+/* LifeHub Styling */
+.lifehub {
+    width: 100%;
+    background: rgba(0, 0, 0, 0.1);
+    border-radius: 3em;
+    color: white;
+    padding: 2.5em;
+    margin: 2em;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+/* LifeHub Title */
+.lifehub h2 {
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+/* Shared Content Wrapper */
+.shared-content {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+/* Post Card Styling */
+.post-card {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    background: rgba(255, 255, 255, 0.1);
+    padding: 15px;
+    border-radius: 10px;
+}
+
+/* Post Info Styling */
+.post-info {
+    display: flex;
+    flex-direction: column;
+    font-size: 16px;
+}
+
+/* Bold Username */
+.post-info p strong,
+.post-info p{
+    color: white;
+}
 

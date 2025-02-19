@@ -20,4 +20,10 @@ public class IndexController {
     public String getRegisterPage() {
         return "register";
     }
+
+    @GetMapping("/home")
+    public String getHomePage() {
+        return "home";
+    }
+
 }
