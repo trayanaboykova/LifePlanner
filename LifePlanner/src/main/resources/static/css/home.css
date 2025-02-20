@@ -271,3 +271,85 @@ ul.links-logout {
     color: white;
 }
 
+/* LifeHub Content Sections */
+.toggle-section {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 15px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+
+/* Styling for the toggle summary (clickable title) */
+.toggle-section summary {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: white;
+    font-size: 22px;
+    padding: 10px;
+    font-weight: bold;
+    border-bottom: 2px solid rgba(255, 255, 255, 0.3);
+    cursor: pointer; /* Makes it clear it's clickable */
+}
+
+/* Section Icons (Same Size as Sidebar Icons) */
+.section-icon {
+    width: 45px;
+    height: 45px;
+}
+
+/* Post Card Styling */
+.post-card {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    background: rgba(0, 0, 0, 0.1);
+    padding: 15px;
+    border-radius: 10px;
+}
+
+/* Post Info Styling */
+.post-info {
+    display: flex;
+    flex-direction: column;
+    font-size: 16px;
+}
+
+/* Bold Username */
+.post-info p strong,
+.post-info p {
+    color: white;
+}
+
+/* Ensure the toggle indicator is visible */
+.toggle-section summary {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: white;
+    font-size: 22px;
+    padding: 10px;
+    font-weight: bold;
+    border-bottom: 2px solid rgba(255, 255, 255, 0.3);
+    cursor: pointer;
+    list-style: none; /* Removes default triangle */
+    position: relative;
+}
+
+/* Add a custom toggle icon */
+.toggle-section summary::before {
+    content: "▶"; /* Default closed icon */
+    font-size: 18px;
+    color: white;
+    position: static;
+    left: -20px; /* Moves it left */
+    transition: transform 0.2s ease-in-out;
+}
+
+/* Change to downward arrow when open */
+.toggle-section[open] summary::before {
+    content: "▼";
+    transform: rotate(0deg);
+}
+
