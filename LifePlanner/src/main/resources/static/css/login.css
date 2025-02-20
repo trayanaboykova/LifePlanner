@@ -1,0 +1,90 @@
+/* Login Page */
+/* Centering the form */
+.login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 10em;
+}
+
+/* Style the form */
+.login-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 30px;
+    background: rgba(0, 0, 0, 0.1);
+    border-radius: 3em;
+}
+
+.login-form h3 {
+    justify-content: center;
+    text-align: center;
+    font-size: 2em;
+    color: #006891;
+    font-weight: normal;
+    margin-bottom: 0.5em;
+}
+
+/* Input styling */
+.login-form input {
+    width: 250px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 25px;
+    text-align: center;
+    font-size: 16px;
+    cursor: text;
+}
+
+/* Explicitly change placeholder text color */
+input::placeholder {
+    color: #006891;
+    opacity: 1;
+}
+
+/* Ensure it works when input is focused */
+input:focus {
+    color: #006891;
+    border-color: #006891;
+    outline: none;
+}
+
+/* Login button */
+.login-btn {
+    margin-top: 10px;
+    width: 150px;
+    padding: 10px;
+    background: #006891;
+    color: white;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: 0.3s ease-in-out;
+    margin-bottom: 1em;
+}
+
+.login-btn:hover {
+    background: #004f68;
+}
+
+.register-redirect {
+    font-size: 20px;
+}
+
+.register-redirect a {
+    text-decoration: none;
+    color: #006891;
+    font-weight: bold;
+}
+
+.register-redirect a:hover {
+    text-decoration: underline;
+}
+
+.error-message {
+    font-size: 15px;
+    color: #9f4825;
+    margin-bottom: 1em;
+}
