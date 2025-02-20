@@ -1,0 +1,29 @@
+/* Books Page Header */
+.books-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: 15px 30px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+}
+
+/* Left side: Page Title */
+.books-header-left h1 {
+    font-size: 22px;
+    color: white;
+    margin: 0;
+}
+
+/* Right side: Back to Home */
+.books-header-right .back-home {
+    text-decoration: none;
+    font-size: 16px;
+    color: #006891;
+    font-weight: bold;
+}
+
+.books-header-right .back-home:hover {
+    text-decoration: underline;
+}

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head th:replace="~{fragments/commons :: head}">
+  <title th:text="${pageTitle}"></title>
+  <link rel="stylesheet" href="/css/my-books.css">
+</head>
+<body>
+
+<header>
+  <nav class="books-nav">
+    <div class="books-header-left">
+      <h1>📚 User’s Book Library</h1>
+    </div>
+    <div class="books-header-right">
+      <a href="/home" class="back-home">Back to Home</a>
+    </div>
+  </nav>
+</header>
+
+<!-- Main Dashboard Layout -->
+<div class="dashboard">
+
+  <!-- Sidebar Navigation -->
+  <aside class="sidebar books-sidebar">
+    <ul>
+      <li><a href="#">Add Book</a></li>
+      <li><a href="#">Edit Book</a></li>
+      <li><a href="#">All Books</a></li>
+      <li><a href="#">Read Books</a></li>
+      <li><a href="#">Wish List</a></li>
+    </ul>
+  </aside>
+
+  <!-- Main Content: Currently Reading -->
+  <main class="books-main">
+    <h2>Currently Reading</h2>
+    <div class="books-table">
+      <table>
+        <thead>
+        <tr>
+          <th>Status</th>
+          <th>Title</th>
+          <th>Author</th>
+          <th>Date Read</th>
+          <th>My Rating</th>
+          <th>Bookshelves</th>
+          <th>Genre</th>
+          <th>Edit Book</th>
+        </tr>
+        </thead>
+        <tbody>
+        <!-- Placeholder for dynamic content -->
+        </tbody>
+      </table>
+    </div>
+  </main>
+
+</div>
+
+<footer th:replace="~{fragments/commons :: footer}"></footer>
+</body>
+</html>
