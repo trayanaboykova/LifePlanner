@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head th:replace="~{fragments/commons :: head}">
+  <link rel="stylesheet" href="/static/css/home.css">
   <title>Homepage</title>
 <body>
 <header>
@@ -40,31 +41,37 @@
         <li>
           <a href="#">
             <img src="https://img.icons8.com/?size=100&id=43130&format=png&color=000000" alt="Books Icon">
-            Book Library
+            My Book Library
           </a>
         </li>
         <li>
           <a href="#">
             <img src="https://img.icons8.com/?size=100&id=54994&format=png&color=000000" alt="Media Icon">
-            Media Library
+            My Media Library
           </a>
         </li>
         <li>
           <a href="#">
             <img src="https://img.icons8.com/?size=100&id=46406&format=png&color=000000" alt="Recipe Icon">
-            Recipes
+            My Recipes
           </a>
         </li>
         <li>
           <a href="#">
             <img src="https://img.icons8.com/?size=100&id=43121&format=png&color=000000" alt="Travel Icon">
-            Travel Plans
+            My Travel Plans
           </a>
         </li>
         <li>
           <a href="#">
             <img src="https://img.icons8.com/?size=100&id=49297&format=png&color=000000" alt="Goals Icon">
-            Goals
+            My Goals
+          </a>
+        </li>
+        <li>
+          <a href="/lifehub-favorites">
+            <img src="https://img.icons8.com/?size=100&id=42887&format=png&color=000000" alt="Favorites Icon">
+            LifeHub Favorites
           </a>
         </li>
       </ul>
@@ -104,6 +111,16 @@
             <p><strong>@User123</strong> shared a book:</p>
             <p>"The Midnight Library" by Matt Haig</p>
           </div>
+          <div class="post-actions">
+            <button class="like-btn">
+              <img src="https://img.icons8.com/?size=100&id=80137&format=png&color=000000" alt="Like Icon">
+              <span class="like-count">0</span> <!-- Default count -->
+            </button>
+            <button class="favorite-btn">
+              <img src="https://img.icons8.com/?size=100&id=46336&format=png&color=000000" alt="Favorite Icon">
+              <span class="favorite-count">0</span> <!-- Default count -->
+            </button>
+          </div>
         </div>
       </details>
       <!-- Media Section -->
@@ -116,6 +133,16 @@
           <div class="post-info">
             <p><strong>@Oscar</strong> shared a movie/tv-show:</p>
             <p>"Currently watching..."</p>
+          </div>
+          <div class="post-actions">
+            <button class="like-btn">
+              <img src="https://img.icons8.com/?size=100&id=80137&format=png&color=000000" alt="Like Icon">
+              <span class="like-count">0</span> <!-- Default count -->
+            </button>
+            <button class="favorite-btn">
+              <img src="https://img.icons8.com/?size=100&id=46336&format=png&color=000000" alt="Favorite Icon">
+              <span class="favorite-count">0</span> <!-- Default count -->
+            </button>
           </div>
         </div>
       </details>
@@ -130,6 +157,16 @@
             <p><strong>@Foodie99</strong> shared a recipe:</p>
             <p>"Homemade Pizza - Best Recipe Ever!"</p>
           </div>
+          <div class="post-actions">
+            <button class="like-btn">
+              <img src="https://img.icons8.com/?size=100&id=80137&format=png&color=000000" alt="Like Icon">
+              <span class="like-count">0</span> <!-- Default count -->
+            </button>
+            <button class="favorite-btn">
+              <img src="https://img.icons8.com/?size=100&id=46336&format=png&color=000000" alt="Favorite Icon">
+              <span class="favorite-count">0</span> <!-- Default count -->
+            </button>
+          </div>
         </div>
       </details>
       <!-- Travel Section -->
@@ -142,6 +179,16 @@
           <div class="post-info">
             <p><strong>@GlobeTrotter</strong> shared a travel plan:</p>
             <p>"Trip to Bali - March 2025"</p>
+          </div>
+          <div class="post-actions">
+            <button class="like-btn">
+              <img src="https://img.icons8.com/?size=100&id=80137&format=png&color=000000" alt="Like Icon">
+              <span class="like-count">0</span> <!-- Default count -->
+            </button>
+            <button class="favorite-btn">
+              <img src="https://img.icons8.com/?size=100&id=46336&format=png&color=000000" alt="Favorite Icon">
+              <span class="favorite-count">0</span> <!-- Default count -->
+            </button>
           </div>
         </div>
       </details>
@@ -156,12 +203,28 @@
             <p><strong>@123r</strong> shared a goal:</p>
             <p>"Lose weight"</p>
           </div>
+          <div class="post-actions">
+            <button class="like-btn">
+              <img src="https://img.icons8.com/?size=100&id=80137&format=png&color=000000" alt="Like Icon">
+              <span class="like-count">0</span> <!-- Default count -->
+            </button>
+            <button class="favorite-btn">
+              <img src="https://img.icons8.com/?size=100&id=46336&format=png&color=000000" alt="Favorite Icon">
+              <span class="favorite-count">0</span> <!-- Default count -->
+            </button>
+          </div>
         </div>
       </details>
     </div>
   </div>
-
+  <div class="daily-quote">
+    <h2>Daily Quote</h2>
+    <div class="quote-card">
+      <img src="https://i.pinimg.com/736x/96/c5/a6/96c5a6095b0f7b38f77b2413b49313c0.jpg" alt="Daily Quote Image">
+    </div>
+  </div>
 </div>
+<script src="/js/home.js"></script>
 <footer th:replace="~{fragments/commons :: footer}"></footer>
 </body>
 </html>

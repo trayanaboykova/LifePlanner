@@ -56,6 +56,7 @@ ul.links-logout {
 /* Dashboard Layout */
 .dashboard {
     display: flex;
+    align-items: flex-start;
 }
 
 /* Sidebar */
@@ -119,6 +120,7 @@ ul.links-logout {
     font-weight: normal;
     margin-top: 5px;
     padding-left: 2em;
+    white-space: nowrap;
 }
 
 /* Edit Profile icon size */
@@ -221,9 +223,41 @@ ul.links-logout {
     font-weight: bold;
 }
 
+/* Daily Quote Section */
+.daily-quote {
+    width: fit-content;
+    height: fit-content;
+    background: rgba(0, 0, 0, 0.1);
+    border-radius: 2em;
+    color: white;
+    padding: 2.5em;
+    margin: 2em;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+}
+
+/* Title */
+.daily-quote h2 {
+    margin-bottom: 10px;
+    font-size: 18px;
+}
+
+/* Quote Image Styling */
+.quote-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+
 /* LifeHub Styling */
 .lifehub {
-    width: 100%;
+    width: 80%;
     background: rgba(0, 0, 0, 0.1);
     border-radius: 3em;
     color: white;
@@ -260,14 +294,17 @@ ul.links-logout {
 
 /* Post Info Styling */
 .post-info {
+    flex: 1; /* Takes up available space */
     display: flex;
     flex-direction: column;
+    align-items: center; /* Centers the text horizontally */
+    text-align: center;
     font-size: 16px;
 }
 
 /* Bold Username */
 .post-info p strong,
-.post-info p{
+.post-info p {
     color: white;
 }
 
@@ -301,25 +338,63 @@ ul.links-logout {
 /* Post Card Styling */
 .post-card {
     display: flex;
-    align-items: center;
-    justify-content: center;
+    align-items: center;  /* Centers vertically */
+    justify-content: space-between; /* Keeps like/favorite buttons aligned */
     gap: 15px;
-    background: rgba(0, 0, 0, 0.1);
+    background: rgba(255, 255, 255, 0.1);
     padding: 15px;
     border-radius: 10px;
+    min-height: 80px; /* Ensures a consistent height */
 }
 
-/* Post Info Styling */
-.post-info {
+/* Post Actions (Like & Favorite Buttons) */
+.post-actions {
     display: flex;
-    flex-direction: column;
-    font-size: 16px;
+    gap: 10px;
+    align-items: center;
+    margin-left: auto;
 }
 
-/* Bold Username */
-.post-info p strong,
-.post-info p {
+.like-btn,
+.favorite-btn {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 5px;
+    transition: transform 0.2s ease-in-out;
+    display: flex;
+    align-items: center;
+    gap: 7px;
+}
+
+/* Like & Favorite Icon Styling */
+.like-btn img,
+.favorite-btn img {
+    width: 30px;
+    height: 30px;
+    filter: brightness(0) invert(1); /* Makes icons white */
+}
+
+/* Hover Effects */
+.like-btn:hover,
+.favorite-btn:hover {
+    transform: scale(1.2);
+}
+
+/* Count Styling */
+.like-count, .favorite-count {
     color: white;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+/* Active States */
+.like-btn img.liked {
+    filter: none; /* Shows original red heart */
+}
+
+.favorite-btn img.favorited {
+    filter: none; /* Shows original gold star */
 }
 
 /* Ensure the toggle indicator is visible */
