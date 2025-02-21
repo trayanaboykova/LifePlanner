@@ -6,17 +6,16 @@
 <body>
 <header>
   <nav class="homepage-nav">
-    <div class="homepage">
-      <p class="greeting">Welcome, user!</p>
+    <div class="homepage-header-left">
+      <h1>Welcome, user!</h1>
     </div>
-    <ul class="links-logout">
-      <li class="logout">
-        <a href="/">
-          <img src="https://img.icons8.com/?size=100&id=42802&format=png&color=000000"
-               alt="Logout Icon" width="45" height="45"/>
-          Logout</a>
-      </li>
-    </ul>
+    <div class="homepage-header-right">
+      <a href="/" class="logout">
+        <img src="https://img.icons8.com/?size=100&id=42802&format=png&color=000000"
+             alt="Logout Icon" width="45" height="45"/>
+        Logout
+      </a>
+    </div>
   </nav>
 </header>
 <div class="dashboard">
@@ -230,6 +229,7 @@
     </div>
   </div>
 </div>
+
 <script src="/js/home.js"></script>
 <footer th:replace="~{fragments/commons :: footer}"></footer>
 </body>

@@ -1,6 +1,5 @@
-/* Login Page */
-/* Centering the form */
-.login-container {
+/* Center the form */
+.add-book-container {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -8,7 +7,7 @@
 }
 
 /* Style the form */
-.login-form {
+.add-book-form {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -17,8 +16,7 @@
     border-radius: 3em;
 }
 
-.login-form h3 {
-    justify-content: center;
+.add-book-form h3 {
     text-align: center;
     font-size: 2em;
     color: #006891;
@@ -26,32 +24,38 @@
     margin-bottom: 0.5em;
 }
 
-/* Input styling */
-.login-form input {
+/* Input & Select Styling */
+.add-book-form input,
+.add-book-form select {
     width: 250px;
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 25px;
     text-align: center;
     font-size: 16px;
-    cursor: text;
+    appearance: none;
+    color: #006891;
 }
 
-/* Explicitly change placeholder text color */
+/* Style placeholders */
 input::placeholder {
     color: #006891;
     opacity: 1;
 }
 
-/* Ensure it works when input is focused */
-input:focus {
+input:focus,
+select:focus {
     color: #006891;
     border-color: #006891;
     outline: none;
 }
 
-/* Login button */
-.login-btn {
+select:focus {
+    font-weight: bold;
+}
+
+/* Button Styling */
+.add-book-btn {
     margin-top: 10px;
     width: 150px;
     padding: 10px;
@@ -65,24 +69,30 @@ input:focus {
     margin-bottom: 1em;
 }
 
-.login-btn:hover {
+.add-book-btn:hover {
     background: #004f68;
 }
 
-.register-redirect {
-    font-size: 20px;
+/* Back to My Books Link */
+.back-to-books {
+    font-size: 18px;
 }
 
-.register-redirect a {
+.back-to-books a {
+    display: flex;
+    align-items: center;
+    gap: 8px;
     text-decoration: none;
+    font-size: 20px;
     color: #006891;
+}
+
+.back-to-books a:hover {
+    text-decoration: none;
     font-weight: bold;
 }
 
-.register-redirect a:hover {
-    text-decoration: underline;
-}
-
+/* Error Message Styling */
 .error-message {
     font-size: 15px;
     color: #9f4825;

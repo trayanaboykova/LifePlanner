@@ -1,29 +1,131 @@
 /* Books Page Header */
 .books-nav {
     display: flex;
+    width: 100%;
     justify-content: space-between;
     align-items: center;
-    width: 100%;
+    flex-wrap: wrap;
     padding: 15px 30px;
-    background: rgba(255, 255, 255, 0.1);
-    border-radius: 10px;
 }
 
 /* Left side: Page Title */
 .books-header-left h1 {
-    font-size: 22px;
-    color: white;
+    font-size: 25px;
+    color: #006891;
     margin: 0;
 }
 
 /* Right side: Back to Home */
 .books-header-right .back-home {
+    display: flex;
+    align-items: center;
+    gap: 8px;
     text-decoration: none;
-    font-size: 16px;
+    font-size: 20px;
     color: #006891;
-    font-weight: bold;
 }
 
 .books-header-right .back-home:hover {
-    text-decoration: underline;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+ /*Dashboard Layout */
+.my-books-dashboard {
+    display: flex;
+    align-items: stretch;
+    margin: 10em auto;
+    padding: 50px;
+    gap: 35px;
+    background: rgba(0, 0, 0, 0.1);
+    border-radius: 3em;
+    width: 80%;
+}
+
+/* Sidebar */
+.books-sidebar {
+    width: 250px;
+    height: fit-content;
+    background: rgb(255 255 255 / 15%);
+    border-radius: 3em;
+    padding: 20px;
+}
+
+.books-sidebar ul {
+    list-style: none;
+    padding: 0;
+}
+
+.books-sidebar ul li {
+    margin: 10px 0;
+}
+
+.books-sidebar ul li a {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+    color: white;
+    font-size: 16px;
+    padding: 8px 12px;
+    border-radius: 5px;
+    transition: background 0.3s;
+}
+
+.books-sidebar ul li a:hover {
+    background: rgba(255, 255, 255, 0.3);
+    font-weight: bold;
+}
+
+/* Main Content */
+.books-main {
+    flex-grow: 1;
+    padding: 2em;
+    background: rgb(255 255 255 / 15%);
+    border-radius: 3em;
+    height: fit-content;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+/* Header inside Main Content */
+.currently-reading {
+    font-size: 22px;
+    color: white;
+    margin-bottom: 15px;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    justify-content: center;
+}
+
+/* Table Styling */
+.books-table {
+    width: 100%;
+    overflow: hidden;
+    border-radius: 1em;
+}
+
+.books-table table {
+    width: 100%;
+    border-collapse: collapse;
+    background: rgba(0, 0, 0, 0.1);
+    border-radius: 1em;
+}
+
+.books-table th,
+.books-table td {
+    padding: 12px;
+    text-align: left;
+    color: white;
+}
+
+.books-table th {
+    font-weight: bold;
+}
+
+.books-table tbody tr:hover{
+    background: rgba(255, 255, 255, 0.2);
 }
