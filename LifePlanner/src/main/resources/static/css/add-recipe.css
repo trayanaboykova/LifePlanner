@@ -38,7 +38,8 @@
 }
 
 textarea {
-    min-height: auto;
+    min-height: 15em;
+    min-width: 40em;
     padding: 10px;
     border-radius: 25px;
     border: 1px solid #ccc;
