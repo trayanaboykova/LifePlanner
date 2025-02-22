@@ -8,7 +8,12 @@
 <header>
     <nav class="books-nav">
         <div class="books-header-left">
-            <h1>User’s Travel Plans</h1>
+            <p class="back-to-books">
+                <a href="/travel">
+                    <img src="https://img.icons8.com/?size=100&id=46652&format=png&color=000000"
+                         alt="Back Icon" width="45" height="45"/>
+                    Back to My Travel Plans</a>
+            </p>
         </div>
         <div class="books-header-right">
             <a href="/home" class="back-home">
@@ -20,40 +25,20 @@
     </nav>
 </header>
 <!-- Main Dashboard Layout -->
-<div class="my-books-dashboard">
-    <!-- Sidebar Navigation -->
-    <aside class="books-sidebar">
-        <ul>
-            <li>
-                <a href="/add-trip">
-                    <img src="https://img.icons8.com/?size=100&id=FLWDruQvhQbr&format=png&color=000000"
-                         alt="Add Trip Icon" width="45" height="45"/>
-                    Add Trip
-                </a>
-            </li>
-            <li>
-                <a href="/all-trips">
-                    <img src="https://img.icons8.com/?size=100&id=46731&format=png&color=000000"
-                         alt="All Trips Icon" width="45" height="45"/>
-                    All Trips
-                </a>
-            </li>
-            <li>
-                <a href="/past-trips">
-                    <img src="https://img.icons8.com/?size=100&id=54944&format=png&color=000000"
-                         alt="Past Trips Icon" width="45" height="45"/>
-                    Past Trips
-                </a>
-            </li>
-        </ul>
-    </aside>
-    <!-- Main Content: Upcoming Trips -->
+<div class="all-books-dashboard">
+    <!-- Main Content: All Books -->
     <main class="books-main">
-        <h2 class="currently-reading">
-            <img src="https://img.icons8.com/?size=100&id=43121&format=png&color=000000"
-                 alt="Upcoming Trips Icon" class="currently-reading-icon" width="45" height="45"/>
-            Upcoming Trips
+        <h2 class="all-books">
+            <img src="https://img.icons8.com/?size=100&id=54944&format=png&color=000000"
+                 alt="All Trips Icon" class="all-books" width="45" height="45"/>
+           Past Trips
         </h2>
+        <!-- Search Bar -->
+        <div class="search-bar">
+            <img src="https://img.icons8.com/?size=100&id=43189&format=png&color=000000"
+                 alt="Search Icon" width="45" height="45"/>
+            <input type="text" id="searchInput" placeholder="Search by trip name, destination or accommodation " onkeyup="searchBooks()">
+        </div>
         <div class="books-table">
             <table>
                 <thead>
@@ -88,8 +73,20 @@
                 </tbody>
             </table>
         </div>
+
+        <!-- Pagination Controls -->
+        <div class="pagination">
+            <button id="prevPage" onclick="changePage(-1)">← Previous</button>
+            <span id="pageInfo">Page 1</span>
+            <button id="nextPage" onclick="changePage(1)">Next →</button>
+        </div>
+
+
     </main>
 </div>
+
+<script src="/js/search-books.js"></script>
+<script src="/js/pagination-books.js"></script>
 <footer th:replace="~{fragments/commons :: footer}"></footer>
 </body>
 </html>

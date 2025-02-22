@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/commons :: head}">
+    <title th:text="${pageTitle}"></title>
+</head>
+<body>
+<header>
+    <nav class="books-nav">
+        <div class="books-header-left">
+            <p class="back-to-books">
+                <a href="/travel">
+                    <img src="https://img.icons8.com/?size=100&id=46652&format=png&color=000000"
+                         alt="Back Icon" width="45" height="45"/>
+                    Back to My Travel Plans</a>
+            </p>
+        </div>
+        <div class="books-header-right">
+            <a href="/home" class="back-home">
+                <img src="https://img.icons8.com/?size=100&id=42814&format=png&color=000000"
+                     alt="Home Icon" width="45" height="45"/>
+                Back to Home
+            </a>
+        </div>
+    </nav>
+</header>
+<main class="container">
+    <section class="add-book-container">
+        <form class="add-book-form" action="/books/save" method="post">
+            <h3>Edit Trip</h3>
+
+            <!-- Trip Name -->
+            <div class="form-group">
+                <label for="trip-name">Edit Trip Name</label>
+                <input type="text" id="trip-name" name="tripName" placeholder="Enter trip name" required>
+            </div>
+
+            <!-- Destination -->
+            <div class="form-group">
+                <label for="destination">Edit Destination</label>
+                <input type="text" id="destination" name="destination" placeholder="Enter destination" required>
+            </div>
+
+            <!-- Start Date -->
+            <div class="form-group">
+                <label for="start-date">Edit Start Date</label>
+                <input type="date" id="start-date" name="startDate" required>
+            </div>
+
+            <!-- End Date -->
+            <div class="form-group">
+                <label for="end-date">Edit End Date</label>
+                <input type="date" id="end-date" name="endDate" required>
+            </div>
+
+            <!-- Trip Type Dropdown -->
+            <div class="form-group">
+                <label for="trip-type">Edit Trip Type</label>
+                <select id="trip-type" name="tripType" required>
+                    <option value="" disabled selected>-- Select Trip Type --</option>
+                    <option value="vacation">Vacation</option>
+                    <option value="business">Business</option>
+                    <option value="family">Family Trip</option>
+                    <option value="adventure">Adventure</option>
+                    <option value="road-trip">Road Trip</option>
+                    <option value="solo">Solo Travel</option>
+                </select>
+            </div>
+
+            <!-- Accommodation -->
+            <div class="form-group">
+                <label for="accommodation">Edit Accommodation</label>
+                <input type="text" id="accommodation" name="accommodation" placeholder="Hotel, Airbnb, etc.">
+            </div>
+
+            <!-- Transportation Dropdown -->
+            <div class="form-group">
+                <label for="transportation">Edit Transportation</label>
+                <select id="transportation" name="transportation" required>
+                    <option value="" disabled selected>-- Select Transportation --</option>
+                    <option value="airplane">Airplane</option>
+                    <option value="car">Car</option>
+                    <option value="car-rental">Car Rental</option>
+                    <option value="train">Train</option>
+                    <option value="bus">Bus</option>
+                    <option value="ship">Ship</option>
+                </select>
+            </div>
+
+            <!-- Notes -->
+            <div class="form-group">
+                <label for="notes">Edit Notes</label>
+                <textarea id="notes" name="notes" placeholder="Type additional details..." rows="4"></textarea>
+            </div>
+
+            <!-- Submit Button -->
+            <button type="submit" class="add-book-btn">Save Book</button>
+
+        </form>
+    </section>
+</main>
+
+<footer th:replace="~{fragments/commons::footer}"></footer>
+
+</body>
+</html>

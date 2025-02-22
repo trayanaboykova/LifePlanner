@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/commons :: head}">
+  <title th:text="${pageTitle}"></title>
+</head>
+<body>
+<header>
+  <nav class="books-nav">
+    <div class="books-header-left">
+      <p class="back-to-books">
+        <a href="/travel">
+          <img src="https://img.icons8.com/?size=100&id=46652&format=png&color=000000"
+               alt="Back Icon" width="45" height="45"/>
+          Back to My Travel Plans</a>
+      </p>
+    </div>
+    <div class="books-header-right">
+      <a href="/home" class="back-home">
+        <img src="https://img.icons8.com/?size=100&id=42814&format=png&color=000000"
+             alt="Home Icon" width="45" height="45"/>
+        Back to Home
+      </a>
+    </div>
+  </nav>
+</header>
+<!-- Main Dashboard Layout -->
+<div class="all-books-dashboard">
+  <!-- Main Content: All Books -->
+  <main class="books-main">
+    <h2 class="all-books">
+      <img src="https://img.icons8.com/?size=100&id=FLWDruQvhQbr&format=png&color=000000"
+           alt="All Trips Icon" class="all-books" width="45" height="45"/>
+      All Trips
+    </h2>
+    <!-- Search Bar -->
+    <div class="search-bar">
+      <img src="https://img.icons8.com/?size=100&id=43189&format=png&color=000000"
+           alt="Search Icon" width="45" height="45"/>
+      <input type="text" id="searchInput" placeholder="Search by trip name, destination or accommodation " onkeyup="searchBooks()">
+    </div>
+    <div class="books-table">
+      <table>
+        <thead>
+        <tr>
+          <th>Status</th>
+          <th>Trip Name</th>
+          <th>Destination</th>
+          <th>Start Date</th>
+          <th>End Date</th>
+          <th>Trip Type</th>
+          <th>Accommodation</th>
+          <th>Transportation</th>
+          <th>Notes</th>
+          <th>Edit</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+          <td>Booked</td>
+          <td>Our Honeymoon</td>
+          <td>Maldives</td>
+          <td>25 Feb 2025</td>
+          <td>15 March 2025</td>
+          <td>Vacation</td>
+          <td>Hilton Maldives</td>
+          <td>Plane</td>
+          <td>!!!!!!</td>
+          <td><a href="/edit-trip">
+            <img src="https://img.icons8.com/?size=100&id=0Ka1o_-mwyre&format=png&color=000000"
+                 alt="Edit Icon" width="45" height="45"/>
+          </a>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Pagination Controls -->
+    <div class="pagination">
+      <button id="prevPage" onclick="changePage(-1)">← Previous</button>
+      <span id="pageInfo">Page 1</span>
+      <button id="nextPage" onclick="changePage(1)">Next →</button>
+    </div>
+
+
+  </main>
+</div>
+
+<script src="/js/search-books.js"></script>
+<script src="/js/pagination-books.js"></script>
+<footer th:replace="~{fragments/commons :: footer}"></footer>
+</body>
+</html>
