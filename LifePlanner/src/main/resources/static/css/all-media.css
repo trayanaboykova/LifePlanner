@@ -1,0 +1,147 @@
+/*Dashboard Layout */
+.all-media-dashboard {
+    display: flex;
+    align-items: stretch;
+    margin: 5em auto;
+    padding: 50px;
+    gap: 35px;
+    background: rgba(0, 0, 0, 0.1);
+    border-radius: 3em;
+    width: 80%;
+}
+
+/* Main Content */
+.media-main {
+    flex-grow: 1;
+    padding: 2em;
+    background: rgb(255 255 255 / 15%);
+    border-radius: 3em;
+    height: fit-content;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+.all-media {
+    font-size: 22px;
+    color: white;
+    margin-bottom: 10px;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    justify-content: center;
+}
+
+/* Table Styling */
+.media-table {
+    width: 100%;
+    overflow: hidden;
+    border-radius: 1em;
+}
+
+.media-table table {
+    width: 100%;
+    border-collapse: collapse;
+    background: rgba(0, 0, 0, 0.1);
+    border-radius: 1em;
+}
+
+.media-table th,
+.media-table td {
+    padding: 12px;
+    text-align: left;
+    color: white;
+}
+
+.media-table th {
+    font-weight: bold;
+}
+
+.media-table tbody tr:hover{
+    background: rgba(255, 255, 255, 0.2);
+}
+
+/* Search Bar */
+.search-bar {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+    background: rgba(255, 255, 255, 0.2);
+    padding: 12px;
+    border-radius: 25px;
+    width: 25%;
+    margin-left: auto;
+    margin-right: auto;
+    border: 1px solid rgba(255, 255, 255, 0.4);
+}
+
+/* Search Input */
+.search-bar input {
+    flex-grow: 1;
+    padding: 10px;
+    border: none;
+    border-radius: 20px;
+    font-size: 16px;
+    background: transparent;
+    color: white;
+    width: 100%;
+    text-align: center;
+}
+
+/* Placeholder Styling */
+.search-bar input::placeholder {
+    color: white;
+    font-size: 16px;
+}
+
+/* Remove default focus outline */
+.search-bar input:focus {
+    outline: none;
+    border: none;
+    color: white;
+}
+
+/* Search Icon */
+.search-bar img {
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+    transition: transform 0.2s ease-in-out;
+}
+
+/* Hover effect on Search Icon */
+.search-bar img:hover {
+    transform: scale(1.1);
+}
+
+/* Pagination Controls */
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.pagination button {
+    background: #006891;
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 25px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: 0.3s ease-in-out;
+}
+
+.pagination button:hover {
+    background: #004f68;
+}
+
+.pagination span {
+    font-size: 18px;
+    color: white;
+}
+
+

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head th:replace="~{fragments/commons :: head}">
+    <title th:text="${pageTitle}"></title>
+</head>
+<body>
+<header>
+    <nav class="books-nav">
+        <div class="books-header-right">
+            <a href="/home" class="back-home">
+                <img src="https://img.icons8.com/?size=100&id=42814&format=png&color=000000"
+                     alt="Home Icon" width="45" height="45"/>
+                Back to Home
+            </a>
+        </div>
+    </nav>
+</header>
+<main class="container">
+    <section class="add-book-container">
+        <form class="add-book-form" action="/books/save" method="post">
+            <h3>Add Media</h3>
+            <!-- Status Dropdown -->
+            <div class="form-group">
+                <label for="status">Add Status</label>
+                <select id="status" name="status" required>
+                    <option value="" disabled selected>-----Status-----</option>
+                    <option value="Currently Reading">Watched</option>
+                    <option value="Want to Read">Want to Watch</option>
+                </select>
+                <p class="error-message">Error Text Here</p>
+            </div>
+            <!-- Type Dropdown -->
+            <div class="form-group">
+                <label for="type">Add Type</label>
+                <select id="type" name="type" required>
+                    <option value="" disabled selected>-----Type-----</option>
+                    <option value="Currently Reading">Movie</option>
+                    <option value="Want to Read">TV Show</option>
+                </select>
+                <p class="error-message">Error Text Here</p>
+            </div>
+            <!-- Title -->
+            <div class="form-group">
+                <label for="title">Add Title</label>
+                <input type="text" id="title" name="title" placeholder="Title" required>
+                <p class="error-message">Error Text Here</p>
+            </div>
+            <!-- Date Watched -->
+            <div class="form-group">
+                <label for="date-watched">Add Date Watched</label>
+                <input type="date" id="date-watched" name="dateWatched" >
+                <p class="error-message">Error Text Here</p>
+            </div>
+            <!-- Rating Dropdown -->
+            <div class="form-group">
+                <label for="rating">Add Rating</label>
+                <select id="rating" name="rating">
+                    <option value="" disabled selected>-----Rating-----</option>
+                    <option value="1">1 star - ⭐</option>
+                    <option value="2">2 stars - ⭐⭐</option>
+                    <option value="3">3 stars - ⭐⭐⭐</option>
+                    <option value="4">4 stars - ⭐⭐⭐⭐</option>
+                    <option value="5">5 stars - ⭐⭐⭐⭐⭐</option>
+                </select>
+                <p class="error-message">Error Text Here</p>
+            </div>
+            <!-- Genre -->
+            <div class="form-group">
+                <label for="genre">Add Genre</label>
+                <input type="text" id="genre" name="genre" placeholder="Genre">
+                <p class="error-message">Error Text Here</p>
+            </div>
+            <!-- Submit Button -->
+            <button type="submit" class="add-book-btn">Save Media</button>
+        </form>
+    </section>
+</main>
+
+<footer th:replace="~{fragments/commons::footer}"></footer>
+</body>
+</html>

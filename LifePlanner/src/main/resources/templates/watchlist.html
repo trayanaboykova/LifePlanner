@@ -7,12 +7,7 @@
 <header>
     <nav class="books-nav">
         <div class="books-header-left">
-            <p class="back-to-books">
-                <a href="/my-books">
-                    <img src="https://img.icons8.com/?size=100&id=46652&format=png&color=000000"
-                         alt="Back Icon" width="45" height="45"/>
-                    Back to My Books</a>
-            </p>
+            <h1>User’s Watchlist</h1>
         </div>
         <div class="books-header-right">
             <a href="/home" class="back-home">
@@ -24,28 +19,26 @@
     </nav>
 </header>
 <!-- Main Dashboard Layout -->
-<div class="all-books-dashboard">
-    <!-- Main Content: Currently Reading -->
-    <main class="books-main">
-        <h2 class="all-books">
-            <img src="https://img.icons8.com/?size=100&id=46363&format=png&color=000000"
-                 alt="All Books Icon" class="all-books" width="45" height="45"/>
-            All Books
+<div class="all-media-dashboard">
+    <main class="media-main">
+        <h2 class="all-media">
+            <img src="https://img.icons8.com/?size=100&id=55140&format=png&color=000000"
+                 alt="All Media Icon" class="all-books" width="45" height="45"/>
+            Watchlist
         </h2>
         <!-- Search Bar -->
         <div class="search-bar">
             <img src="https://img.icons8.com/?size=100&id=43189&format=png&color=000000"
                  alt="Search Icon" width="45" height="45"/>
-            <input type="text" id="searchInput" placeholder="Search by title, author, or genre" onkeyup="searchBooks()">
+            <input type="text" id="searchInput" placeholder="Search by title or genre" onkeyup="searchMedia()">
         </div>
-        <div class="books-table">
+
+        <div class="media-table">
             <table>
                 <thead>
                 <tr>
-                    <th>Status</th>
+                    <th>Type</th>
                     <th>Title</th>
-                    <th>Author</th>
-                    <th>Date Read</th>
                     <th>My Rating</th>
                     <th>Genre</th>
                     <th>Edit</th>
@@ -53,13 +46,11 @@
                 </thead>
                 <tbody>
                 <tr>
-                    <td>Not read</td>
-                    <td>The Night Circus</td>
-                    <td>Erin Morgenstern</td>
-                    <td>10 Jan 2015</td>
+                    <td>Movie</td>
+                    <td>Legally Blonde</td>
                     <td>⭐ ⭐ ⭐ ⭐</td>
-                    <td>Fiction</td>
-                    <td><a href="/edit-book">
+                    <td>Comedy</td>
+                    <td><a href="/edit-media">
                         <img src="https://img.icons8.com/?size=100&id=0Ka1o_-mwyre&format=png&color=000000"
                              alt="Edit Icon" width="45" height="45"/>
                     </a>
@@ -76,12 +67,11 @@
             <button id="nextPage" onclick="changePage(1)">Next →</button>
         </div>
 
-
     </main>
 </div>
 
-<script src="/js/search-books.js"></script>
-<script src="/js/pagination-books.js"></script>
+<script src="/js/search-media.js"></script>
+<script src="/js/pagination-media.js"></script>
 <footer th:replace="~{fragments/commons :: footer}"></footer>
 </body>
 </html>
