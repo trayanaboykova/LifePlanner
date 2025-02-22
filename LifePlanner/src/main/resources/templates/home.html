@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
 <head th:replace="~{fragments/commons :: head}">
   <title th:text="${pageTitle}"></title>
   <link rel="stylesheet" href="/static/css/home.css">
@@ -101,7 +102,7 @@
         </li>
         <!-- My Travel Plans -->
         <li>
-          <a href="#">
+          <a href="/travel">
             <img src="https://img.icons8.com/?size=100&id=43121&format=png&color=000000" alt="Travel Icon">
             My Travel Plans
           </a>
