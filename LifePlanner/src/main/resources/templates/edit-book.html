@@ -30,6 +30,7 @@
 
             <!-- Status Dropdown -->
             <div class="form-group">
+                <label for="status">Edit Status</label>
                 <select id="status" name="status" required>
                     <option value="" disabled selected>-----Status-----</option>
                     <option value="Currently Reading">Currently Reading</option>
@@ -41,24 +42,28 @@
 
             <!-- Title -->
             <div class="form-group">
+                <label for="title">Edit Title</label>
                 <input type="text" id="title" name="title" placeholder="Book Title" required>
                 <p class="error-message">Error Text Here</p>
             </div>
 
             <!-- Author -->
             <div class="form-group">
+                <label for="author">Edit Author</label>
                 <input type="text" id="author" name="author" placeholder="Author" required>
                 <p class="error-message">Error Text Here</p>
             </div>
 
             <!-- Date Read -->
             <div class="form-group">
-                <input type="date" id="date-read" name="dateRead">
+                <label for="date-read">Edit Date Read</label>
+                <input type="date" id="date-read" name="dateRead" >
                 <p class="error-message">Error Text Here</p>
             </div>
 
             <!-- Rating Dropdown -->
             <div class="form-group">
+                <label for="rating">Edit Rating</label>
                 <select id="rating" name="rating">
                     <option value="" disabled selected>-----Rating-----</option>
                     <option value="1">1 star - ⭐</option>
@@ -70,14 +75,9 @@
                 <p class="error-message">Error Text Here</p>
             </div>
 
-            <!-- Bookshelves -->
-            <div class="form-group">
-                <input type="text" id="bookshelves" name="bookshelves" placeholder="Bookshelves">
-                <p class="error-message">Error Text Here</p>
-            </div>
-
             <!-- Genre -->
             <div class="form-group">
+                <label for="genre">Edit Genre</label>
                 <input type="text" id="genre" name="genre" placeholder="Genre">
                 <p class="error-message">Error Text Here</p>
             </div>

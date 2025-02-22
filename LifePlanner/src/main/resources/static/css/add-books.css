@@ -98,4 +98,19 @@ select:focus {
     color: #9f4825;
     margin-top: 0.3em;
     margin-bottom: 1em;
+    font-weight: bold;
 }
+
+/* Position the form group */
+.form-group {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group label {
+    color: white;
+    text-align: center;
+}
+
+
