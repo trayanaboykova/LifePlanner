@@ -9,10 +9,10 @@
     <nav class="books-nav">
         <div class="books-header-left">
             <p class="back-to-books">
-                <a href="/travel">
+                <a href="/goals">
                     <img src="https://img.icons8.com/?size=100&id=46652&format=png&color=000000"
                          alt="Back Icon" width="45" height="45"/>
-                    Back to My Travel Plans</a>
+                    Back to My Goals</a>
             </p>
         </div>
         <div class="books-header-right">
@@ -26,20 +26,28 @@
 </header>
 <main class="container">
     <section class="add-book-container">
-        <form class="add-book-form" action="/trips/save" method="post">
-            <h3>Edit Trip</h3>
+        <form class="add-book-form" action="/goals/save" method="post">
+            <h3>Edit Goal</h3>
 
-            <!-- Trip Name -->
+            <!-- Goal Name -->
             <div class="form-group">
-                <label for="trip-name">Edit Trip Name</label>
-                <input type="text" id="trip-name" name="tripName" placeholder="Enter trip name" required>
+                <label for="goal-name">Edit Name</label>
+                <input type="text" id="goal-name" name="goalName" placeholder="Enter goal name" required>
                 <p class="error-message">Error Text Here</p>
             </div>
 
-            <!-- Destination -->
+            <!-- Category Dropdown -->
             <div class="form-group">
-                <label for="destination">Edit Destination</label>
-                <input type="text" id="destination" name="destination" placeholder="Enter destination" required>
+                <label for="category">Edit Category</label>
+                <select id="category" name="category" required>
+                    <option value="" disabled selected>-- Select Category --</option>
+                    <option value="health">Health & Fitness</option>
+                    <option value="career">Career & Education</option>
+                    <option value="finance">Finance</option>
+                    <option value="personal">Personal Growth</option>
+                    <option value="travel">Travel</option>
+                    <option value="relationships">Relationships</option>
+                </select>
                 <p class="error-message">Error Text Here</p>
             </div>
 
@@ -57,56 +65,52 @@
                 <p class="error-message">Error Text Here</p>
             </div>
 
-            <!-- Trip Type Dropdown -->
+            <!-- Priority Dropdown -->
             <div class="form-group">
-                <label for="trip-type">Edit Trip Type</label>
-                <select id="trip-type" name="tripType" required>
-                    <option value="" disabled selected>-- Select Trip Type --</option>
-                    <option value="vacation">Vacation</option>
-                    <option value="business">Business</option>
-                    <option value="family">Family Trip</option>
-                    <option value="adventure">Adventure</option>
-                    <option value="road-trip">Road Trip</option>
-                    <option value="solo">Solo Travel</option>
+                <label for="priority">Edit Priority</label>
+                <select id="priority" name="priority" required>
+                    <option value="" disabled selected>-- Select Priority --</option>
+                    <option value="high">High</option>
+                    <option value="medium">Medium</option>
+                    <option value="low">Low</option>
                 </select>
                 <p class="error-message">Error Text Here</p>
             </div>
 
-            <!-- Accommodation -->
+            <!-- Progress (Percentage) -->
             <div class="form-group">
-                <label for="accommodation">Edit Accommodation</label>
-                <input type="text" id="accommodation" name="accommodation" placeholder="Hotel, Airbnb, etc.">
+                <label for="progress">Edit Progress (%)</label>
+                <input type="number" id="progress" name="progress" placeholder="Enter progress" min="0" max="100">
                 <p class="error-message">Error Text Here</p>
             </div>
 
-            <!-- Transportation Dropdown -->
+            <!-- Status Dropdown -->
             <div class="form-group">
-                <label for="transportation">Edit Transportation</label>
-                <select id="transportation" name="transportation" required>
-                    <option value="" disabled selected>-- Select Transportation --</option>
-                    <option value="airplane">Airplane</option>
-                    <option value="car">Car</option>
-                    <option value="car-rental">Car Rental</option>
-                    <option value="train">Train</option>
-                    <option value="bus">Bus</option>
-                    <option value="ship">Ship</option>
+                <label for="status">Edit Status</label>
+                <select id="status" name="status" required>
+                    <option value="" disabled selected>-- Select Status --</option>
+                    <option value="not-started">Not Started</option>
+                    <option value="in-progress">In Progress</option>
+                    <option value="on-hold">On Hold</option>
+                    <option value="completed">Completed</option>
                 </select>
                 <p class="error-message">Error Text Here</p>
             </div>
 
-            <!-- Notes -->
+            <!-- Notes (Textarea) -->
             <div class="form-group">
                 <label for="notes">Edit Notes</label>
-                <textarea id="notes" name="notes" placeholder="Type additional details..." rows="4"></textarea>
+                <textarea id="notes" name="notes" placeholder="Any additional notes..."></textarea>
                 <p class="error-message">Error Text Here</p>
             </div>
 
             <!-- Submit Button -->
-            <button type="submit" class="add-book-btn">Save Trip</button>
+            <button type="submit" class="add-book-btn">Save Goal</button>
 
         </form>
     </section>
 </main>
+
 
 <footer th:replace="~{fragments/commons::footer}"></footer>
 

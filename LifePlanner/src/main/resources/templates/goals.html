@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/commons :: head}">
+    <title th:text="${pageTitle}"></title>
+</head>
+<body>
+<header>
+    <nav class="books-nav">
+        <div class="books-header-left">
+            <h1>User’s Goals</h1>
+        </div>
+        <div class="books-header-right">
+            <a href="/home" class="back-home">
+                <img src="https://img.icons8.com/?size=100&id=42814&format=png&color=000000"
+                     alt="Home Icon" width="45" height="45"/>
+                Back to Home
+            </a>
+        </div>
+    </nav>
+</header>
+<!-- Main Dashboard Layout -->
+<div class="my-books-dashboard">
+    <!-- Sidebar Navigation -->
+    <aside class="books-sidebar">
+        <ul>
+            <li>
+                <a href="/add-goal">
+                    <img src="https://img.icons8.com/?size=100&id=104333&format=png&color=000000"
+                         alt="Add Goal Icon" width="45" height="45"/>
+                    Add Goal
+                </a>
+            </li>
+            <li>
+                <a href="/all-goals">
+                    <img src="https://img.icons8.com/?size=100&id=yg0Xl3Bazd07&format=png&color=000000"
+                         alt="All Goals Icon" width="45" height="45"/>
+                    All Goals
+                </a>
+            </li>
+            <li>
+                <a href="/completed-goals">
+                    <img src="https://img.icons8.com/?size=100&id=46670&format=png&color=000000"
+                         alt="Completed Goals Icon" width="45" height="45"/>
+                    Completed Goals
+                </a>
+            </li>
+        </ul>
+    </aside>
+    <!-- Main Content: Current Goals -->
+    <main class="books-main">
+        <h2 class="currently-reading">
+            <img src="https://img.icons8.com/?size=100&id=49297&format=png&color=000000"
+                 alt="Current Goals Icon" class="currently-reading-icon" width="45" height="45"/>
+            Current Goals
+        </h2>
+        <div class="books-table">
+            <table>
+                <thead>
+                <tr>
+                    <th>Goal Name</th>
+                    <th>Category</th>
+                    <th>Start Date</th>
+                    <th>End Date</th>
+                    <th>Priority</th>
+                    <th>Progress</th>
+                    <th>Notes</th>
+                    <th>Edit</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>Lose 5kg</td>
+                    <td>Health & Fitness</td>
+                    <td>01 March 2025</td>
+                    <td>01 June 2025</td>
+                    <td>High</td>
+                    <td>40%</td>
+                    <td>Working on better meal planning and workouts</td>
+                    <td>
+                        <a href="/edit-goal">
+                            <img src="https://img.icons8.com/?size=100&id=0Ka1o_-mwyre&format=png&color=000000"
+                                 alt="Edit Icon" width="45" height="45"/>
+                        </a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </main>
+</div>
+<footer th:replace="~{fragments/commons :: footer}"></footer>
+</body>
+</html>

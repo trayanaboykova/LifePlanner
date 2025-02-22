@@ -39,7 +39,7 @@
     gap: 35px;
     background: rgba(0, 0, 0, 0.1);
     border-radius: 3em;
-    width: 70%;
+    width: fit-content;
 }
 
 /* Sidebar */

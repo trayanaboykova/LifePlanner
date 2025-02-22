@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/commons :: head}">
+    <title th:text="${pageTitle}"></title>
+</head>
+<body>
+<header>
+    <nav class="books-nav">
+        <div class="books-header-left">
+            <p class="back-to-books">
+                <a href="/goals">
+                    <img src="https://img.icons8.com/?size=100&id=46652&format=png&color=000000"
+                         alt="Back Icon" width="45" height="45"/>
+                    Back to My Goals</a>
+            </p>
+        </div>
+        <div class="books-header-right">
+            <a href="/home" class="back-home">
+                <img src="https://img.icons8.com/?size=100&id=42814&format=png&color=000000"
+                     alt="Home Icon" width="45" height="45"/>
+                Back to Home
+            </a>
+        </div>
+    </nav>
+</header>
+<!-- Main Dashboard Layout -->
+<div class="all-books-dashboard">
+    <!-- Main Content: All Books -->
+    <main class="books-main">
+        <h2 class="all-books">
+            <img src="https://img.icons8.com/?size=100&id=46670&format=png&color=000000"
+                 alt="Completed Goals Icon" class="all-books" width="45" height="45"/>
+            Completed Goals
+        </h2>
+        <!-- Search Bar -->
+        <div class="search-bar">
+            <img src="https://img.icons8.com/?size=100&id=43189&format=png&color=000000"
+                 alt="Search Icon" width="45" height="45"/>
+            <input type="text" id="searchInput" placeholder="Search by goal name"
+                   onkeyup="searchBooks()">
+        </div>
+        <div class="books-table">
+            <table>
+                <thead>
+                <tr>
+                    <th>Goal Name</th>
+                    <th>Category</th>
+                    <th>Start Date</th>
+                    <th>End Date</th>
+                    <th>Priority</th>
+                    <th>Progress</th>
+                    <th>Notes</th>
+                    <th>Edit</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>Lose 5kg</td>
+                    <td>Health & Fitness</td>
+                    <td>01 March 2025</td>
+                    <td>01 June 2025</td>
+                    <td>High</td>
+                    <td>40%</td>
+                    <td>Working on better meal planning and workouts</td>
+                    <td>
+                        <a href="/edit-goal">
+                            <img src="https://img.icons8.com/?size=100&id=0Ka1o_-mwyre&format=png&color=000000"
+                                 alt="Edit Icon" width="45" height="45"/>
+                        </a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Pagination Controls -->
+        <div class="pagination">
+            <button id="prevPage" onclick="changePage(-1)">← Previous</button>
+            <span id="pageInfo">Page 1</span>
+            <button id="nextPage" onclick="changePage(1)">Next →</button>
+        </div>
+
+
+    </main>
+</div>
+
+<script src="/js/search-books.js"></script>
+<script src="/js/pagination-books.js"></script>
+<footer th:replace="~{fragments/commons :: footer}"></footer>
+</body>
+</html>

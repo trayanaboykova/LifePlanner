@@ -14,19 +14,19 @@ public class IndexController {
     }
 
     @GetMapping("/login")
-    public String loginPage(Model model) {
+    public String getLoginPage(Model model) {
         model.addAttribute("pageTitle", "Login");
         return "login";
     }
 
     @GetMapping("/register")
-    public String registerPage(Model model) {
+    public String getRegisterPage(Model model) {
         model.addAttribute("pageTitle", "Register");
         return "register";
     }
 
     @GetMapping("/home")
-    public String homePage(Model model) {
+    public String getHomePage(Model model) {
         model.addAttribute("pageTitle", "Home");
         return "home";
     }

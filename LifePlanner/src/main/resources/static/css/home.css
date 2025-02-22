@@ -442,3 +442,26 @@
 .dropdown-menu a:hover {
     font-weight: bold;
 }
+
+/* LifeHub Fav */
+.lifehub-fav {
+    width: 80%;
+    background: rgba(0, 0, 0, 0.1);
+    border-radius: 3em;
+    color: white;
+    padding: 2.5em;
+    margin: 2em;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.lifehub-fav h2 {
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.dashboard-fav {
+    display: flex;
+    justify-content: center;
+}

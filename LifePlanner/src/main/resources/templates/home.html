@@ -3,7 +3,6 @@
       xmlns:th="http://www.thymeleaf.org">
 <head th:replace="~{fragments/commons :: head}">
   <title th:text="${pageTitle}"></title>
-  <link rel="stylesheet" href="/static/css/home.css">
 <body>
 <header>
   <nav class="homepage-nav">
@@ -29,7 +28,7 @@
         <p>First Name</p>
         <p>Last Name</p>
         <p>Email</p>
-        <a href="#">
+        <a href="/edit-user">
           Edit Profile
           <img src="https://img.icons8.com/?size=100&id=43150&format=png&color=000000" alt="Edit Icon">
         </a>
@@ -109,15 +108,15 @@
         </li>
         <!-- My Goals -->
         <li>
-          <a href="#">
+          <a href="/goals">
             <img src="https://img.icons8.com/?size=100&id=49297&format=png&color=000000" alt="Goals Icon">
             My Goals
           </a>
         </li>
         <!-- LifeHub Favorites -->
         <li>
-          <a href="/lifehub-favorites">
-            <img src="https://img.icons8.com/?size=100&id=42887&format=png&color=000000" alt="Favorites Icon">
+          <a href="/lifehub-fav">
+            <img src="https://img.icons8.com/?size=100&id=46336&format=png&color=000000" alt="Favorites Icon">
             LifeHub Favorites
           </a>
         </li>

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/commons :: head}">
+    <title th:text="${pageTitle}"></title>
+</head>
+<body>
+<header>
+    <nav class="books-nav">
+        <div class="books-header-right">
+            <a href="/home" class="back-home">
+                <img src="https://img.icons8.com/?size=100&id=42814&format=png&color=000000"
+                     alt="Home Icon" width="45" height="45"/>
+                Back to Home
+            </a>
+        </div>
+    </nav>
+</header>
+<main class="container">
+    <section class="add-book-container">
+        <form class="add-book-form" action="/profile/update" method="post">
+            <h3>Edit Profile</h3>
+
+            <!-- First Name -->
+            <div class="form-group">
+                <label for="first-name">Edit First Name</label>
+                <input type="text" id="first-name" name="firstName" placeholder="First Name" required>
+                <p class="error-message">Error Text Here</p>
+            </div>
+
+            <!-- Last Name -->
+            <div class="form-group">
+                <label for="last-name">Edit Last Name</label>
+                <input type="text" id="last-name" name="lastName" placeholder="Last Name" required>
+                <p class="error-message">Error Text Here</p>
+            </div>
+
+            <!-- Email -->
+            <div class="form-group">
+                <label for="email">Edit Email</label>
+                <input type="email" id="email" name="email" placeholder="Email Address" required>
+                <p class="error-message">Error Text Here</p>
+            </div>
+
+            <!-- Profile Picture URL -->
+            <div class="form-group">
+                <label for="profile-picture">Edit Profile Picture</label>
+                <input type="url" id="profile-picture" name="profilePicture" placeholder="Profile Picture URL">
+                <p class="error-message">Error Text Here</p>
+            </div>
+
+            <!-- Submit Button -->
+            <button type="submit" class="add-book-btn">Save Changes</button>
+
+        </form>
+    </section>
+</main>
+
+
+<footer th:replace="~{fragments/commons::footer}"></footer>
+
+</body>
+</html>
