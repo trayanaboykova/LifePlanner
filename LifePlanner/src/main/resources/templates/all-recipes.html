@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head th:replace="~{fragments/commons :: head}">
+    <title th:text="${pageTitle}"></title>
+</head>
+<body>
+<header>
+    <nav class="books-nav">
+        <div class="books-header-left">
+            <h1>User’s Recipes</h1>
+        </div>
+        <div class="books-header-right">
+            <a href="/home" class="back-home">
+                <img src="https://img.icons8.com/?size=100&id=42814&format=png&color=000000"
+                     alt="Home Icon" width="45" height="45"/>
+                Back to Home
+            </a>
+        </div>
+    </nav>
+</header>
+<!-- Main Dashboard Layout -->
+<div class="all-media-dashboard">
+    <main class="media-main">
+        <h2 class="all-media">
+            <img src="https://img.icons8.com/?size=100&id=46406&format=png&color=000000"
+                 alt="All Media Icon" class="all-books" width="45" height="45"/>
+            All Recipes
+        </h2>
+        <!-- Search Bar -->
+        <div class="search-bar">
+            <img src="https://img.icons8.com/?size=100&id=43189&format=png&color=000000"
+                 alt="Search Icon" width="45" height="45"/>
+            <input type="text" id="searchInput" placeholder="Search by title or cuisine" onkeyup="searchMedia()">
+        </div>
+
+        <div class="media-table">
+            <table>
+                <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Category</th>
+                    <th>Difficulty Level</th>
+                    <th>Cuisine</th>
+                    <th>Total Cooking Time</th>
+                    <th>Ingredients</th>
+                    <th>Notes</th>
+                    <th>Edit</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>Pizza</td>
+                    <td>Dinner</td>
+                    <td>Medium</td>
+                    <td>Italian</td>
+                    <td>60 minutes</td>
+                    <td>1 gram salt</td>
+                    <td>Something, something</td>
+                    <td><a href="/edit-recipe">
+                        <img src="https://img.icons8.com/?size=100&id=0Ka1o_-mwyre&format=png&color=000000"
+                             alt="Edit Icon" width="45" height="45"/>
+                    </a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Pagination Controls -->
+        <div class="pagination">
+            <button id="prevPage" onclick="changePage(-1)">← Previous</button>
+            <span id="pageInfo">Page 1</span>
+            <button id="nextPage" onclick="changePage(1)">Next →</button>
+        </div>
+
+    </main>
+</div>
+
+<script src="/js/search-media.js"></script>
+<script src="/js/pagination-media.js"></script>
+<footer th:replace="~{fragments/commons :: footer}"></footer>
+</body>
+</html>
