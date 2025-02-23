@@ -10,19 +10,19 @@
 
 <main class="container">
     <section class="login-container">
-        <form class="login-form" action="/" method="post">
+        <form class="login-form" th:action="@{/login}" th:method="POST" th:object="${loginRequest}">
             <h3>Login</h3>
 
             <!-- Username -->
             <div class="form-group">
-                <input type="text" id="username" name="username" placeholder="Username" required>
-                <p class="error-message">Error Text Here</p>
+                <input type="text" id="username" name="username" placeholder="Username" required th:field="*{username}">
+                <p class="error-message-login" th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></p>
             </div>
 
             <!-- Password -->
             <div class="form-group">
-                <input type="password" id="password" name="password" placeholder="Password" required>
-                <p class="error-message">Error Text Here</p>
+                <input type="password" id="password" name="password" placeholder="Password" required th:field="*{password}">
+                <p class="error-message-login" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></p>
             </div>
 
             <!-- Submit Button -->
