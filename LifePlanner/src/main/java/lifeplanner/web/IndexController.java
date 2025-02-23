@@ -14,6 +14,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.List;
+import java.util.UUID;
+
 @Controller
 public class IndexController {
 
@@ -51,7 +54,9 @@ public class IndexController {
     }
 
     @PostMapping("/register")
-    public String registerNewUser(@Valid RegisterRequest registerRequest, BindingResult bindingResult) {
+    public String registerNewUser(@Valid RegisterRequest registerRequest, BindingResult bindingResult, Model model) {
+        model.addAttribute("pageTitle", "Register");
+
         if (bindingResult.hasErrors()) {
             return "register";
         }
@@ -62,7 +67,8 @@ public class IndexController {
     }
 
     @PostMapping("/login")
-    public String loginUser(@Valid LoginRequest loginRequest, BindingResult bindingResult, HttpSession session) {
+    public String loginUser(@Valid LoginRequest loginRequest, BindingResult bindingResult, HttpSession session, Model model) {
+        model.addAttribute("pageTitle", "Login");
 
         if (bindingResult.hasErrors()) {
             return "login";
@@ -76,9 +82,16 @@ public class IndexController {
     }
 
     @GetMapping("/home")
-    public String getHomePage(Model model) {
+    public ModelAndView getHomePage(HttpSession session, Model model) {
         model.addAttribute("pageTitle", "Home");
-        return "home";
+        UUID userId = (UUID) session.getAttribute("user_id");
+        User user = userService.getById(userId);
+
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("home");
+        modelAndView.addObject("user", user);
+
+        return modelAndView;
     }
 
     @GetMapping("/logout")

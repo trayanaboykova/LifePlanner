@@ -38,6 +38,9 @@ public class User {
 
     private String profilePicture;
 
+    @Enumerated(EnumType.STRING)
+    private UserRole role;
+
     @OneToMany(mappedBy = "owner", fetch = FetchType.EAGER)
     private List<BookLibrary> books;
 

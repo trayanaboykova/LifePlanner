@@ -7,7 +7,11 @@
 <header>
   <nav class="homepage-nav">
     <div class="homepage-header-left">
-      <h1>Welcome, user!</h1>
+      <h1>
+        Welcome,
+        <span th:text="${user.username}">User</span>
+        !
+      </h1>
     </div>
     <div class="homepage-header-right">
       <a href="/" class="logout">
@@ -124,7 +128,7 @@
     </details>
     <div class="admin-links">
       <!-- Admin Section -->
-      <details class="toggle-section">
+      <details class="toggle-section" th:if="${(user.role != null ? user.role.name() : 'USER') == 'ADMIN'}">
         <summary>Admin</summary>
         <ul class="admin-links">
           <li>
