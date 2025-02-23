@@ -27,14 +27,3 @@ button {
 .switch-status-btn:hover {
     background: #004f68;
 }
-
-/* Active Status */
-.status.active {
-    color: green;
-    font-weight: bold;
-}
-
-.status.inactive {
-    color: red;
-    font-weight: bold;
-}
