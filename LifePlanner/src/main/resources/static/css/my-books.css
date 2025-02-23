@@ -10,7 +10,7 @@
 
 /* Left side: Page Title */
 .books-header-left h1 {
-    font-size: 25px;
+    font-size: 20px;
     color: #006891;
     margin: 0;
 }
@@ -129,4 +129,3 @@
 .books-table tbody tr:hover{
     background: rgba(255, 255, 255, 0.2);
 }
-

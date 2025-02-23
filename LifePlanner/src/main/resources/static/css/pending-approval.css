@@ -1,0 +1,41 @@
+/* Align checkboxes properly */
+.approve-checkbox {
+    transform: scale(1.2); /* Makes the checkbox slightly bigger */
+    margin-right: 10px; /* Adds spacing */
+    cursor: pointer;
+}
+
+/* Approval Buttons */
+.approval-actions {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.approve-btn {
+    background: #5b935d;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.approve-btn:hover {
+    background: #2d6730;
+}
+
+.reject-btn {
+    background: #a32b2b;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.reject-btn:hover {
+    background: #802424;
+}
+

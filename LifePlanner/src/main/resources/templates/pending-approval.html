@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/commons :: head}">
+    <title th:text="${pageTitle}"></title>
+</head>
+<body>
+<header>
+    <nav class="books-nav">
+        <div class="books-header-right">
+            <a href="/home" class="back-home">
+                <img src="https://img.icons8.com/?size=100&id=42814&format=png&color=000000"
+                     alt="Home Icon" width="45" height="45"/>
+                Back to Home
+            </a>
+        </div>
+    </nav>
+</header>
+<div class="dashboard-fav">
+    <div class="lifehub-fav">
+        <h2>Pending Approval</h2>
+        <form id="approval-form" action="/approve-selected" method="post">
+            <div class="shared-content">
+                <!-- Books Section -->
+                <details class="toggle-section">
+                    <summary>
+                        <img src="https://img.icons8.com/?size=100&id=43130&format=png&color=000000" alt="Books Icon"
+                             class="section-icon">
+                        Books
+                    </summary>
+                    <div class="post-card">
+                        <input type="checkbox" name="approve[]" value="book-1" class="approve-checkbox">
+                        <div class="post-info">
+                            <p><strong>@User123</strong> shared a book:</p>
+                            <p>"The Midnight Library" by Matt Haig</p>
+                        </div>
+                    </div>
+                </details>
+
+                <!-- Media Section -->
+                <details class="toggle-section">
+                    <summary>
+                        <img src="https://img.icons8.com/?size=100&id=54994&format=png&color=000000" alt="Media Icon"
+                             class="section-icon">
+                        Movies / TV Shows
+                    </summary>
+                    <div class="post-card">
+                        <input type="checkbox" name="approve[]" value="media-1" class="approve-checkbox">
+                        <div class="post-info">
+                            <p><strong>@Oscar</strong> shared a movie/tv-show:</p>
+                            <p>"Currently watching..."</p>
+                        </div>
+                    </div>
+                </details>
+
+                <!-- Recipes Section -->
+                <details class="toggle-section">
+                    <summary>
+                        <img src="https://img.icons8.com/?size=100&id=46406&format=png&color=000000" alt="Recipe Icon"
+                             class="section-icon">
+                        Recipes
+                    </summary>
+                    <div class="post-card">
+                        <input type="checkbox" name="approve[]" value="recipe-1" class="approve-checkbox">
+                        <div class="post-info">
+                            <p><strong>@Foodie99</strong> shared a recipe:</p>
+                            <p>"Homemade Pizza - Best Recipe Ever!"</p>
+                        </div>
+                    </div>
+                </details>
+
+                <!-- Travel Section -->
+                <details class="toggle-section">
+                    <summary>
+                        <img src="https://img.icons8.com/?size=100&id=43121&format=png&color=000000" alt="Travel Icon"
+                             class="section-icon">
+                        Travel Plans
+                    </summary>
+                    <div class="post-card">
+                        <input type="checkbox" name="approve[]" value="travel-1" class="approve-checkbox">
+                        <div class="post-info">
+                            <p><strong>@GlobeTrotter</strong> shared a travel plan:</p>
+                            <p>"Trip to Bali - March 2025"</p>
+                        </div>
+                    </div>
+                </details>
+
+                <!-- Goals Section -->
+                <details class="toggle-section">
+                    <summary>
+                        <img src="https://img.icons8.com/?size=100&id=49297&format=png&color=000000" alt="Goals Icon"
+                             class="section-icon">
+                        Goals
+                    </summary>
+                    <div class="post-card">
+                        <input type="checkbox" name="approve[]" value="goal-1" class="approve-checkbox">
+                        <div class="post-info">
+                            <p><strong>@123r</strong> shared a goal:</p>
+                            <p>"Lose weight"</p>
+                        </div>
+                    </div>
+                </details>
+            </div>
+
+            <!-- Approval Buttons -->
+            <div class="approval-actions">
+                <button type="submit" class="approve-btn">Approve Selected</button>
+                <button type="reset" class="reject-btn">Reject Selected</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<footer th:replace="~{fragments/commons :: footer}"></footer>
+</body>
+</html>

@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/commons :: head}">
+    <title th:text="${pageTitle}"></title>
+</head>
+<body>
+<header>
+    <nav class="books-nav">
+        <div class="books-header-right">
+            <a href="/home" class="back-home">
+                <img src="https://img.icons8.com/?size=100&id=42814&format=png&color=000000"
+                     alt="Home Icon" width="45" height="45"/>
+                Back to Home
+            </a>
+        </div>
+    </nav>
+</header>
+<!-- Main Dashboard Layout -->
+<div class="all-books-dashboard">
+    <!-- Main Content: Currently Reading -->
+    <main class="books-main">
+        <h2 class="all-books">
+            <img src="https://img.icons8.com/?size=100&id=103783&format=png&color=000000"
+                 alt="All Users Icon" class="all-books" width="45" height="45"/>
+            All Users
+        </h2>
+        <!-- Search Bar -->
+        <div class="search-bar">
+            <img src="https://img.icons8.com/?size=100&id=43189&format=png&color=000000"
+                 alt="Search Icon" width="45" height="45"/>
+            <input type="text" id="searchInput" placeholder="Search by username" onkeyup="searchBooks()">
+        </div>
+        <div class="books-table">
+            <table>
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Username</th>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Email</th>
+                    <th>Registration Date</th>
+                    <th>Role</th>
+                    <th>Change Role</th>
+                    <th>Status</th>
+                    <th>Switch Status</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>001</td>
+                    <td>terra</td>
+                    <td>John</td>
+                    <td>Doe</td>
+                    <td>johndoe@example.com</td>
+                    <td>10 Jan 2024</td>
+                    <td>Admin</td>
+                    <td><button class="change-role-btn">Change Role</button></td>
+                    <td><span class="status active">Active</span></td>
+                    <td><button class="switch-status-btn">Switch Status</button></td>
+                </tr>
+                </tbody>
+            </table>
+
+
+        </div>
+
+        <!-- Pagination Controls -->
+        <div class="pagination">
+            <button id="prevPage" onclick="changePage(-1)">← Previous</button>
+            <span id="pageInfo">Page 1</span>
+            <button id="nextPage" onclick="changePage(1)">Next →</button>
+        </div>
+
+
+    </main>
+</div>
+
+<script src="/js/search-books.js"></script>
+<script src="/js/pagination-books.js"></script>
+<footer th:replace="~{fragments/commons :: footer}"></footer>
+</body>
+</html>

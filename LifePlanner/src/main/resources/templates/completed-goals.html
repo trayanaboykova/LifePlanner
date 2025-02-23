@@ -51,7 +51,9 @@
                     <th>Priority</th>
                     <th>Progress</th>
                     <th>Notes</th>
+                    <th>Share</th>
                     <th>Edit</th>
+                    <th>Delete</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -61,13 +63,22 @@
                     <td>01 March 2025</td>
                     <td>01 June 2025</td>
                     <td>High</td>
-                    <td>40%</td>
+                    <td class="emoji-progress" data-completed="4" data-total="10"></td>
                     <td>Working on better meal planning and workouts</td>
                     <td>
-                        <a href="/edit-goal">
+                        <a href="#">
+                            <img src="https://img.icons8.com/?size=100&id=46812&format=png&color=000000"
+                                 alt="Share Icon" width="45" height="45"/></a>
+                    </td>
+                    <td>
+                        <a href="/edit-book">
                             <img src="https://img.icons8.com/?size=100&id=0Ka1o_-mwyre&format=png&color=000000"
-                                 alt="Edit Icon" width="45" height="45"/>
-                        </a>
+                                 alt="Edit Icon" width="45" height="45"/></a>
+                    </td>
+                    <td>
+                        <a href="#">
+                            <img src="https://img.icons8.com/?size=100&id=104338&format=png&color=000000"
+                                 alt="Delete Icon" width="45" height="45"/></a>
                     </td>
                 </tr>
                 </tbody>
@@ -87,6 +98,7 @@
 
 <script src="/js/search-books.js"></script>
 <script src="/js/pagination-books.js"></script>
+<script src="/js/progress.js"></script>
 <footer th:replace="~{fragments/commons :: footer}"></footer>
 </body>
 </html>

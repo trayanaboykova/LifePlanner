@@ -18,4 +18,16 @@ public class HomeController {
         model.addAttribute("pageTitle", "Edit Profile");
         return "edit-user";
     }
+
+    @GetMapping("/pending-approval")
+    public String getPendingApprovalPage(Model model) {
+        model.addAttribute("pageTitle", "Pending Approval");
+        return "pending-approval";
+    }
+
+    @GetMapping("/all-users")
+    public String getAllUsersPage(Model model) {
+        model.addAttribute("pageTitle", "All Users");
+        return "all-users";
+    }
 }

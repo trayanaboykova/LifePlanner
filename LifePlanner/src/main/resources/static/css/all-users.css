@@ -1,0 +1,40 @@
+/* Common button styling */
+button {
+    padding: 8px 12px;
+    font-size: 14px;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: 0.3s ease-in-out;
+}
+
+/* Change Role Button */
+.change-role-btn {
+    background: #006891;
+    color: white;
+}
+
+.change-role-btn:hover {
+    background: #004f68;
+}
+
+/* Switch Status Button */
+.switch-status-btn {
+    background: #006891;
+    color: white;
+}
+
+.switch-status-btn:hover {
+    background: #004f68;
+}
+
+/* Active Status */
+.status.active {
+    color: green;
+    font-weight: bold;
+}
+
+.status.inactive {
+    color: red;
+    font-weight: bold;
+}
