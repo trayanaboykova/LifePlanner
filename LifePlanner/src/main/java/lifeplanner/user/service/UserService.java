@@ -1,9 +1,11 @@
 package lifeplanner.user.service;
 
+import jakarta.validation.Valid;
 import lifeplanner.user.model.User;
 import lifeplanner.user.repository.UserRepository;
 import lifeplanner.web.dto.LoginRequest;
 import lifeplanner.web.dto.RegisterRequest;
+import lifeplanner.web.dto.UserEditRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -56,5 +58,16 @@ public class UserService {
 
     public User getById(UUID userId) {
         return userRepository.findById(userId).orElseThrow(() -> new RuntimeException("User with id [" + userId + "] does not exist."));
+    }
+
+    public void editUserDetails(UUID id, @Valid UserEditRequest userEditRequest) {
+        User user = getById(id);
+
+        user.setFirstName(userEditRequest.getFirstName());
+        user.setLastName(userEditRequest.getLastName());
+        user.setEmail(userEditRequest.getEmail());
+        user.setProfilePicture(userEditRequest.getProfilePicture());
+
+        userRepository.save(user);
     }
 }

@@ -13,12 +13,6 @@ public class HomeController {
         return "lifehub-fav";
     }
 
-    @GetMapping("/edit-user")
-    public String getEditUserPage(Model model) {
-        model.addAttribute("pageTitle", "Edit Profile");
-        return "edit-user";
-    }
-
     @GetMapping("/pending-approval")
     public String getPendingApprovalPage(Model model) {
         model.addAttribute("pageTitle", "Pending Approval");
