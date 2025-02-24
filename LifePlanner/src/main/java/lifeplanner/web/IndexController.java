@@ -2,6 +2,8 @@ package lifeplanner.web;
 
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
+import lifeplanner.books.model.Book;
+import lifeplanner.books.service.BookService;
 import lifeplanner.user.model.User;
 import lifeplanner.user.service.UserService;
 import lifeplanner.web.dto.LoginRequest;
@@ -21,10 +23,12 @@ import java.util.UUID;
 public class IndexController {
 
     private final UserService userService;
+    private final BookService bookService;
 
     @Autowired
-    public IndexController(UserService userService) {
+    public IndexController(UserService userService, BookService bookService) {
         this.userService = userService;
+        this.bookService = bookService;
     }
 
     @GetMapping("/")
@@ -87,9 +91,14 @@ public class IndexController {
         UUID userId = (UUID) session.getAttribute("user_id");
         User user = userService.getById(userId);
 
+        List<Book> allBooks = bookService.getAllBooks();
+        List<Book> sharedBooks = bookService.getSharedBooks();
+
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("home");
         modelAndView.addObject("user", user);
+        modelAndView.addObject("allBooks", allBooks);
+        modelAndView.addObject("sharedBooks", sharedBooks);
 
         return modelAndView;
     }

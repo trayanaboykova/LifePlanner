@@ -9,7 +9,7 @@
     <nav class="books-nav">
         <div class="books-header-left">
             <p class="back-to-books">
-                <a href="/my-books">
+                <a href="/books/my-books">
                     <img src="https://img.icons8.com/?size=100&id=46652&format=png&color=000000"
                          alt="Back Icon" width="45" height="45"/>
                     Back to My Books</a>
@@ -26,61 +26,61 @@
 </header>
 <main class="container">
     <section class="add-book-container">
-        <form class="add-book-form" action="/books/save" method="post">
+        <form class="add-book-form" th:action="@{/books}" method="post" th:object="${addBookRequest}">
             <h3>Add Book</h3>
 
             <!-- Status Dropdown -->
-            <div class="form-group">
+            <div class="form-group-add-book">
                 <label for="status">Add Status</label>
-                <select id="status" name="status" required>
-                    <option value="" disabled selected>-----Status-----</option>
-                    <option value="Currently Reading">Currently Reading</option>
-                    <option value="Want to Read">Want to Read</option>
-                    <option value="Read">Read</option>
+                <select id="status" name="status" required th:field="*{bookStatus}">
+                    <option value="">-----Status-----</option>
+                    <option th:each="bookStatus : ${T(lifeplanner.books.model.BookStatus).values()}"
+                            th:value="${bookStatus}"
+                            th:text="${bookStatus.label}">
+                    </option>
                 </select>
-                <p class="error-message">Error Text Here</p>
+                <p class="error-message-add-book" th:if="${#fields.hasErrors('bookStatus')}" th:errors="*{bookStatus}"></p>
             </div>
 
             <!-- Title -->
-            <div class="form-group">
+            <div class="form-group-add-book">
                 <label for="title">Add Title</label>
-                <input type="text" id="title" name="title" placeholder="Book Title" required>
-                <p class="error-message">Error Text Here</p>
+                <input type="text" id="title" name="title" placeholder="Book Title" required th:field="*{title}">
+                <p class="error-message-add-book" th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></p>
             </div>
 
             <!-- Author -->
-            <div class="form-group">
+            <div class="form-group-add-book">
                 <label for="author">Add Author</label>
-                <input type="text" id="author" name="author" placeholder="Author" required>
-                <p class="error-message">Error Text Here</p>
+                <input type="text" id="author" name="author" placeholder="Author" required th:field="*{author}">
+                <p class="error-message-add-book" th:if="${#fields.hasErrors('author')}" th:errors="*{author}"></p>
             </div>
 
             <!-- Date Read -->
-            <div class="form-group">
+            <div class="form-group-add-book">
                 <label for="date-read">Add Date Read</label>
-                <input type="date" id="date-read" name="dateRead" >
-                <p class="error-message">Error Text Here</p>
+                <input type="date" id="date-read" name="dateRead" th:field="*{dateRead}">
+                <p class="error-message-add-book" th:if="${#fields.hasErrors('dateRead')}" th:errors="*{dateRead}"></p>
             </div>
 
             <!-- Rating Dropdown -->
-            <div class="form-group">
+            <div class="form-group-add-book">
                 <label for="rating">Add Rating</label>
-                <select id="rating" name="rating">
-                    <option value="" disabled selected>-----Rating-----</option>
-                    <option value="1">1 star - ⭐</option>
-                    <option value="2">2 stars - ⭐⭐</option>
-                    <option value="3">3 stars - ⭐⭐⭐</option>
-                    <option value="4">4 stars - ⭐⭐⭐⭐</option>
-                    <option value="5">5 stars - ⭐⭐⭐⭐⭐</option>
+                <select id="rating" name="rating" th:field="*{bookRating}">
+                    <option value="">-----Rating-----</option>
+                    <option th:each="bookRating : ${T(lifeplanner.books.model.BookRating).values()}"
+                            th:value="${bookRating}"
+                            th:text="${bookRating.label}">
+                    </option>
                 </select>
-                <p class="error-message">Error Text Here</p>
+                <p class="error-message-add-book" th:if="${#fields.hasErrors('bookRating')}" th:errors="*{bookRating}"></p>
             </div>
 
             <!-- Genre -->
-            <div class="form-group">
+            <div class="form-group-add-book">
                 <label for="genre">Add Genre</label>
-                <input type="text" id="genre" name="genre" placeholder="Genre">
-                <p class="error-message">Error Text Here</p>
+                <input type="text" id="genre" name="genre" placeholder="Genre" th:field="*{genre}">
+                <p class="error-message-add-book" th:if="${#fields.hasErrors('genre')}" th:errors="*{genre}"></p>
             </div>
 
             <!-- Submit Button -->

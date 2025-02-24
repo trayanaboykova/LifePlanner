@@ -25,7 +25,7 @@
     <aside class="books-sidebar">
         <ul>
             <li>
-                <a href="/add-books">
+                <a href="/books/new">
                     <img src="https://img.icons8.com/?size=100&id=46595&format=png&color=000000"
                          alt="Add Book Icon" width="45" height="45"/>
                     Add Book
@@ -73,31 +73,47 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr>
-                    <td>The Night Circus</td>
-                    <td>Erin Morgenstern</td>
-                    <td>⭐ ⭐ ⭐ ⭐</td>
-                    <td>Fiction</td>
+                <tr th:each="book : ${books}"
+                    th:if="${book.bookStatus.name()} == 'CURRENTLY_READING'">
+                    <td th:text="${book.title}"></td>
+                    <td th:text="${book.author}"></td>
+                    <td th:text="${book.bookRating}"></td>
+                    <td th:text="${book.genre}"></td>
                     <td>
                         <a href="#">
                             <img src="https://img.icons8.com/?size=100&id=46812&format=png&color=000000"
-                                 alt="Share Icon" width="45" height="45"/></a>
+                                 alt="Share Icon" width="45" height="45"/>
+                        </a>
                     </td>
                     <td>
-                        <a href="/edit-book">
-                        <img src="https://img.icons8.com/?size=100&id=0Ka1o_-mwyre&format=png&color=000000"
-                             alt="Edit Icon" width="45" height="45"/></a>
+                        <a th:href="@{/books/edit/{id}(id=${book.id})}">
+                            <img src="https://img.icons8.com/?size=100&id=0Ka1o_-mwyre&format=png&color=000000"
+                                 alt="Edit Icon" width="45" height="45"/>
+                        </a>
                     </td>
                     <td>
-                        <a href="#">
-                        <img src="https://img.icons8.com/?size=100&id=104338&format=png&color=000000"
-                             alt="Delete Icon" width="45" height="45"/></a>
+                        <a th:href="@{/books/delete/{id}(id=${book.id})}">
+                            <img src="https://img.icons8.com/?size=100&id=104338&format=png&color=000000"
+                                 alt="Delete Icon" width="45" height="45"/>
+                        </a>
                     </td>
+<!--                    <td>-->
+<!--                        <a href="/edit-book">-->
+<!--                            <img src="https://img.icons8.com/?size=100&id=0Ka1o_-mwyre&format=png&color=000000"-->
+<!--                                 alt="Edit Icon" width="45" height="45"/></a>-->
+<!--                    </td>-->
+<!--                    <td>-->
+<!--                        <a href="#">-->
+<!--                            <img src="https://img.icons8.com/?size=100&id=104338&format=png&color=000000"-->
+<!--                                 alt="Delete Icon" width="45" height="45"/></a>-->
+<!--                    </td>-->
                 </tr>
                 </tbody>
+
             </table>
         </div>
     </main>
+
 </div>
 <footer th:replace="~{fragments/commons :: footer}"></footer>
 </body>

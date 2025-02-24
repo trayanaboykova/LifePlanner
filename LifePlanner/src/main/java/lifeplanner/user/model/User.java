@@ -2,13 +2,15 @@ package lifeplanner.user.model;
 
 
 import jakarta.persistence.*;
-import lifeplanner.books.model.BookLibrary;
+import lifeplanner.books.model.Book;
 import lifeplanner.goals.model.Goal;
 import lifeplanner.media.model.Media;
 import lifeplanner.recipes.model.Recipe;
 import lifeplanner.travel.model.Travel;
 import lombok.*;
 
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -41,21 +43,26 @@ public class User {
     @Enumerated(EnumType.STRING)
     private UserRole role;
 
-    @OneToMany(mappedBy = "owner", fetch = FetchType.EAGER)
-    private List<BookLibrary> books;
+    private boolean isActive;
+
+    @Column(nullable = false)
+    private LocalDateTime registrationDate;
 
     @OneToMany(mappedBy = "owner", fetch = FetchType.EAGER)
-    private List<Media> media;
+    private List<Book> books = new ArrayList<>();
 
     @OneToMany(mappedBy = "owner", fetch = FetchType.EAGER)
-    private List<Recipe> recipes;
+    private List<Media> media = new ArrayList<>();
 
     @OneToMany(mappedBy = "owner", fetch = FetchType.EAGER)
-    private List<Travel> travel;
+    private List<Recipe> recipes = new ArrayList<>();
 
     @OneToMany(mappedBy = "owner", fetch = FetchType.EAGER)
-    private List<Goal> goals;
+    private List<Travel> travel = new ArrayList<>();
 
     @OneToMany(mappedBy = "owner", fetch = FetchType.EAGER)
-    private List<SharedPosts> sharedPosts;
+    private List<Goal> goals = new ArrayList<>();
+
+    @OneToMany(mappedBy = "owner", fetch = FetchType.EAGER)
+    private List<SharedPosts> sharedPosts = new ArrayList<>();
 }

@@ -101,15 +101,23 @@ select:focus {
 }
 
 /* Position the form group */
-.form-group {
-    position: relative;
+.form-group-add-book {
     display: flex;
     flex-direction: column;
+    align-items: center;
+    margin-bottom: 0.8em;
 }
 
-.form-group label {
+.form-group-add-book label {
     color: white;
     text-align: center;
+}
+
+.form-group-add-book .error-message-add-book {
+    font-size: 15px;
+    color: #9f4825;
+    margin-top: 0.5em;
+    font-weight: bold;
 }
 
 

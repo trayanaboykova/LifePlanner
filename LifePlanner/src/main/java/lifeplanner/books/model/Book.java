@@ -13,7 +13,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @Getter
 @Setter
-public class BookLibrary {
+public class Book {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
@@ -21,18 +21,23 @@ public class BookLibrary {
     @Column(nullable = false)
     private String title;
 
+    @Column(nullable = false)
     private String author;
 
     private String genre;
 
     private LocalDate dateRead;
 
-    private Double rating;
-
     @Enumerated(EnumType.STRING)
-    private BookStatus status;
+    private BookRating bookRating;
+
+    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
+    private BookStatus bookStatus;
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     private User owner;
+
+    private boolean visible;
 }
