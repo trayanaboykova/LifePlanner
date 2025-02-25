@@ -63,10 +63,13 @@
                     <td th:text="${book.bookRating?.label}"></td>
                     <td th:text="${book.genre}"></td>
                     <td>
-                        <a href="#">
-                            <img src="https://img.icons8.com/?size=100&id=46812&format=png&color=000000"
-                                 alt="Share Icon" width="45" height="45"/>
-                        </a>
+                        <form th:action="@{/books/{id}/share(id=${book.id})}" method="post"
+                              onsubmit="return confirm('Are you sure you want to share this book to LifeHub?');">
+                            <button type="submit" style="border: none; background: none;">
+                                <img src="https://img.icons8.com/?size=100&id=46812&format=png&color=000000"
+                                     alt="Share Icon" width="45" height="45"/>
+                            </button>
+                        </form>
                     </td>
                     <td>
                         <a th:href="@{/books/{id}/edit(id=${book.id})}">

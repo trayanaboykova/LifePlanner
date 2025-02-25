@@ -108,7 +108,10 @@ public class BooksController {
     }
 
     @PostMapping
-    public String addBook(@Valid AddBookRequest addBookRequest, BindingResult bindingResult, HttpSession session, Model model) {
+    public String addBook(@Valid AddBookRequest addBookRequest,
+                          BindingResult bindingResult,
+                          HttpSession session,
+                          Model model) {
 
         model.addAttribute("pageTitle", "Add Book");
 
@@ -153,6 +156,15 @@ public class BooksController {
         bookService.editBook(id, editBookRequest);
         return new ModelAndView("redirect:/books/my-books");
     }
+
+    @PostMapping("/{id}/share")
+    public String shareBook(@PathVariable UUID id) {
+
+        bookService.shareBook(id);
+
+        return "redirect:/books/my-books";
+    }
+
 
     @DeleteMapping("/{id}")
     public String deleteBook(@PathVariable UUID id) {

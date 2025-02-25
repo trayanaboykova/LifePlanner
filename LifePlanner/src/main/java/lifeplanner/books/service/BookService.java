@@ -56,10 +56,6 @@ public class BookService {
         return bookRepository.findAll();
     }
 
-    public List<Book> getSharedBooks() {
-        return bookRepository.findAllByVisibleTrue();
-    }
-
     public Book getBookById(UUID bookId) {
         return bookRepository.findById(bookId)
                 .orElseThrow(() -> new RuntimeException("Book with id [" + bookId + "] does not exist."));
@@ -68,4 +64,22 @@ public class BookService {
     public void deleteBookById(UUID id) {
         bookRepository.deleteById(id);
     }
+
+    public void shareBook(UUID bookId) {
+        Book book = bookRepository.findById(bookId)
+                .orElseThrow(() -> new RuntimeException("Book not found"));
+
+
+        book.setVisible(true);
+        bookRepository.save(book);
+    }
+
+    public List<Book> getSharedBooks(User currentUser) {
+        return bookRepository.findAllByVisibleTrue()
+                .stream()
+                .filter(book -> !book.getOwner().getId().equals(currentUser.getId()))
+                .toList();
+    }
+
+
 }

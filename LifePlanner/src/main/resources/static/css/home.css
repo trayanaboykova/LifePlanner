@@ -275,10 +275,11 @@
 
 /* Post Info Styling */
 .post-info {
-    flex: 1; /* Takes up available space */
+    flex: auto;
     display: flex;
-    flex-direction: column;
-    align-items: center; /* Centers the text horizontally */
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
     text-align: center;
     font-size: 16px;
 }

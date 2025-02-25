@@ -3,6 +3,7 @@ package lifeplanner.web;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import lifeplanner.books.model.Book;
+import lifeplanner.books.service.BookLikesService;
 import lifeplanner.books.service.BookService;
 import lifeplanner.user.model.User;
 import lifeplanner.user.service.UserService;
@@ -17,7 +18,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 @Controller
@@ -25,11 +28,13 @@ public class IndexController {
 
     private final UserService userService;
     private final BookService bookService;
+    private final BookLikesService bookLikesService;
 
     @Autowired
-    public IndexController(UserService userService, BookService bookService) {
+    public IndexController(UserService userService, BookService bookService, BookLikesService bookLikesService) {
         this.userService = userService;
         this.bookService = bookService;
+        this.bookLikesService = bookLikesService;
     }
 
     @GetMapping("/")
@@ -97,13 +102,21 @@ public class IndexController {
         }
 
         List<Book> allBooks = bookService.getAllBooks();
-        List<Book> sharedBooks = bookService.getSharedBooks();
+        List<Book> sharedBooks = bookService.getSharedBooks(user);
+
+        // For each book, retrieve its like count
+        Map<UUID, Long> likeCounts = new HashMap<>();
+        for (Book b : sharedBooks) {
+            long count = bookLikesService.getLikeCount(b.getId());
+            likeCounts.put(b.getId(), count);
+        }
 
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("home");
         modelAndView.addObject("user", user);
         modelAndView.addObject("allBooks", allBooks);
         modelAndView.addObject("sharedBooks", sharedBooks);
+        model.addAttribute("likeCounts", likeCounts);
 
         return modelAndView;
     }
