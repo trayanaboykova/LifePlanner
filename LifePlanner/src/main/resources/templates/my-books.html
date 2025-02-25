@@ -32,21 +32,21 @@
                 </a>
             </li>
             <li>
-                <a href="/all-books">
+                <a href="/books/all-books">
                     <img src="https://img.icons8.com/?size=100&id=46363&format=png&color=000000"
                          alt="All Books Icon" width="45" height="45"/>
                     All Books
                 </a>
             </li>
             <li>
-                <a href="/read-books">
+                <a href="/books/read-books">
                     <img src="https://img.icons8.com/?size=100&id=54999&format=png&color=000000"
                          alt="Read Books Icon" width="45" height="45"/>
                     Read Books
                 </a>
             </li>
             <li>
-                <a href="/wished-books">
+                <a href="/books/wished-books">
                     <img src="https://img.icons8.com/?size=100&id=54980&format=png&color=000000"
                          alt="Wish List Icon" width="45" height="45"/>
                     Wish List</a></li>
@@ -86,27 +86,16 @@
                         </a>
                     </td>
                     <td>
-                        <a th:href="@{/books/edit/{id}(id=${book.id})}">
+                        <a th:href="@{/books/{id}/edit(id=${book.id})}">
                             <img src="https://img.icons8.com/?size=100&id=0Ka1o_-mwyre&format=png&color=000000"
                                  alt="Edit Icon" width="45" height="45"/>
                         </a>
                     </td>
                     <td>
-                        <a th:href="@{/books/delete/{id}(id=${book.id})}">
+                        <a href="#">
                             <img src="https://img.icons8.com/?size=100&id=104338&format=png&color=000000"
-                                 alt="Delete Icon" width="45" height="45"/>
-                        </a>
+                                 alt="Delete Icon" width="45" height="45"/></a>
                     </td>
-<!--                    <td>-->
-<!--                        <a href="/edit-book">-->
-<!--                            <img src="https://img.icons8.com/?size=100&id=0Ka1o_-mwyre&format=png&color=000000"-->
-<!--                                 alt="Edit Icon" width="45" height="45"/></a>-->
-<!--                    </td>-->
-<!--                    <td>-->
-<!--                        <a href="#">-->
-<!--                            <img src="https://img.icons8.com/?size=100&id=104338&format=png&color=000000"-->
-<!--                                 alt="Delete Icon" width="45" height="45"/></a>-->
-<!--                    </td>-->
                 </tr>
                 </tbody>
 

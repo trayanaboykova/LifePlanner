@@ -8,6 +8,7 @@ import lifeplanner.user.model.User;
 import lifeplanner.user.service.UserService;
 import lifeplanner.web.dto.LoginRequest;
 import lifeplanner.web.dto.RegisterRequest;
+import org.apache.tomcat.util.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -90,6 +91,10 @@ public class IndexController {
         model.addAttribute("pageTitle", "Home");
         UUID userId = (UUID) session.getAttribute("user_id");
         User user = userService.getById(userId);
+
+        if (userId == null) {
+            return new ModelAndView("redirect:/login");
+        }
 
         List<Book> allBooks = bookService.getAllBooks();
         List<Book> sharedBooks = bookService.getSharedBooks();

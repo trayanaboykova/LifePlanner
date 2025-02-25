@@ -14,4 +14,5 @@ public interface BookRepository extends JpaRepository<Book, UUID> {
     List<Book> findAllByOwner(User user);
 
     List<Book> findAllByVisibleTrue();
+
 }

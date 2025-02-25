@@ -9,7 +9,7 @@
     <nav class="books-nav">
         <div class="books-header-left">
             <p class="back-to-books">
-                <a href="/my-books">
+                <a href="/books/my-books">
                     <img src="https://img.icons8.com/?size=100&id=46652&format=png&color=000000"
                          alt="Back Icon" width="45" height="45"/>
                     Back to My Books</a>
@@ -40,7 +40,7 @@
             <input type="text" id="searchInput" placeholder="Search by title, author, or genre" onkeyup="searchBooks()">
         </div>
         <div class="books-table">
-            <table>
+            <table id="booksTable">
                 <thead>
                 <tr>
                     <th>Status</th>
@@ -55,22 +55,24 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr>
-                    <td>Currently Reading</td>
-                    <td>The Night Circus</td>
-                    <td>Erin Morgenstern</td>
-                    <td>10 Jan 2015</td>
-                    <td>⭐ ⭐ ⭐ ⭐</td>
-                    <td>Fiction</td>
+                <tr th:each="book : ${books}">
+                    <td th:text="${book.bookStatus}"></td>
+                    <td th:text="${book.title}"></td>
+                    <td th:text="${book.author}"></td>
+                    <td th:text="${#temporals.format(book.dateRead, 'dd MMM yyyy', T(java.util.Locale).ENGLISH)}"></td>
+                    <td th:text="${book.bookRating}"></td>
+                    <td th:text="${book.genre}"></td>
                     <td>
                         <a href="#">
                             <img src="https://img.icons8.com/?size=100&id=46812&format=png&color=000000"
-                                 alt="Share Icon" width="45" height="45"/></a>
+                                 alt="Share Icon" width="45" height="45"/>
+                        </a>
                     </td>
                     <td>
-                        <a href="/edit-book">
+                        <a th:href="@{/books/{id}/edit(id=${book.id})}">
                             <img src="https://img.icons8.com/?size=100&id=0Ka1o_-mwyre&format=png&color=000000"
-                                 alt="Edit Icon" width="45" height="45"/></a>
+                                 alt="Edit Icon" width="45" height="45"/>
+                        </a>
                     </td>
                     <td>
                         <a href="#">

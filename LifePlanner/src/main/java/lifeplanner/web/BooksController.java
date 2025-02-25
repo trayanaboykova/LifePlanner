@@ -3,18 +3,17 @@ package lifeplanner.web;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import lifeplanner.books.model.Book;
-import lifeplanner.books.repository.BookRepository;
 import lifeplanner.books.service.BookService;
 import lifeplanner.user.model.User;
 import lifeplanner.user.service.UserService;
 import lifeplanner.web.dto.AddBookRequest;
+import lifeplanner.web.dto.EditBookRequest;
+import lifeplanner.web.mapper.DTOMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
@@ -48,20 +47,47 @@ public class BooksController {
     }
 
     @GetMapping("/all-books")
-    public String getAllBooksPage(Model model) {
+    public String getAllBooksPage(Model model, HttpSession session) {
         model.addAttribute("pageTitle", "All Books");
+
+        UUID userId = (UUID) session.getAttribute("user_id");
+
+        User user = userService.getById(userId);
+
+        List<Book> userBooks = bookService.getBooksByUser(user);
+
+        model.addAttribute("books", userBooks);
+
         return "all-books";
     }
 
     @GetMapping("/read-books")
-    public String getAllReadPage(Model model) {
+    public String getAllReadPage(Model model, HttpSession session) {
         model.addAttribute("pageTitle", "Read Books");
+
+        UUID userId = (UUID) session.getAttribute("user_id");
+
+        User user = userService.getById(userId);
+
+        List<Book> userBooks = bookService.getBooksByUser(user);
+
+        model.addAttribute("books", userBooks);
+
         return "read-books";
     }
 
     @GetMapping("/wished-books")
-    public String getWishListPage(Model model) {
+    public String getWishListPage(Model model, HttpSession session) {
         model.addAttribute("pageTitle", "Wish List");
+
+        UUID userId = (UUID) session.getAttribute("user_id");
+
+        User user = userService.getById(userId);
+
+        List<Book> userBooks = bookService.getBooksByUser(user);
+
+        model.addAttribute("books", userBooks);
+
         return "wished-books";
     }
 
@@ -95,13 +121,37 @@ public class BooksController {
 
         bookService.addBook(addBookRequest, user);
 
-        return "redirect:/home";
+        return "redirect:/books/my-books";
     }
 
-
-    @GetMapping("/edit-book")
-    public String getEditBooksPage(Model model) {
+    @GetMapping("/{id}/edit")
+    public ModelAndView showEditBookForm(@PathVariable("id") UUID id, Model model) {
         model.addAttribute("pageTitle", "Edit Book");
-        return "edit-book";
+
+        Book book = bookService.getBookById(id);
+
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("edit-book");
+        modelAndView.addObject("book", book);
+        modelAndView.addObject("editBookRequest", DTOMapper.mapBookToEditBookRequest(book));
+        return modelAndView;
     }
+
+    @PostMapping("/{id}/edit")
+    public ModelAndView updateBook(@PathVariable("id") UUID id,
+                                   @Valid @ModelAttribute("editBookRequest") EditBookRequest editBookRequest,
+                                   BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            Book book = bookService.getBookById(id);
+            ModelAndView modelAndView = new ModelAndView();
+            modelAndView.setViewName("edit-book");
+            modelAndView.addObject("book", book);
+            modelAndView.addObject("editBookRequest", editBookRequest);
+            return modelAndView;
+        }
+
+        bookService.editBook(id, editBookRequest);
+        return new ModelAndView("redirect:/books/my-books");
+    }
+
 }

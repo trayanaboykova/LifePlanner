@@ -28,6 +28,7 @@
     <h2>LifePlanner</h2>
     <div class="profile">
       <img th:src="${#strings.isEmpty(user.profilePicture) ? 'https://img.icons8.com/?size=100&id=txmnrJwlctOz&format=png&color=000000' : user.profilePicture}" alt="Profile Picture">
+
       <div class="user-info">
         <p th:text="${user.firstName}"></p>
         <p th:text="${user.lastName}"></p>
