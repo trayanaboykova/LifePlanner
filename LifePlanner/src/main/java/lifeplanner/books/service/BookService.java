@@ -64,4 +64,8 @@ public class BookService {
         return bookRepository.findById(bookId)
                 .orElseThrow(() -> new RuntimeException("Book with id [" + bookId + "] does not exist."));
     }
+
+    public void deleteBookById(UUID id) {
+        bookRepository.deleteById(id);
+    }
 }

@@ -154,4 +154,12 @@ public class BooksController {
         return new ModelAndView("redirect:/books/my-books");
     }
 
+    @DeleteMapping("/{id}")
+    public String deleteBook(@PathVariable UUID id) {
+
+        bookService.deleteBookById(id);
+
+        return "redirect:/books/my-books";
+    }
+
 }

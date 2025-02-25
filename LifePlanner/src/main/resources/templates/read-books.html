@@ -73,9 +73,13 @@
                         </a>
                     </td>
                     <td>
-                        <a href="#">
-                            <img src="https://img.icons8.com/?size=100&id=104338&format=png&color=000000"
-                                 alt="Delete Icon" width="45" height="45"/></a>
+                        <form th:action="@{/books/{id}(id=${book.id})}" method="post" onsubmit="return confirm('Are you sure you want to delete this book?');">
+                            <input type="hidden" name="_method" value="delete" />
+                            <button type="submit" style="border: none; background: none;">
+                                <img src="https://img.icons8.com/?size=100&id=104338&format=png&color=000000"
+                                     alt="Delete Icon" width="45" height="45"/>
+                            </button>
+                        </form>
                     </td>
                 </tr>
                 </tbody>
