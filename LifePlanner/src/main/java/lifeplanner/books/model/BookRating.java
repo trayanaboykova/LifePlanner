@@ -6,11 +6,11 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public enum BookRating {
-    ONE("1 star - ⭐"),
-    TWO("2 stars - ⭐⭐"),
-    THREE("3 stars - ⭐⭐⭐"),
-    FOUR("4 stars - ⭐⭐⭐⭐"),
-    FIVE("5 stars - ⭐⭐⭐⭐⭐");
+    ONE("⭐"),
+    TWO("⭐⭐"),
+    THREE("⭐⭐⭐"),
+    FOUR("⭐⭐⭐⭐"),
+    FIVE("⭐⭐⭐⭐⭐");
 
     private final String label;
 }

@@ -57,7 +57,7 @@
                     th:if="${book.bookStatus.name()} == 'WANT_TO_READ'">
                     <td th:text="${book.title}"></td>
                     <td th:text="${book.author}"></td>
-                    <td th:text="${book.bookRating}"></td>
+                    <td th:text="${book.bookRating?.label}"></td>
                     <td th:text="${book.genre}"></td>
                     <td>
                         <a href="#">
