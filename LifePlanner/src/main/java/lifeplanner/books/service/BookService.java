@@ -61,10 +61,6 @@ public class BookService {
                 .orElseThrow(() -> new RuntimeException("Book with id [" + bookId + "] does not exist."));
     }
 
-    public void deleteBookById(UUID id) {
-        bookRepository.deleteById(id);
-    }
-
     public void shareBook(UUID bookId) {
         Book book = bookRepository.findById(bookId)
                 .orElseThrow(() -> new RuntimeException("Book not found"));
@@ -81,5 +77,8 @@ public class BookService {
                 .toList();
     }
 
+    public void deleteBookById(UUID id) {
+        bookRepository.deleteById(id);
+    }
 
 }

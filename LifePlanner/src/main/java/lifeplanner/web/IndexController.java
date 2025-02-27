@@ -5,6 +5,9 @@ import jakarta.validation.Valid;
 import lifeplanner.books.model.Book;
 import lifeplanner.books.service.BookLikesService;
 import lifeplanner.books.service.BookService;
+import lifeplanner.media.model.Media;
+import lifeplanner.media.service.MediaLikesService;
+import lifeplanner.media.service.MediaService;
 import lifeplanner.user.model.User;
 import lifeplanner.user.service.UserService;
 import lifeplanner.web.dto.LoginRequest;
@@ -29,12 +32,16 @@ public class IndexController {
     private final UserService userService;
     private final BookService bookService;
     private final BookLikesService bookLikesService;
+    private final MediaService mediaService;
+    private final MediaLikesService mediaLikesService;
 
     @Autowired
-    public IndexController(UserService userService, BookService bookService, BookLikesService bookLikesService) {
+    public IndexController(UserService userService, BookService bookService, BookLikesService bookLikesService, MediaService mediaService, MediaLikesService mediaLikesService) {
         this.userService = userService;
         this.bookService = bookService;
         this.bookLikesService = bookLikesService;
+        this.mediaService = mediaService;
+        this.mediaLikesService = mediaLikesService;
     }
 
     @GetMapping("/")
@@ -101,22 +108,39 @@ public class IndexController {
             return new ModelAndView("redirect:/login");
         }
 
+        // BOOKS
         List<Book> allBooks = bookService.getAllBooks();
         List<Book> sharedBooks = bookService.getSharedBooks(user);
 
         // For each book, retrieve its like count
-        Map<UUID, Long> likeCounts = new HashMap<>();
+        Map<UUID, Long> bookLikeCounts = new HashMap<>();
         for (Book b : sharedBooks) {
             long count = bookLikesService.getLikeCount(b.getId());
-            likeCounts.put(b.getId(), count);
+            bookLikeCounts.put(b.getId(), count);
+        }
+
+        // MEDIA
+        List<Media> allMedia = mediaService.getAllMedia();
+        List<Media> sharedMedia = mediaService.getSharedMedia(user);
+
+        // For each book, retrieve its like count
+        Map<UUID, Long> mediaLikeCounts = new HashMap<>();
+        for (Media m : sharedMedia) {
+            long count = mediaLikesService.getLikeCount(m.getId());
+            mediaLikeCounts.put(m.getId(), count);
         }
 
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("home");
         modelAndView.addObject("user", user);
+        // BOOKS
         modelAndView.addObject("allBooks", allBooks);
         modelAndView.addObject("sharedBooks", sharedBooks);
-        model.addAttribute("likeCounts", likeCounts);
+        model.addAttribute("bookLikeCounts", bookLikeCounts);
+        // MEDIA
+        modelAndView.addObject("allMedia", allMedia);
+        modelAndView.addObject("sharedMedia", sharedMedia);
+        model.addAttribute("mediaLikeCounts", mediaLikeCounts);
 
         return modelAndView;
     }
@@ -127,5 +151,4 @@ public class IndexController {
 
         return "redirect:/";
     }
-
 }

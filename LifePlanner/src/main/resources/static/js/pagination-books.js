@@ -8,7 +8,15 @@ let totalPages = 1;
 function initializePagination() {
     const rows = document.querySelectorAll(".books-table tbody tr");
     booksData = Array.from(rows); // Store all book rows
+
+    // Calculate total pages based on number of rows
     totalPages = Math.ceil(booksData.length / booksPerPage);
+
+    // If there are no rows, force totalPages to 1
+    if (totalPages < 1) {
+        totalPages = 1;
+    }
+
     showPage(currentPage);
 }
 
@@ -18,7 +26,7 @@ function showPage(page) {
     let endIndex = startIndex + booksPerPage;
 
     booksData.forEach((row, index) => {
-        row.style.display = index >= startIndex && index < endIndex ? "" : "none";
+        row.style.display = (index >= startIndex && index < endIndex) ? "" : "none";
     });
 
     updatePaginationControls();
@@ -39,10 +47,10 @@ function updatePaginationControls() {
     document.getElementById("pageInfo").innerText = `Page ${currentPage} of ${totalPages}`;
 
     // Hide Previous button if on first page
-    document.getElementById("prevPage").style.display = currentPage === 1 ? "none" : "inline-block";
+    document.getElementById("prevPage").style.display = (currentPage === 1) ? "none" : "inline-block";
 
     // Hide Next button if on last page
-    document.getElementById("nextPage").style.display = currentPage === totalPages ? "none" : "inline-block";
+    document.getElementById("nextPage").style.display = (currentPage === totalPages) ? "none" : "inline-block";
 }
 
 // Wait for DOM to Load and Initialize Pagination

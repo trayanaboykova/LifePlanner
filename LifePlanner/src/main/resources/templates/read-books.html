@@ -54,7 +54,8 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr th:each="book : ${books}">
+                <tr th:each="book : ${books}"
+                    th:if="${book.bookStatus.name()} == 'READ'">
                     <td th:text="${book.title}"></td>
                     <td th:text="${book.author}"></td>
                     <td th:text="${#temporals.format(book.dateRead, 'dd MMM yyyy', T(java.util.Locale).ENGLISH)}"></td>

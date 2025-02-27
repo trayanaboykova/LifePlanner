@@ -9,7 +9,7 @@
     <nav class="books-nav">
         <div class="books-header-left">
             <p class="back-to-books">
-                <a href="/all-media">
+                <a href="/media/all-media">
                     <img src="https://img.icons8.com/?size=100&id=46652&format=png&color=000000"
                          alt="Back Icon" width="45" height="45"/>
                     Back to My Media</a>
@@ -26,58 +26,60 @@
 </header>
 <main class="container">
     <section class="add-book-container">
-        <form class="add-book-form" action="/books/save" method="post">
+        <form class="add-book-form" th:action="@{'/media/' + ${media.id} + '/edit'}" method="post" th:object="${editMediaRequest}">
             <h3>Edit Media</h3>
             <!-- Status Dropdown -->
             <div class="form-group">
                 <label for="status">Edit Status</label>
-                <select id="status" name="status" required>
-                    <option value="" disabled selected>-----Status-----</option>
-                    <option value="">Watched</option>
-                    <option value="">Want to Watch</option>
+                <select id="status" name="status" required th:field="*{status}">
+                    <option value="">-----Status-----</option>
+                    <option th:each="status : ${T(lifeplanner.media.model.MediaStatus).values()}"
+                            th:value="${status}"
+                            th:text="${status.label}">
+                    </option>
                 </select>
-                <p class="error-message">Error Text Here</p>
+                <p class="error-message" th:if="${#fields.hasErrors('status')}" th:errors="*{status}"></p>
             </div>
             <!-- Type Dropdown -->
             <div class="form-group">
                 <label for="type">Edit Type</label>
-                <select id="type" name="type" required>
-                    <option value="" disabled selected>-----Type-----</option>
-                    <option value="">Movie</option>
-                    <option value="">TV Show</option>
+                <select id="type" name="type" required th:field="*{type}">
+                    <option th:each="type : ${T(lifeplanner.media.model.TypeMedia).values()}"
+                            th:value="${type}"
+                            th:text="${type.label}">
+                    </option>
                 </select>
-                <p class="error-message">Error Text Here</p>
+                <p class="error-message" th:if="${#fields.hasErrors('type')}" th:errors="*{type}"></p>
             </div>
             <!-- Title -->
             <div class="form-group">
                 <label for="title">Edit Title</label>
-                <input type="text" id="title" name="title" placeholder="Title" required>
-                <p class="error-message">Error Text Here</p>
+                <input type="text" id="title" name="title" placeholder="Title" required th:field="*{title}">
+                <p class="error-message" th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></p>
             </div>
             <!-- Rating Dropdown -->
             <div class="form-group">
                 <label for="rating">Edit Rating</label>
-                <select id="rating" name="rating">
-                    <option value="" disabled selected>-----Rating-----</option>
-                    <option value="1">1 star - ⭐</option>
-                    <option value="2">2 stars - ⭐⭐</option>
-                    <option value="3">3 stars - ⭐⭐⭐</option>
-                    <option value="4">4 stars - ⭐⭐⭐⭐</option>
-                    <option value="5">5 stars - ⭐⭐⭐⭐⭐</option>
+                <select id="rating" name="rating" th:field="*{rating}">
+                    <option value="" >-----Rating-----</option>
+                    <option th:each="rating : ${T(lifeplanner.media.model.MediaRating).values()}"
+                            th:value="${rating}"
+                            th:text="${rating.label}">
+                    </option>
                 </select>
-                <p class="error-message">Error Text Here</p>
+                <p class="error-message" th:if="${#fields.hasErrors('rating')}" th:errors="*{rating}"></p>
             </div>
             <!-- Date Rated -->
             <div class="form-group">
                 <label for="date-rated">Edit Date Rated</label>
-                <input type="date" id="date-rated" name="dateRated" >
-                <p class="error-message">Error Text Here</p>
+                <input type="date" id="date-rated" name="dateRated" th:field="*{dateRated}">
+                <p class="error-message" th:if="${#fields.hasErrors('dateRated')}" th:errors="*{dateRated}"></p>
             </div>
             <!-- Genre -->
             <div class="form-group">
                 <label for="genre">Edit Genre</label>
-                <input type="text" id="genre" name="genre" placeholder="Genre">
-                <p class="error-message">Error Text Here</p>
+                <input type="text" id="genre" name="genre" placeholder="Genre" th:field="*{genre}">
+                <p class="error-message" th:if="${#fields.hasErrors('genre')}" th:errors="*{genre}"></p>
             </div>
             <!-- Submit Button -->
             <button type="submit" class="add-book-btn">Save Media</button>

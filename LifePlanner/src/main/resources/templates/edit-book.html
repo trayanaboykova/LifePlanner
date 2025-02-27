@@ -39,28 +39,28 @@
                             th:text="${bookStatus.label}">
                     </option>
                 </select>
-                <p class="error-message-add-book" th:if="${#fields.hasErrors('bookStatus')}" th:errors="*{bookStatus}"></p>
+                <p class="error-message-edit-book" th:if="${#fields.hasErrors('bookStatus')}" th:errors="*{bookStatus}"></p>
             </div>
 
             <!-- Title -->
             <div class="form-group">
                 <label for="title">Edit Title</label>
                 <input type="text" id="title" name="title" placeholder="Book Title" required th:field="*{title}">
-                <p class="error-message-add-book" th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></p>
+                <p class="error-message-edit-book" th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></p>
             </div>
 
             <!-- Author -->
             <div class="form-group">
                 <label for="author">Edit Author</label>
                 <input type="text" id="author" name="author" placeholder="Author" required th:field="*{author}">
-                <p class="error-message-add-book" th:if="${#fields.hasErrors('author')}" th:errors="*{author}"></p>
+                <p class="error-message-edit-book" th:if="${#fields.hasErrors('author')}" th:errors="*{author}"></p>
             </div>
 
             <!-- Date Read -->
             <div class="form-group">
                 <label for="date-read">Edit Date Read</label>
                 <input type="date" id="date-read" name="dateRead" th:field="*{dateRead}" >
-                <p class="error-message-add-book" th:if="${#fields.hasErrors('dateRead')}" th:errors="*{dateRead}"></p>
+                <p class="error-message-edit-book" th:if="${#fields.hasErrors('dateRead')}" th:errors="*{dateRead}"></p>
             </div>
 
             <!-- Rating Dropdown -->
@@ -73,14 +73,14 @@
                             th:text="${bookRating.label}">
                     </option>
                 </select>
-                <p class="error-message-add-book" th:if="${#fields.hasErrors('bookRating')}" th:errors="*{bookRating}"></p>
+                <p class="error-message-edit-book" th:if="${#fields.hasErrors('bookRating')}" th:errors="*{bookRating}"></p>
             </div>
 
             <!-- Genre -->
             <div class="form-group">
                 <label for="genre">Edit Genre</label>
                 <input type="text" id="genre" name="genre" placeholder="Genre" th:field="*{genre}">
-                <p class="error-message-add-book" th:if="${#fields.hasErrors('genre')}" th:errors="*{genre}"></p>
+                <p class="error-message-edit-book" th:if="${#fields.hasErrors('genre')}" th:errors="*{genre}"></p>
             </div>
 
             <!-- Submit Button -->

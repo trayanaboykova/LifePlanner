@@ -5,9 +5,12 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public enum MediaStatus {
-    WATCHED("Watched"),
-    WANT_TO_WATCH("Want to watch"),;
+public enum MediaRating {
+    ONE("⭐"),
+    TWO("⭐⭐"),
+    THREE("⭐⭐⭐"),
+    FOUR("⭐⭐⭐⭐"),
+    FIVE("⭐⭐⭐⭐⭐");
 
     private final String label;
 }

@@ -1,8 +1,10 @@
 package lifeplanner.web.mapper;
 
 import lifeplanner.books.model.Book;
+import lifeplanner.media.model.Media;
 import lifeplanner.user.model.User;
 import lifeplanner.web.dto.EditBookRequest;
+import lifeplanner.web.dto.EditMediaRequest;
 import lifeplanner.web.dto.UserEditRequest;
 import lombok.experimental.UtilityClass;
 
@@ -26,6 +28,17 @@ public class DTOMapper {
                 .dateRead(book.getDateRead())
                 .bookRating(book.getBookRating())
                 .bookStatus(book.getBookStatus())
+                .build();
+    }
+
+    public static EditMediaRequest mapMediaToEditMediaRequest(Media media) {
+        return EditMediaRequest.builder()
+                .status(media.getStatus())
+                .type(media.getType())
+                .title(media.getTitle())
+                .rating(media.getRating())
+                .dateRated(media.getDateRated())
+                .genre(media.getGenre())
                 .build();
     }
 }

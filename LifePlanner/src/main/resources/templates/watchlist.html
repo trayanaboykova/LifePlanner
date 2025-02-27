@@ -9,7 +9,7 @@
     <nav class="books-nav">
         <div class="books-header-left">
             <p class="back-to-books">
-                <a href="/add-media">
+                <a href="/media/new">
                     <img src="https://img.icons8.com/?size=100&id=42879&format=png&color=000000"
                          alt="Back Icon" width="45" height="45"/>
                     Add Media</a>
@@ -40,12 +40,11 @@
         </div>
 
         <div class="media-table">
-            <table>
-                <thead>
+            <table id="mediaTable">
+            <thead>
                 <tr>
                     <th>Type</th>
                     <th>Title</th>
-                    <th>My Rating</th>
                     <th>Genre</th>
                     <th>Share</th>
                     <th>Edit</th>
@@ -53,25 +52,34 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr>
-                    <td>Movie</td>
-                    <td>Legally Blonde</td>
-                    <td>⭐ ⭐ ⭐ ⭐</td>
-                    <td>Comedy</td>
+                <tr th:each="media : ${media}"
+                    th:if="${media.status.name()} == 'WANT_TO_WATCH'">
+                    <td th:text="${media.status != null ? media.status.label : 'No Status'}"></td>
+                    <td th:text="${media.title}"></td>
+                    <td th:text="${media.genre}"></td>
                     <td>
-                        <a href="#">
-                            <img src="https://img.icons8.com/?size=100&id=46812&format=png&color=000000"
-                                 alt="Share Icon" width="45" height="45"/></a>
+                        <form th:action="@{/media/{id}/share(id=${media.id})}" method="post"
+                              onsubmit="return confirm('Are you sure you want to share this item to LifeHub?');">
+                            <button type="submit" style="border: none; background: none;">
+                                <img src="https://img.icons8.com/?size=100&id=46812&format=png&color=000000"
+                                     alt="Share Icon" width="45" height="45"/>
+                            </button>
+                        </form>
                     </td>
                     <td>
-                        <a href="/edit-book">
+                        <a th:href="@{/media/{id}/edit(id=${media.id})}">
                             <img src="https://img.icons8.com/?size=100&id=0Ka1o_-mwyre&format=png&color=000000"
-                                 alt="Edit Icon" width="45" height="45"/></a>
+                                 alt="Edit Icon" width="45" height="45"/>
+                        </a>
                     </td>
                     <td>
-                        <a href="#">
-                            <img src="https://img.icons8.com/?size=100&id=104338&format=png&color=000000"
-                                 alt="Delete Icon" width="45" height="45"/></a>
+                        <form th:action="@{/media/{id}(id=${media.id})}" method="post" onsubmit="return confirm('Are you sure you want to delete this item?');">
+                            <input type="hidden" name="_method" value="delete" />
+                            <button type="submit" style="border: none; background: none;">
+                                <img src="https://img.icons8.com/?size=100&id=104338&format=png&color=000000"
+                                     alt="Delete Icon" width="45" height="45"/>
+                            </button>
+                        </form>
                     </td>
                 </tr>
                 </tbody>

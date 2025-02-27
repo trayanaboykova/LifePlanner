@@ -14,7 +14,6 @@ import java.util.UUID;
 @Getter
 @Setter
 public class Media {
-
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
@@ -24,18 +23,22 @@ public class Media {
     private TypeMedia type;
 
     @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
+    private MediaStatus status;
+
+    @Column(nullable = false)
     private String title;
 
     private String genre;
 
-    private Double rating;
+    @Enumerated(EnumType.STRING)
+    private MediaRating rating;
 
     private LocalDate dateRated;
-
-    @Enumerated(EnumType.STRING)
-    private MediaStatus status;
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     private User owner;
+
+    private boolean visible;
 }

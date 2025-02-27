@@ -9,7 +9,7 @@
     <nav class="books-nav">
         <div class="books-header-left">
             <p class="back-to-books">
-                <a href="/add-media">
+                <a href="/media/new">
                     <img src="https://img.icons8.com/?size=100&id=42879&format=png&color=000000"
                          alt="Back Icon" width="45" height="45"/>
                     Add Media</a>
@@ -38,10 +38,9 @@
                  alt="Search Icon" width="45" height="45"/>
             <input type="text" id="searchInput" placeholder="Search by title or genre" onkeyup="searchMedia()">
         </div>
-
         <div class="media-table">
-            <table>
-                <thead>
+            <table id="mediaTable">
+            <thead>
                 <tr>
                     <th>Status</th>
                     <th>Type</th>
@@ -55,27 +54,36 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr>
-                    <td>Not watched</td>
-                    <td>Movie</td>
-                    <td>Legally Blonde</td>
-                    <td>⭐ ⭐ ⭐ ⭐</td>
-                    <td>10 Jan 2015</td>
-                    <td>Comedy</td>
+                <tr th:each="media : ${media}">
+                    <td th:text="${media.status != null ? media.status.label : 'No Status'}"></td>
+                    <td th:text="${media.type != null ? media.type.label : 'No Type'}"></td>
+                    <td th:text="${media.title}"></td>
+                    <td th:text="${media.rating != null ? media.rating.label : 'Not Rated'}"></td>
+                    <td th:text="${#temporals.format(media.dateRated, 'dd MMM yyyy', T(java.util.Locale).ENGLISH)}"></td>
+                    <td th:text="${media.genre}"></td>
                     <td>
-                        <a href="#">
-                            <img src="https://img.icons8.com/?size=100&id=46812&format=png&color=000000"
-                                 alt="Share Icon" width="45" height="45"/></a>
+                        <form th:action="@{/media/{id}/share(id=${media.id})}" method="post"
+                              onsubmit="return confirm('Are you sure you want to share this item to LifeHub?');">
+                            <button type="submit" style="border: none; background: none;">
+                                <img src="https://img.icons8.com/?size=100&id=46812&format=png&color=000000"
+                                     alt="Share Icon" width="45" height="45"/>
+                            </button>
+                        </form>
                     </td>
                     <td>
-                        <a href="/edit-book">
+                        <a th:href="@{/media/{id}/edit(id=${media.id})}">
                             <img src="https://img.icons8.com/?size=100&id=0Ka1o_-mwyre&format=png&color=000000"
-                                 alt="Edit Icon" width="45" height="45"/></a>
+                                 alt="Edit Icon" width="45" height="45"/>
+                        </a>
                     </td>
                     <td>
-                        <a href="#">
-                            <img src="https://img.icons8.com/?size=100&id=104338&format=png&color=000000"
-                                 alt="Delete Icon" width="45" height="45"/></a>
+                        <form th:action="@{/media/{id}(id=${media.id})}" method="post" onsubmit="return confirm('Are you sure you want to delete this item?');">
+                            <input type="hidden" name="_method" value="delete" />
+                            <button type="submit" style="border: none; background: none;">
+                                <img src="https://img.icons8.com/?size=100&id=104338&format=png&color=000000"
+                                     alt="Delete Icon" width="45" height="45"/>
+                            </button>
+                        </form>
                     </td>
                 </tr>
                 </tbody>

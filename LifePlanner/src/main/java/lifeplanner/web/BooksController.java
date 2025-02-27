@@ -124,11 +124,11 @@ public class BooksController {
 
         bookService.addBook(addBookRequest, user);
 
-        return "redirect:/books/my-books";
+        return "redirect:/books/all-books";
     }
 
     @GetMapping("/{id}/edit")
-    public ModelAndView showEditBookForm(@PathVariable("id") UUID id, Model model) {
+    public ModelAndView showEditBookRequest(@PathVariable("id") UUID id, Model model) {
         model.addAttribute("pageTitle", "Edit Book");
 
         Book book = bookService.getBookById(id);
@@ -154,7 +154,7 @@ public class BooksController {
         }
 
         bookService.editBook(id, editBookRequest);
-        return new ModelAndView("redirect:/books/my-books");
+        return new ModelAndView("redirect:/books/all-books");
     }
 
     @PostMapping("/{id}/share")
