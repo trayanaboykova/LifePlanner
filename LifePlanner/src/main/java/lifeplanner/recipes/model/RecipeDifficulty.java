@@ -1,5 +1,14 @@
 package lifeplanner.recipes.model;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+
+@Getter
+@AllArgsConstructor
 public enum RecipeDifficulty {
-    EASY, MEDIUM, HARD
+    EASY("Easy"),
+    MEDIUM("Medium"),
+    HARD("Hard");
+
+    private final String label;
 }

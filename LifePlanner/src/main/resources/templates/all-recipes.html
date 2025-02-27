@@ -9,7 +9,7 @@
     <nav class="books-nav">
         <div class="books-header-left">
             <p class="back-to-books">
-                <a href="/add-recipe">
+                <a href="/recipes/new">
                     <img src="https://img.icons8.com/?size=100&id=42876&format=png&color=000000"
                          alt="Back Icon" width="45" height="45"/>
                     Add Recipe</a>
@@ -36,18 +36,17 @@
         <div class="search-bar">
             <img src="https://img.icons8.com/?size=100&id=43189&format=png&color=000000"
                  alt="Search Icon" width="45" height="45"/>
-            <input type="text" id="searchInput" placeholder="Search by title or cuisine" onkeyup="searchMedia()">
+            <input type="text" id="searchInput" placeholder="Search by name or cuisine" onkeyup="searchRecipes()">
         </div>
-
         <div class="media-table">
-            <table>
+            <table id="mediaTable">
                 <thead>
                 <tr>
-                    <th>Title</th>
+                    <th>Name</th>
                     <th>Category</th>
                     <th>Difficulty Level</th>
                     <th>Cuisine</th>
-                    <th>Cooking Time</th>
+                    <th>Cooking Time (min)</th>
                     <th>Ingredients</th>
                     <th>Instructions</th>
                     <th>Share</th>
@@ -56,14 +55,20 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr>
-                    <td>Pizza</td>
-                    <td>Dinner</td>
-                    <td>Medium</td>
-                    <td>Italian</td>
-                    <td>60 minutes</td>
-                    <td>1 gram salt</td>
-                    <td>Something, something</td>
+                <tr th:each="recipe : ${recipes}">
+                    <td th:text="${recipe.name}"></td>
+                    <td th:text="${recipe.category.label}"></td>
+                    <td th:text="${recipe.difficulty.label}"></td>
+                    <td th:text="${recipe.cuisine}"></td>
+                    <td th:text="${recipe.cookingTime} + ' minutes'"></td>
+                    <td>
+                        <ul>
+                            <li th:each="ingredient : ${recipe.ingredients}"
+                                th:text="|${ingredient.ingredientName} (${ingredient.quantity} ${ingredient.unit})|">
+                            </li>
+                        </ul>
+                    </td>
+                    <td th:text="${recipe.instructions}"></td>
                     <td>
                         <a href="#">
                             <img src="https://img.icons8.com/?size=100&id=46812&format=png&color=000000"
@@ -94,7 +99,7 @@
     </main>
 </div>
 
-<script src="/js/search-media.js"></script>
+<script src="/js/search-recipes.js"></script>
 <script src="/js/pagination-media.js"></script>
 <footer th:replace="~{fragments/commons :: footer}"></footer>
 </body>
