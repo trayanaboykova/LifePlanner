@@ -2,13 +2,11 @@ package lifeplanner.web;
 
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
-import lifeplanner.books.model.Book;
 import lifeplanner.media.model.Media;
 import lifeplanner.media.service.MediaService;
 import lifeplanner.user.model.User;
 import lifeplanner.user.service.UserService;
 import lifeplanner.web.dto.AddMediaRequest;
-import lifeplanner.web.dto.EditBookRequest;
 import lifeplanner.web.dto.EditMediaRequest;
 import lifeplanner.web.mapper.DTOMapper;
 import org.springframework.beans.factory.annotation.Autowired;
