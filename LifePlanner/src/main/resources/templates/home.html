@@ -164,10 +164,6 @@
               "<span th:text="${book.title}"></span>" by
               <span th:text="${book.author}"></span>
             </p>
-<!--            <p>-->
-<!--              "<span th:text="${book.title}"></span>" by-->
-<!--              <span th:text="${book.author}"></span>-->
-<!--            </p>-->
           </div>
           <div class="post-actions">
             <button class="like-btn">
@@ -211,18 +207,35 @@
       <!-- Recipes Section -->
       <details class="toggle-section">
         <summary>
-          <img src="https://img.icons8.com/?size=100&id=46406&format=png&color=000000" alt="Recipe Icon" class="section-icon">
+          <img src="https://img.icons8.com/?size=100&id=46406&format=png&color=000000"
+               alt="Recipe Icon" class="section-icon">
           Recipes
         </summary>
-        <div class="post-card">
-          <div class="post-info">
-            <p><strong>@Foodie99</strong> shared a recipe:</p>
-            <p>"Homemade Pizza - Best Recipe Ever!"</p>
+        <div class="post-card" th:each="recipe : ${sharedRecipes}" th:attr="data-recipe-id=${recipe.id}">
+          <div class="post-info-recipes">
+            <p>
+              <strong>@</strong>
+              <strong th:text="${recipe.owner.username}"></strong>
+              shared a recipe:
+              "<span th:text="${recipe.name}"></span>"
+            </p>
+            <br>
+            <p>Ingredients:</p>
+            <ul>
+              <li th:each="ingredient : ${recipe.ingredients}"
+                  th:text="|${ingredient.ingredientName} (${ingredient.quantity} ${ingredient.unit})|">
+              </li>
+            </ul>
+            <br>
+            <p>Instructions:</p>
+            <p th:text="${recipe.instructions}"></p>
           </div>
+
           <div class="post-actions">
             <button class="like-btn">
-              <img src="https://img.icons8.com/?size=100&id=80137&format=png&color=000000" alt="Like Icon">
-              <span class="like-count">0</span> <!-- Default count -->
+              <img src="https://img.icons8.com/?size=100&id=80137&format=png&color=000000" alt="Like Icon"
+                   th:classappend="${recipeLikeCounts[recipe.id]} > 0 ? 'liked' : ''">
+              <span class="like-count" th:text="${recipeLikeCounts[recipe.id]}"></span>
             </button>
             <button class="favorite-btn">
               <img src="https://img.icons8.com/?size=100&id=46336&format=png&color=000000" alt="Favorite Icon">
@@ -231,6 +244,7 @@
           </div>
         </div>
       </details>
+
       <!-- Travel Section -->
       <details class="toggle-section">
         <summary>

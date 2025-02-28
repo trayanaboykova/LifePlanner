@@ -8,6 +8,9 @@ import lifeplanner.books.service.BookService;
 import lifeplanner.media.model.Media;
 import lifeplanner.media.service.MediaLikesService;
 import lifeplanner.media.service.MediaService;
+import lifeplanner.recipes.model.Recipe;
+import lifeplanner.recipes.service.RecipeLikesService;
+import lifeplanner.recipes.service.RecipeService;
 import lifeplanner.user.model.User;
 import lifeplanner.user.service.UserService;
 import lifeplanner.web.dto.LoginRequest;
@@ -34,14 +37,18 @@ public class IndexController {
     private final BookLikesService bookLikesService;
     private final MediaService mediaService;
     private final MediaLikesService mediaLikesService;
+    private final RecipeService recipeService;
+    private final RecipeLikesService recipeLikesService;
 
     @Autowired
-    public IndexController(UserService userService, BookService bookService, BookLikesService bookLikesService, MediaService mediaService, MediaLikesService mediaLikesService) {
+    public IndexController(UserService userService, BookService bookService, BookLikesService bookLikesService, MediaService mediaService, MediaLikesService mediaLikesService, RecipeService recipeService, RecipeLikesService recipeLikesService) {
         this.userService = userService;
         this.bookService = bookService;
         this.bookLikesService = bookLikesService;
         this.mediaService = mediaService;
         this.mediaLikesService = mediaLikesService;
+        this.recipeService = recipeService;
+        this.recipeLikesService = recipeLikesService;
     }
 
     @GetMapping("/")
@@ -130,6 +137,17 @@ public class IndexController {
             mediaLikeCounts.put(m.getId(), count);
         }
 
+        // RECIPES
+        List<Recipe> allRecipes = recipeService.getAllRecipes();
+        List<Recipe> sharedRecipes = recipeService.getSharedRecipes(user);
+
+        // For each recipe, retrieve its like count
+        Map<UUID, Long> recipeLikeCounts = new HashMap<>();
+        for (Recipe r : sharedRecipes) {
+            long count = recipeLikesService.getLikeCount(r.getId());
+            recipeLikeCounts.put(r.getId(), count);
+        }
+
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("home");
         modelAndView.addObject("user", user);
@@ -141,6 +159,10 @@ public class IndexController {
         modelAndView.addObject("allMedia", allMedia);
         modelAndView.addObject("sharedMedia", sharedMedia);
         model.addAttribute("mediaLikeCounts", mediaLikeCounts);
+        // RECIPES
+        modelAndView.addObject("allRecipes", allRecipes);
+        modelAndView.addObject("sharedRecipes", sharedRecipes);
+        model.addAttribute("recipeLikeCounts", recipeLikeCounts);
 
         return modelAndView;
     }

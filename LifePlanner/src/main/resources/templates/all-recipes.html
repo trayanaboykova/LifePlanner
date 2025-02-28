@@ -70,19 +70,28 @@
                     </td>
                     <td th:text="${recipe.instructions}"></td>
                     <td>
-                        <a href="#">
-                            <img src="https://img.icons8.com/?size=100&id=46812&format=png&color=000000"
-                                 alt="Share Icon" width="45" height="45"/></a>
+                        <form th:action="@{/recipes/{id}/share(id=${recipe.id})}" method="post"
+                              onsubmit="return confirm('Are you sure you want to share this recipe to LifeHub?');">
+                            <button type="submit" style="border: none; background: none;">
+                                <img src="https://img.icons8.com/?size=100&id=46812&format=png&color=000000"
+                                     alt="Share Icon" width="45" height="45"/>
+                            </button>
+                        </form>
                     </td>
                     <td>
-                        <a href="/edit-recipe">
+                        <a th:href="@{/recipes/{id}/edit(id=${recipe.id})}">
                             <img src="https://img.icons8.com/?size=100&id=0Ka1o_-mwyre&format=png&color=000000"
-                                 alt="Edit Icon" width="45" height="45"/></a>
+                                 alt="Edit Icon" width="45" height="45"/>
+                        </a>
                     </td>
                     <td>
-                        <a href="#">
-                            <img src="https://img.icons8.com/?size=100&id=104338&format=png&color=000000"
-                                 alt="Delete Icon" width="45" height="45"/></a>
+                        <form th:action="@{/recipes/{id}(id=${recipe.id})}" method="post" onsubmit="return confirm('Are you sure you want to delete this recipe?');">
+                            <input type="hidden" name="_method" value="delete" />
+                            <button type="submit" style="border: none; background: none;">
+                                <img src="https://img.icons8.com/?size=100&id=104338&format=png&color=000000"
+                                     alt="Delete Icon" width="45" height="45"/>
+                            </button>
+                        </form>
                     </td>
                 </tr>
                 </tbody>

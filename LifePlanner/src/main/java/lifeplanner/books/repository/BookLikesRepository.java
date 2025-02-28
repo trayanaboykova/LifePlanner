@@ -16,6 +16,4 @@ public interface BookLikesRepository extends JpaRepository<BookLikes, BookLikesI
     // Check if a user has already liked a book
     boolean existsById(BookLikesId id);
 
-    // Optional: find all likes for a given book
-    List<BookLikes> findAllByBookId(UUID bookId);
 }

@@ -106,4 +106,39 @@ document.querySelectorAll('[data-media-id] .like-btn').forEach(btn => {
     });
 });
 
+// RECIPE LIKES
+document.querySelectorAll('[data-recipe-id] .like-btn').forEach(btn => {
+    btn.addEventListener("click", function () {
+        const postCard = this.closest(".post-card");
+        const recipeId = postCard.getAttribute("data-recipe-id");
+        console.log("Toggling like for recipe ID:", recipeId);
 
+        const img = this.querySelector("img");
+        const countSpan = postCard.querySelector(".like-count");
+
+        fetch(`/api/recipes/${recipeId}/like`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' }
+        })
+            .then(response => {
+                console.log("Response status:", response.status);
+                return response.json();
+            })
+            .then(data => {
+                console.log("Response data:", data);
+                const isLiked = data.liked;
+                const newCount = data.likeCount;
+
+                countSpan.textContent = newCount;
+
+                if (isLiked) {
+                    img.src = "https://img.icons8.com/?size=100&id=80137&format=png&color=ff0000";
+                    img.classList.add("liked");
+                } else {
+                    img.src = "https://img.icons8.com/?size=100&id=80137&format=png&color=000000";
+                    img.classList.remove("liked");
+                }
+            })
+            .catch(err => console.error("Error toggling recipe like:", err));
+    });
+});

@@ -33,4 +33,5 @@ public class AddRecipeRequest {
 
     @Lob
     private String instructions;
+
 }

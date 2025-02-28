@@ -18,6 +18,4 @@ public interface MediaLikesRepository extends JpaRepository<MediaLikes, MediaLik
     // Check if a user has already liked a type of media
     boolean existsById(MediaLikesId id);
 
-    // Optional: find all likes for a given type of media
-    List<MediaLikes> findAllByMediaId(UUID mediaId);
 }

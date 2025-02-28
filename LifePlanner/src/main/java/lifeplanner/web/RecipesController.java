@@ -2,19 +2,21 @@ package lifeplanner.web;
 
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
+import lifeplanner.books.model.Book;
 import lifeplanner.recipes.model.Recipe;
 import lifeplanner.recipes.service.RecipeService;
 import lifeplanner.user.model.User;
 import lifeplanner.user.service.UserService;
 import lifeplanner.web.dto.AddBookRequest;
 import lifeplanner.web.dto.AddRecipeRequest;
+import lifeplanner.web.dto.EditBookRequest;
+import lifeplanner.web.dto.EditRecipeRequest;
+import lifeplanner.web.mapper.DTOMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
@@ -88,5 +90,51 @@ public class RecipesController {
     public String getEditRecipePage(Model model) {
         model.addAttribute("pageTitle", "Edit Recipe");
         return "edit-recipe";
+    }
+
+    @GetMapping("/{id}/edit")
+    public ModelAndView showEditRecipeRequest(@PathVariable("id") UUID id, Model model) {
+        model.addAttribute("pageTitle", "Edit Recipe");
+
+        Recipe recipe = recipeService.getRecipeById(id);
+
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("edit-recipe");
+        modelAndView.addObject("recipe", recipe);
+        modelAndView.addObject("editRecipeRequest", DTOMapper.mapRecipeToEditRecipeRequest(recipe));
+        return modelAndView;
+    }
+
+    @PostMapping("/{id}/edit")
+    public ModelAndView updateBook(@PathVariable("id") UUID id,
+                                   @Valid @ModelAttribute("editRecipeRequest") EditRecipeRequest editRecipeRequest,
+                                   BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            Recipe recipe = recipeService.getRecipeById(id);
+            ModelAndView modelAndView = new ModelAndView();
+            modelAndView.setViewName("edit-recipe");
+            modelAndView.addObject("recipe", recipe);
+            modelAndView.addObject("editRecipeRequest", editRecipeRequest);
+            return modelAndView;
+        }
+
+        recipeService.editRecipe(id, editRecipeRequest);
+        return new ModelAndView("redirect:/recipes/all-recipes");
+    }
+
+    @PostMapping("/{id}/share")
+    public String shareRecipe(@PathVariable UUID id) {
+
+        recipeService.shareRecipe(id);
+
+        return "redirect:/recipes/all-recipes";
+    }
+
+    @DeleteMapping("/{id}")
+    public String deleteRecipe(@PathVariable UUID id) {
+
+        recipeService.deleteRecipeById(id);
+
+        return "redirect:/recipes/all-recipes";
     }
 }

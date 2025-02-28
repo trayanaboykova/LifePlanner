@@ -9,7 +9,7 @@
     <nav class="books-nav">
         <div class="books-header-left">
             <p class="back-to-books">
-                <a href="/all-recipes">
+                <a href="/recipes/all-recipes">
                     <img src="https://img.icons8.com/?size=100&id=46652&format=png&color=000000"
                          alt="Back Icon" width="45" height="45"/>
                     Back to My Recipes</a>
@@ -26,64 +26,73 @@
 </header>
 <main class="container">
     <section class="add-book-container">
-        <form class="add-book-form" action="/books/save" method="post">
-            <h3>Edit Recipe</h3>
+        <form class="add-book-form" th:action="@{/recipes/{id}/edit(id=${recipe.id})}" method="post" th:object="${editRecipeRequest}">
+        <h3>Edit Recipe</h3>
             <!-- Name -->
             <div class="form-group">
                 <label for="name">Edit Recipe Name</label>
-                <input type="text" id="name" name="name" placeholder="Title" required>
-                <p class="error-message">Error Text Here</p>
+                <input type="text" id="name" name="name" placeholder="Title" required th:field="*{name}">
+                <p class="error-message-add-book" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></p>
             </div>
+
             <!-- Category Dropdown -->
             <div class="form-group">
                 <label for="category">Edit Category</label>
-                <select id="category" name="category" required>
-                    <option value="" disabled selected>-----Category-----</option>
-                    <option value="">Breakfast</option>
-                    <option value="">Lunch</option>
-                    <option value="">Dinner</option>
-                    <option value="">Snack</option>
-                    <option value="">Dessert</option>
+                <select id="category" name="category" required th:field="*{category}">
+                    <option value="">-----Category-----</option>
+                    <option th:each="recipeCategory : ${T(lifeplanner.recipes.model.RecipeCategory).values()}"
+                            th:value="${recipeCategory}"
+                            th:text="${recipeCategory}">
+                    </option>
                 </select>
-                <p class="error-message">Error Text Here</p>
+                <p class="error-message-add-book" th:if="${#fields.hasErrors('category')}" th:errors="*{category}"></p>
             </div>
+
             <!-- Difficulty Level -->
             <div class="form-group">
                 <label for="difficulty">Edit Difficulty Level</label>
-                <select id="difficulty" name="difficulty">
-                    <option value="" disabled selected>-----Select Difficulty-----</option>
-                    <option value="Easy">Easy</option>
-                    <option value="Medium">Medium</option>
-                    <option value="Hard">Hard</option>
+                <select id="difficulty" name="difficulty" th:field="*{difficulty}">
+                    <option value="">-----Select Difficulty-----</option>
+                    <option th:each="recipeDifficulty : ${T(lifeplanner.recipes.model.RecipeDifficulty).values()}"
+                            th:value="${recipeDifficulty}"
+                            th:text="${recipeDifficulty}">
+                    </option>
                 </select>
-                <p class="error-message">Error Text Here</p>
+                <p class="error-message-add-book" th:if="${#fields.hasErrors('difficulty')}" th:errors="*{difficulty}"></p>
             </div>
+
             <!-- Cuisine -->
             <div class="form-group">
                 <label for="cuisine">Edit Cuisine</label>
-                <input type="text" id="cuisine" name="cuisine" placeholder="Cuisine">
-                <p class="error-message">Error Text Here</p>
+                <input type="text" id="cuisine" placeholder="Cuisine" th:field="*{cuisine}">
+                <p class="error-message-add-book" th:if="${#fields.hasErrors('cuisine')}" th:errors="*{cuisine}"></p>
             </div>
+
             <!-- Cooking Time -->
             <div class="form-group">
                 <label for="cooking-time">Edit Cooking Time</label>
-                <input type="number" id="cooking-time" name="cooking-time" inputmode="numeric" placeholder="minutes">
-                <p class="error-message">Error Text Here</p>
+                <input type="number" id="cooking-time" placeholder="Cooking Time" th:field="*{cookingTime}">
+                <p class="error-message-add-book" th:if="${#fields.hasErrors('cookingTime')}" th:errors="*{cookingTime}"></p>
             </div>
-            <!-- Ingredients List (Dynamically Add Items) -->
+
+            <!-- Ingredients List (Pre-Populated) -->
             <div class="form-group">
-                <label>Edit Ingredients List</label> <!-- Removed `for="ingredients"` -->
+                <label>Edit Ingredients List</label>
                 <div id="ingredients-container">
-                    <div class="ingredient-item">
+                    <div th:each="ing, iterStat : *{ingredient}" class="ingredient-item">
                         <label>
-                            <input type="text" name="ingredient[]" placeholder="Ingredient name">
+                            <input type="text"
+                                   th:field="*{ingredient[__${iterStat.index}__]}"
+                                   placeholder="Ingredient name" required/>
                         </label>
                         <label>
-                            <input type="number" name="quantity[]" placeholder="Quantity" min="1">
+                            <input type="number"
+                                   th:field="*{quantity[__${iterStat.index}__]}"
+                                   placeholder="Quantity" min="1" required/>
                         </label>
                         <label>
-                            <select name="unit[]">
-                                <option value="" disabled selected>-----Unit-----</option>
+                            <select th:field="*{unit[__${iterStat.index}__]}" required>
+                                <option value="">-----Unit-----</option>
                                 <option value="g">g</option>
                                 <option value="ml">ml</option>
                                 <option value="cups">cups</option>
@@ -98,12 +107,14 @@
                     <button type="button" id="add-ingredient">+ Add Ingredient</button>
                 </div>
             </div>
+
             <!-- Cooking Notes -->
             <div class="form-group">
-                <label for="cooking-notes">Edit Cooking Instructions</label>
-                <textarea id="cooking-notes" name="cooking-notes" placeholder="Any additional cooking tips..."></textarea>
-                <p class="error-message">Error Text Here</p>
+                <label for="instructions">Edit Cooking Instructions</label>
+                <textarea id="instructions" th:field="*{instructions}" placeholder="Add cooking tips..."></textarea>
+                <p class="error-message-add-book" th:if="${#fields.hasErrors('instructions')}" th:errors="*{instructions}"></p>
             </div>
+
             <!-- Submit Button -->
             <button type="submit" class="add-book-btn">Save Media</button>
         </form>

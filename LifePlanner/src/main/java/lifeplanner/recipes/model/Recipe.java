@@ -42,4 +42,6 @@ public class Recipe {
     @OneToMany(mappedBy = "recipe", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<RecipeIngredient> ingredients;
 
+    private boolean visible;
+
 }

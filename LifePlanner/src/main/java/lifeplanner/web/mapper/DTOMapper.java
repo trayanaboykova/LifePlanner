@@ -2,11 +2,18 @@ package lifeplanner.web.mapper;
 
 import lifeplanner.books.model.Book;
 import lifeplanner.media.model.Media;
+import lifeplanner.recipes.model.Recipe;
+import lifeplanner.recipes.model.RecipeIngredient;
 import lifeplanner.user.model.User;
 import lifeplanner.web.dto.EditBookRequest;
 import lifeplanner.web.dto.EditMediaRequest;
+import lifeplanner.web.dto.EditRecipeRequest;
 import lifeplanner.web.dto.UserEditRequest;
 import lombok.experimental.UtilityClass;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @UtilityClass
 public class DTOMapper {
@@ -40,5 +47,38 @@ public class DTOMapper {
                 .dateRated(media.getDateRated())
                 .genre(media.getGenre())
                 .build();
+    }
+
+    public static EditRecipeRequest mapRecipeToEditRecipeRequest(Recipe recipe) {
+        List<String> ingredientNames = recipe.getIngredients() == null
+                ? new ArrayList<>()
+                : recipe.getIngredients().stream()
+                .map(RecipeIngredient::getIngredientName)
+                .collect(Collectors.toList());
+
+        List<Double> quantities = recipe.getIngredients() == null
+                ? new ArrayList<>()
+                : recipe.getIngredients().stream()
+                .map(RecipeIngredient::getQuantity)
+                .collect(Collectors.toList());
+
+        List<String> units = recipe.getIngredients() == null
+                ? new ArrayList<>()
+                : recipe.getIngredients().stream()
+                .map(RecipeIngredient::getUnit)
+                .collect(Collectors.toList());
+
+        return EditRecipeRequest.builder()
+                .name(recipe.getName())
+                .category(recipe.getCategory())
+                .difficulty(recipe.getDifficulty())
+                .cuisine(recipe.getCuisine())
+                .cookingTime(recipe.getCookingTime())
+                .ingredient(ingredientNames)
+                .quantity(quantities)
+                .unit(units)
+                .instructions(recipe.getInstructions())
+                .build();
+
     }
 }
