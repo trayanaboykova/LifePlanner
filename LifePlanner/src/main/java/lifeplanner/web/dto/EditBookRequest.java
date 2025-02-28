@@ -6,6 +6,7 @@ import lifeplanner.books.model.BookRating;
 import lifeplanner.books.model.BookStatus;
 import lombok.Builder;
 import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
 
@@ -24,6 +25,7 @@ public class EditBookRequest {
     @Size(min = 2, max = 50, message = "Author length must be between 2 and 50 characters!")
     private String author;
 
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     private LocalDate dateRead;
 
     private BookRating bookRating;

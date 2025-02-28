@@ -9,7 +9,7 @@
     <nav class="books-nav">
         <div class="books-header-left">
             <p class="back-to-books">
-                <a href="/travel">
+                <a href="/trips/travel">
                     <img src="https://img.icons8.com/?size=100&id=46652&format=png&color=000000"
                          alt="Back Icon" width="45" height="45"/>
                     Back to My Travel Plans</a>
@@ -26,79 +26,88 @@
 </header>
 <main class="container">
     <section class="add-book-container">
-        <form class="add-book-form" action="/trips/save" method="post">
+        <form class="add-book-form" th:action="@{/trips}" method="post" th:object="${addTripRequest}">
             <h3>Add Trip</h3>
+
+            <!-- Trip Status Dropdown -->
+            <div class="form-group">
+                <label for="trip-status">Trip Status</label>
+                <select id="trip-status" name="tripStatus" required th:field="*{tripStatus}">
+                    <option value="">-- Select Trip Status --</option>
+                    <option th:each="tripStatus : ${T(lifeplanner.travel.model.TripStatus).values()}"
+                            th:value="${tripStatus}"
+                            th:text="${tripStatus.label}">
+                    </option>
+                </select>
+                <p class="error-message-add-book" th:if="${#fields.hasErrors('tripStatus')}" th:errors="*{tripStatus}"></p>
+            </div>
 
             <!-- Trip Name -->
             <div class="form-group">
                 <label for="trip-name">Add Trip Name</label>
-                <input type="text" id="trip-name" name="tripName" placeholder="Enter trip name" required>
-                <p class="error-message">Error Text Here</p>
+                <input type="text" id="trip-name" name="tripName" placeholder="Enter trip name" required th:field="*{tripName}">
+                <p class="error-message-add-book" th:if="${#fields.hasErrors('tripName')}" th:errors="*{tripName}"></p>
             </div>
 
             <!-- Destination -->
             <div class="form-group">
                 <label for="destination">Add Destination</label>
-                <input type="text" id="destination" name="destination" placeholder="Enter destination" required>
-                <p class="error-message">Error Text Here</p>
+                <input type="text" id="destination" name="destination" placeholder="Enter destination" required th:field="*{destination}">
+                <p class="error-message-add-book" th:if="${#fields.hasErrors('destination')}" th:errors="*{destination}"></p>
             </div>
 
             <!-- Start Date -->
             <div class="form-group">
                 <label for="start-date">Add Start Date</label>
-                <input type="date" id="start-date" name="startDate" required>
-                <p class="error-message">Error Text Here</p>
+                <input type="date" id="start-date" name="startDate" required th:field="*{startDate}">
+                <p class="error-message-add-book" th:if="${#fields.hasErrors('startDate')}" th:errors="*{startDate}"></p>
             </div>
 
             <!-- End Date -->
             <div class="form-group">
                 <label for="end-date">Add End Date</label>
-                <input type="date" id="end-date" name="endDate" required>
-                <p class="error-message">Error Text Here</p>
+                <input type="date" id="end-date" name="endDate" required th:field="*{endDate}">
+                <p class="error-message-add-book" th:if="${#fields.hasErrors('endDate')}" th:errors="*{endDate}"></p>
             </div>
 
             <!-- Trip Type Dropdown -->
             <div class="form-group">
                 <label for="trip-type">Add Trip Type</label>
-                <select id="trip-type" name="tripType" required>
+                <select id="trip-type" name="tripType" th:field="*{tripType}">
                     <option value="" disabled selected>-- Select Trip Type --</option>
-                    <option value="vacation">Vacation</option>
-                    <option value="business">Business</option>
-                    <option value="family">Family Trip</option>
-                    <option value="adventure">Adventure</option>
-                    <option value="road-trip">Road Trip</option>
-                    <option value="solo">Solo Travel</option>
+                    <option th:each="tripType : ${T(lifeplanner.travel.model.TripType).values()}"
+                            th:value="${tripType}"
+                            th:text="${tripType.label}">
+                    </option>
                 </select>
-                <p class="error-message">Error Text Here</p>
+                <p class="error-message-add-book" th:if="${#fields.hasErrors('tripType')}" th:errors="*{tripType}"></p>
             </div>
 
             <!-- Accommodation -->
             <div class="form-group">
                 <label for="accommodation">Add Accommodation</label>
-                <input type="text" id="accommodation" name="accommodation" placeholder="Hotel, Airbnb, etc.">
-                <p class="error-message">Error Text Here</p>
+                <input type="text" id="accommodation" name="accommodation" placeholder="Enter accommodation" th:field="*{accommodation}">
+                <p class="error-message-add-book" th:if="${#fields.hasErrors('accommodation')}" th:errors="*{accommodation}"></p>
             </div>
 
             <!-- Transportation Dropdown -->
             <div class="form-group">
                 <label for="transportation">Add Transportation</label>
-                <select id="transportation" name="transportation" required>
-                    <option value="" disabled selected>-- Select Transportation --</option>
-                    <option value="airplane">Airplane</option>
-                    <option value="car">Car</option>
-                    <option value="car-rental">Car Rental</option>
-                    <option value="train">Train</option>
-                    <option value="bus">Bus</option>
-                    <option value="ship">Ship</option>
+                <select id="transportation" name="transportation" th:field="*{transportationType}">
+                    <option value="">-- Select Transportation --</option>
+                    <option th:each="transportation : ${T(lifeplanner.travel.model.TransportationType).values()}"
+                            th:value="${transportation}"
+                            th:text="${transportation.label}">
+                    </option>
                 </select>
-                <p class="error-message">Error Text Here</p>
+                <p class="error-message-add-book" th:if="${#fields.hasErrors('transportationType')}" th:errors="*{transportationType}"></p>
             </div>
 
             <!-- Notes -->
             <div class="form-group">
                 <label for="notes">Add Notes</label>
-                <textarea id="notes" name="notes" placeholder="Type details..." rows="4"></textarea>
-                <p class="error-message">Error Text Here</p>
+                <textarea id="notes" name="notes" placeholder="Type details..." rows="4" th:field="*{notes}"></textarea>
+                <p class="error-message-add-book" th:if="${#fields.hasErrors('notes')}" th:errors="*{notes}"></p>
             </div>
 
             <!-- Submit Button -->

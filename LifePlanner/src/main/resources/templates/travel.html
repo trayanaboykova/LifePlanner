@@ -8,7 +8,9 @@
 <header>
     <nav class="books-nav">
         <div class="books-header-left">
-            <h1>User’s Travel Plans</h1>
+            <h1>
+                <span th:text="${user.username}"></span>’s Travel Plans
+            </h1>
         </div>
         <div class="books-header-right">
             <a href="/home" class="back-home">
@@ -25,21 +27,21 @@
     <aside class="books-sidebar">
         <ul>
             <li>
-                <a href="/add-trip">
+                <a href="/trips/new">
                     <img src="https://img.icons8.com/?size=100&id=FLWDruQvhQbr&format=png&color=000000"
                          alt="Add Trip Icon" width="45" height="45"/>
                     Add Trip
                 </a>
             </li>
             <li>
-                <a href="/all-trips">
+                <a href="/trips/all-trips">
                     <img src="https://img.icons8.com/?size=100&id=46731&format=png&color=000000"
                          alt="All Trips Icon" width="45" height="45"/>
                     All Trips
                 </a>
             </li>
             <li>
-                <a href="/past-trips">
+                <a href="/trips/past-trips">
                     <img src="https://img.icons8.com/?size=100&id=54944&format=png&color=000000"
                          alt="Past Trips Icon" width="45" height="45"/>
                     Past Trips
@@ -55,7 +57,7 @@
             Upcoming Trips
         </h2>
         <div class="books-table">
-            <table>
+            <table id="booksTable">
                 <thead>
                 <tr>
                     <th>Trip Name</th>
@@ -72,29 +74,39 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr>
-                    <td>Our Honeymoon</td>
-                    <td>Maldives</td>
-                    <td>25 Feb 2025</td>
-                    <td>15 March 2025</td>
-                    <td>Vacation</td>
-                    <td>Hilton Maldives</td>
-                    <td>Plane</td>
-                    <td>!!!!!!</td>
+                <tr th:each="trip : ${trips}"
+                    th:if="${trip.tripStatus.name()} == 'UPCOMING'">
+                    <td th:text="${trip.tripName}"></td>
+                    <td th:text="${trip.destination}"></td>
+                    <td th:text="${#temporals.format(trip.startDate, 'dd MMM yyyy', T(java.util.Locale).ENGLISH)}"></td>
+                    <td th:text="${#temporals.format(trip.endDate, 'dd MMM yyyy', T(java.util.Locale).ENGLISH)}"></td>
+                    <td th:text="${trip.tripType != null ? trip.tripType.label : ''}"></td>
+                    <td th:text="${trip.accommodation}"></td>
+                    <td th:text="${trip.transportation != null ? trip.transportation.label : ''}"></td>
+                    <td th:text="${trip.notes}"></td>
                     <td>
-                        <a href="#">
-                            <img src="https://img.icons8.com/?size=100&id=46812&format=png&color=000000"
-                                 alt="Share Icon" width="45" height="45"/></a>
+                        <form th:action="@{/trips/{id}/share(id=${trip.id})}" method="post"
+                              onsubmit="return confirm('Are you sure you want to share this trip to LifeHub?');">
+                            <button type="submit" style="border: none; background: none;">
+                                <img src="https://img.icons8.com/?size=100&id=46812&format=png&color=000000"
+                                     alt="Share Icon" width="45" height="45"/>
+                            </button>
+                        </form>
                     </td>
                     <td>
-                        <a href="/edit-book">
+                        <a th:href="@{/trips/{id}/edit(id=${trip.id})}">
                             <img src="https://img.icons8.com/?size=100&id=0Ka1o_-mwyre&format=png&color=000000"
-                                 alt="Edit Icon" width="45" height="45"/></a>
+                                 alt="Edit Icon" width="45" height="45"/>
+                        </a>
                     </td>
                     <td>
-                        <a href="#">
-                            <img src="https://img.icons8.com/?size=100&id=104338&format=png&color=000000"
-                                 alt="Delete Icon" width="45" height="45"/></a>
+                        <form th:action="@{/trips/{id}(id=${trip.id})}" method="post" onsubmit="return confirm('Are you sure you want to delete this trip?');">
+                            <input type="hidden" name="_method" value="delete" />
+                            <button type="submit" style="border: none; background: none;">
+                                <img src="https://img.icons8.com/?size=100&id=104338&format=png&color=000000"
+                                     alt="Delete Icon" width="45" height="45"/>
+                            </button>
+                        </form>
                     </td>
                 </tr>
                 </tbody>

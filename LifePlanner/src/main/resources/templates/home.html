@@ -9,7 +9,7 @@
     <div class="homepage-header-left">
       <h1>
         Welcome,
-        <span th:text="${user.username}">User</span>
+        <span th:text="${user.username}"></span>
         !
       </h1>
     </div>
@@ -106,7 +106,7 @@
         </li>
         <!-- My Travel Plans -->
         <li>
-          <a href="/travel">
+          <a href="/trips/travel">
             <img src="https://img.icons8.com/?size=100&id=43121&format=png&color=000000" alt="Travel Icon">
             My Travel Plans
           </a>
@@ -244,22 +244,24 @@
           </div>
         </div>
       </details>
-
       <!-- Travel Section -->
       <details class="toggle-section">
         <summary>
           <img src="https://img.icons8.com/?size=100&id=43121&format=png&color=000000" alt="Travel Icon" class="section-icon">
           Travel Plans
         </summary>
-        <div class="post-card">
+        <div class="post-card" th:each="trip : ${sharedTrips}" th:attr="data-trip-id=${trip.id}">
           <div class="post-info">
-            <p><strong>@GlobeTrotter</strong> shared a travel plan:</p>
-            <p>"Trip to Bali - March 2025"</p>
+            <p>
+              <strong>@</strong><strong th:text="${trip.owner.username}"></strong> shared a trip:
+              "<span th:text="${trip.tripName}"></span>" in "<span th:text="${trip.destination}"></span>"
+            </p>
           </div>
           <div class="post-actions">
             <button class="like-btn">
-              <img src="https://img.icons8.com/?size=100&id=80137&format=png&color=000000" alt="Like Icon">
-              <span class="like-count">0</span> <!-- Default count -->
+              <img src="https://img.icons8.com/?size=100&id=80137&format=png&color=000000" alt="Like Icon"
+                   th:classappend="${tripLikeCounts[trip.id]} > 0 ? 'liked' : ''">
+              <span class="like-count" th:text="${tripLikeCounts[trip.id]}"></span>
             </button>
             <button class="favorite-btn">
               <img src="https://img.icons8.com/?size=100&id=46336&format=png&color=000000" alt="Favorite Icon">

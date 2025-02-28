@@ -26,7 +26,6 @@ public class BookLikesService {
         this.userRepository = userRepository;
     }
 
-
     public long getLikeCount(UUID bookId) {
         return bookLikesRepository.countByBookId(bookId);
     }

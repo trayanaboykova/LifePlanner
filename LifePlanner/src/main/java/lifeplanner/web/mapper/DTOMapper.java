@@ -4,11 +4,9 @@ import lifeplanner.books.model.Book;
 import lifeplanner.media.model.Media;
 import lifeplanner.recipes.model.Recipe;
 import lifeplanner.recipes.model.RecipeIngredient;
+import lifeplanner.travel.model.Travel;
 import lifeplanner.user.model.User;
-import lifeplanner.web.dto.EditBookRequest;
-import lifeplanner.web.dto.EditMediaRequest;
-import lifeplanner.web.dto.EditRecipeRequest;
-import lifeplanner.web.dto.UserEditRequest;
+import lifeplanner.web.dto.*;
 import lombok.experimental.UtilityClass;
 
 import java.util.ArrayList;
@@ -80,5 +78,18 @@ public class DTOMapper {
                 .instructions(recipe.getInstructions())
                 .build();
 
+    }
+
+    public static EditTripRequest mapBookToEditTravelRequest(Travel trip) {
+        return EditTripRequest.builder()
+                .tripStatus(trip.getTripStatus())
+                .tripName(trip.getTripName())
+                .destination(trip.getDestination())
+                .startDate(trip.getStartDate())
+                .endDate(trip.getEndDate())
+                .accommodation(trip.getAccommodation())
+                .transportationType(trip.getTransportation())
+                .notes(trip.getNotes())
+                .build();
     }
 }

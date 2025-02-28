@@ -1,7 +1,7 @@
 package lifeplanner.web;
 
 import jakarta.servlet.http.HttpSession;
-import lifeplanner.books.service.BookLikesService;
+import lifeplanner.travel.service.TripLikesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -12,21 +12,21 @@ import java.util.Map;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/api/books")
-public class BookLikesController {
-    private final BookLikesService booklikesService;
+@RequestMapping("api/trips")
+public class TripLikesController {
+    private final TripLikesService tripLikesService;
 
     @Autowired
-    public BookLikesController(BookLikesService booklikesService) {
-        this.booklikesService = booklikesService;
+    public TripLikesController(TripLikesService tripLikesService) {
+        this.tripLikesService = tripLikesService;
     }
 
-    @PostMapping("/{bookId}/like")
-    public Map<String, Object> toggleBookLike(@PathVariable UUID bookId,
-                                          HttpSession session) {
+    @PostMapping("/{tripId}/like")
+    public Map<String, Object> toggleTripLike(@PathVariable UUID tripId,
+                                              HttpSession session) {
         UUID userId = (UUID) session.getAttribute("user_id");
-        boolean isLiked = booklikesService.toggleLike(bookId, userId);
-        long newCount = booklikesService.getLikeCount(bookId);
+        boolean isLiked = tripLikesService.toggleLike(tripId, userId);
+        long newCount = tripLikesService.getLikeCount(tripId);
 
         // Return JSON with new state & count
         return Map.of(

@@ -65,7 +65,6 @@ public class BookService {
         Book book = bookRepository.findById(bookId)
                 .orElseThrow(() -> new RuntimeException("Book not found"));
 
-
         book.setVisible(true);
         bookRepository.save(book);
     }

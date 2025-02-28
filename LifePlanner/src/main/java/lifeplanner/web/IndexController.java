@@ -11,11 +11,13 @@ import lifeplanner.media.service.MediaService;
 import lifeplanner.recipes.model.Recipe;
 import lifeplanner.recipes.service.RecipeLikesService;
 import lifeplanner.recipes.service.RecipeService;
+import lifeplanner.travel.model.Travel;
+import lifeplanner.travel.service.TravelService;
+import lifeplanner.travel.service.TripLikesService;
 import lifeplanner.user.model.User;
 import lifeplanner.user.service.UserService;
 import lifeplanner.web.dto.LoginRequest;
 import lifeplanner.web.dto.RegisterRequest;
-import org.apache.tomcat.util.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -39,9 +41,11 @@ public class IndexController {
     private final MediaLikesService mediaLikesService;
     private final RecipeService recipeService;
     private final RecipeLikesService recipeLikesService;
+    private final TravelService travelService;
+    private final TripLikesService tripLikesService;
 
     @Autowired
-    public IndexController(UserService userService, BookService bookService, BookLikesService bookLikesService, MediaService mediaService, MediaLikesService mediaLikesService, RecipeService recipeService, RecipeLikesService recipeLikesService) {
+    public IndexController(UserService userService, BookService bookService, BookLikesService bookLikesService, MediaService mediaService, MediaLikesService mediaLikesService, RecipeService recipeService, RecipeLikesService recipeLikesService, TravelService travelService, TripLikesService tripLikesService) {
         this.userService = userService;
         this.bookService = bookService;
         this.bookLikesService = bookLikesService;
@@ -49,6 +53,8 @@ public class IndexController {
         this.mediaLikesService = mediaLikesService;
         this.recipeService = recipeService;
         this.recipeLikesService = recipeLikesService;
+        this.travelService = travelService;
+        this.tripLikesService = tripLikesService;
     }
 
     @GetMapping("/")
@@ -148,6 +154,17 @@ public class IndexController {
             recipeLikeCounts.put(r.getId(), count);
         }
 
+        // TRIPS
+        List<Travel> allTrips = travelService.getAllTrips();
+        List<Travel> sharedTrips = travelService.getSharedTrips(user);
+
+//        // For each trip, retrieve its like count
+        Map<UUID, Long> tripLikeCounts = new HashMap<>();
+        for (Travel t : sharedTrips) {
+            long count = tripLikesService.getLikeCount(t.getId());
+            tripLikeCounts.put(t.getId(), count);
+        }
+
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("home");
         modelAndView.addObject("user", user);
@@ -163,6 +180,11 @@ public class IndexController {
         modelAndView.addObject("allRecipes", allRecipes);
         modelAndView.addObject("sharedRecipes", sharedRecipes);
         model.addAttribute("recipeLikeCounts", recipeLikeCounts);
+        // TRIPS
+        modelAndView.addObject("allTrips", allTrips);
+        modelAndView.addObject("sharedTrips", sharedTrips);
+        model.addAttribute("tripLikeCounts", tripLikeCounts);
+
 
         return modelAndView;
     }

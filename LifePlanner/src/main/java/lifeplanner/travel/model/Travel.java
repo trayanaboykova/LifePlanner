@@ -18,6 +18,9 @@ public class Travel {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
+    @Enumerated(EnumType.STRING)
+    private TripStatus tripStatus;
+
     @Column(nullable = false)
     private String tripName;
 
@@ -42,4 +45,6 @@ public class Travel {
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     private User owner;
+
+    private boolean visible;
 }

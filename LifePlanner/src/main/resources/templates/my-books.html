@@ -8,7 +8,9 @@
 <header>
     <nav class="books-nav">
         <div class="books-header-left">
-            <h1>User’s Book Library</h1>
+            <h1>
+                <span th:text="${user.username}"></span>’s Book Library
+            </h1>
         </div>
         <div class="books-header-right">
             <a href="/home" class="back-home">
@@ -79,12 +81,6 @@
                     <td th:text="${book.author}"></td>
                     <td th:text="${book.bookRating?.label}"></td>
                     <td th:text="${book.genre}"></td>
-<!--                    <td>-->
-<!--                        <a href="#">-->
-<!--                            <img src="https://img.icons8.com/?size=100&id=46812&format=png&color=000000"-->
-<!--                                 alt="Share Icon" width="45" height="45"/>-->
-<!--                        </a>-->
-<!--                    </td>-->
                     <td>
                         <form th:action="@{/books/{id}/share(id=${book.id})}" method="post"
                               onsubmit="return confirm('Are you sure you want to share this book to LifeHub?');">

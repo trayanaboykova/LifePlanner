@@ -120,6 +120,13 @@ select:focus {
     font-weight: bold;
 }
 
+.form-group .error-message-add-book {
+    font-size: 15px;
+    color: #9f4825;
+    margin-top: 0.5em;
+    font-weight: bold;
+}
+
 /* Edit Book */
 .form-group .error-message-edit-book {
     font-size: 15px;

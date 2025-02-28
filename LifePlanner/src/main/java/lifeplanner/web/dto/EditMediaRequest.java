@@ -7,6 +7,7 @@ import lifeplanner.media.model.MediaStatus;
 import lifeplanner.media.model.TypeMedia;
 import lombok.Builder;
 import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
 
@@ -25,6 +26,7 @@ public class EditMediaRequest {
 
     private MediaRating rating;
 
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     private LocalDate dateRated;
 
     @Size(max = 40)

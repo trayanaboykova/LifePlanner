@@ -41,6 +41,7 @@ public class BooksController {
 
         List<Book> userBooks = bookService.getBooksByUser(user);
 
+        model.addAttribute("user", user);
         model.addAttribute("books", userBooks);
 
         return "my-books";
