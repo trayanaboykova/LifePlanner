@@ -1,4 +1,19 @@
 package lifeplanner.goals.repository;
 
-public interface GoalRepository {
+import lifeplanner.goals.model.Goal;
+import lifeplanner.user.model.User;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.UUID;
+
+@Repository
+public interface GoalRepository extends JpaRepository<Goal, UUID> {
+
+    List<Goal> findAllByOwner(User user);
+
+    List<Goal> findAllByVisibleTrue();
+
 }

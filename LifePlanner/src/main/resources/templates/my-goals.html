@@ -8,7 +8,9 @@
 <header>
     <nav class="books-nav">
         <div class="books-header-left">
-            <h1>User’s Goals</h1>
+            <h1>
+                <span th:text="${user.username}"></span>’s Goals
+            </h1>
         </div>
         <div class="books-header-right">
             <a href="/home" class="back-home">
@@ -25,21 +27,21 @@
     <aside class="books-sidebar">
         <ul>
             <li>
-                <a href="/add-goal">
+                <a href="/goals/new">
                     <img src="https://img.icons8.com/?size=100&id=104333&format=png&color=000000"
                          alt="Add Goal Icon" width="45" height="45"/>
                     Add Goal
                 </a>
             </li>
             <li>
-                <a href="/all-goals">
+                <a href="/goals/all-goals">
                     <img src="https://img.icons8.com/?size=100&id=yg0Xl3Bazd07&format=png&color=000000"
                          alt="All Goals Icon" width="45" height="45"/>
                     All Goals
                 </a>
             </li>
             <li>
-                <a href="/completed-goals">
+                <a href="/goals/completed-goals">
                     <img src="https://img.icons8.com/?size=100&id=46670&format=png&color=000000"
                          alt="Completed Goals Icon" width="45" height="45"/>
                     Completed Goals
@@ -52,7 +54,7 @@
         <h2 class="currently-reading">
             <img src="https://img.icons8.com/?size=100&id=49297&format=png&color=000000"
                  alt="Current Goals Icon" class="currently-reading-icon" width="45" height="45"/>
-            Current Goals
+            Goals In Progress
         </h2>
         <div class="books-table">
             <table>
@@ -71,28 +73,38 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr>
-                    <td>Lose 5kg</td>
-                    <td>Health & Fitness</td>
-                    <td>01 March 2025</td>
-                    <td>01 June 2025</td>
-                    <td>High</td>
-                    <td class="emoji-progress" data-completed="4" data-total="10"></td>
-                    <td>Working on better meal planning and workouts</td>
+                <tr th:each="goal : ${goals}"
+                th:if="${goal.status != null and goal.status.name() == 'IN_PROGRESS'}">
+                    <td th:text="${goal.goalName}"></td>
+                    <td th:text="${goal.category != null ? goal.category.label : ''}"></td>
+                    <td th:text="${#temporals.format(goal.startDate, 'dd MMM yyyy', T(java.util.Locale).ENGLISH)}"></td>
+                    <td th:text="${#temporals.format(goal.endDate, 'dd MMM yyyy', T(java.util.Locale).ENGLISH)}"></td>
+                    <td th:text="${goal.priority != null ? goal.priority.label : ''}"></td>
+                    <td class="emoji-progress" th:text="${goal.progressBar}"></td>
+                    <td th:text="${goal.notes}"></td>
                     <td>
-                        <a href="#">
-                            <img src="https://img.icons8.com/?size=100&id=46812&format=png&color=000000"
-                                 alt="Share Icon" width="45" height="45"/></a>
+                        <form th:action="@{/goals/{id}/share(id=${goal.id})}" method="post"
+                              onsubmit="return confirm('Are you sure you want to share this goal to LifeHub?');">
+                            <button type="submit" style="border: none; background: none;">
+                                <img src="https://img.icons8.com/?size=100&id=46812&format=png&color=000000"
+                                     alt="Share Icon" width="45" height="45"/>
+                            </button>
+                        </form>
                     </td>
                     <td>
-                        <a href="/edit-book">
+                        <a th:href="@{/goals/{id}/edit(id=${goal.id})}">
                             <img src="https://img.icons8.com/?size=100&id=0Ka1o_-mwyre&format=png&color=000000"
-                                 alt="Edit Icon" width="45" height="45"/></a>
+                                 alt="Edit Icon" width="45" height="45"/>
+                        </a>
                     </td>
                     <td>
-                        <a href="#">
-                            <img src="https://img.icons8.com/?size=100&id=104338&format=png&color=000000"
-                                 alt="Delete Icon" width="45" height="45"/></a>
+                        <form th:action="@{/goals/{id}(id=${goal.id})}" method="post" onsubmit="return confirm('Are you sure you want to delete this goal?');">
+                            <input type="hidden" name="_method" value="delete" />
+                            <button type="submit" style="border: none; background: none;">
+                                <img src="https://img.icons8.com/?size=100&id=104338&format=png&color=000000"
+                                     alt="Delete Icon" width="45" height="45"/>
+                            </button>
+                        </form>
                     </td>
                 </tr>
                 </tbody>
@@ -101,7 +113,6 @@
     </main>
 </div>
 
-<script src="/js/progress.js"></script>
 <footer th:replace="~{fragments/commons :: footer}"></footer>
 </body>
 </html>

@@ -9,7 +9,7 @@
     <nav class="books-nav">
         <div class="books-header-left">
             <p class="back-to-books">
-                <a href="/goals">
+                <a href="/goals/my-goals">
                     <img src="https://img.icons8.com/?size=100&id=46652&format=png&color=000000"
                          alt="Back Icon" width="45" height="45"/>
                     Back to My Goals</a>
@@ -58,24 +58,25 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr>
-                    <td>In Progress</td>
-                    <td>Lose 5kg</td>
-                    <td>Health & Fitness</td>
-                    <td>01 March 2025</td>
-                    <td>01 June 2025</td>
-                    <td>High</td>
-                    <td class="emoji-progress" data-completed="4" data-total="10"></td>
-                    <td>Working on better meal planning and workouts</td>
+                <tr th:each="goal : ${goals}">
+                    <td th:text="${goal.status != null ? goal.status.label : ''}"></td>
+                    <td th:text="${goal.goalName}"></td>
+                    <td th:text="${goal.category != null ? goal.category.label : ''}"></td>
+                    <td th:text="${#temporals.format(goal.startDate, 'dd MMM yyyy', T(java.util.Locale).ENGLISH)}"></td>
+                    <td th:text="${#temporals.format(goal.endDate, 'dd MMM yyyy', T(java.util.Locale).ENGLISH)}"></td>
+                    <td th:text="${goal.priority != null ? goal.priority.label : ''}"></td>
+                    <td class="emoji-progress" th:text="${goal.progressBar}"></td>
+                    <td th:text="${goal.notes}"></td>
                     <td>
                         <a href="#">
                             <img src="https://img.icons8.com/?size=100&id=46812&format=png&color=000000"
                                  alt="Share Icon" width="45" height="45"/></a>
                     </td>
                     <td>
-                        <a href="/edit-book">
+                        <a th:href="@{/goals/{id}/edit(id=${goal.id})}">
                             <img src="https://img.icons8.com/?size=100&id=0Ka1o_-mwyre&format=png&color=000000"
-                                 alt="Edit Icon" width="45" height="45"/></a>
+                                 alt="Edit Icon" width="45" height="45"/>
+                        </a>
                     </td>
                     <td>
                         <a href="#">
@@ -100,7 +101,6 @@
 
 <script src="/js/search-books.js"></script>
 <script src="/js/pagination-books.js"></script>
-<script src="/js/progress.js"></script>
 <footer th:replace="~{fragments/commons :: footer}"></footer>
 </body>
 </html>

@@ -44,4 +44,7 @@ public class Goal {
     private User owner;
 
     private boolean visible;
+
+    @Transient
+    private String progressBar;
 }

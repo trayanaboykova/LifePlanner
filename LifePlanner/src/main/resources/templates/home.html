@@ -113,7 +113,7 @@
         </li>
         <!-- My Goals -->
         <li>
-          <a href="/goals">
+          <a href="/goals/my-goals">
             <img src="https://img.icons8.com/?size=100&id=49297&format=png&color=000000" alt="Goals Icon">
             My Goals
           </a>
@@ -276,10 +276,14 @@
           <img src="https://img.icons8.com/?size=100&id=49297&format=png&color=000000" alt="Goals Icon" class="section-icon">
           Goals
         </summary>
-        <div class="post-card">
-          <div class="post-info">
-            <p><strong>@123r</strong> shared a goal:</p>
-            <p>"Lose weight"</p>
+        <div class="post-card" th:each="goal : ${sharedGoals}" th:attr="data-goal-id=${goal.id}">
+          <div class="post-info-goals">
+            <p>
+              <strong>@</strong><strong th:text="${goal.owner.username}"></strong> shared a goal:
+              <span th:text="${goal.goalName}"></span>
+            <br>
+              <p>Progress: </p><span class="goal-span" th:text="${goal.status.label}"></span>
+            </p>
           </div>
           <div class="post-actions">
             <button class="like-btn">

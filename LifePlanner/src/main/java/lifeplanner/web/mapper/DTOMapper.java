@@ -1,6 +1,7 @@
 package lifeplanner.web.mapper;
 
 import lifeplanner.books.model.Book;
+import lifeplanner.goals.model.Goal;
 import lifeplanner.media.model.Media;
 import lifeplanner.recipes.model.Recipe;
 import lifeplanner.recipes.model.RecipeIngredient;
@@ -90,6 +91,19 @@ public class DTOMapper {
                 .accommodation(trip.getAccommodation())
                 .transportationType(trip.getTransportation())
                 .notes(trip.getNotes())
+                .build();
+    }
+
+    public static EditGoalRequest mapBookToEditGoalRequest(Goal goal) {
+        return EditGoalRequest.builder()
+                .goalName(goal.getGoalName())
+                .category(goal.getCategory())
+                .startDate(goal.getStartDate())
+                .endDate(goal.getEndDate())
+                .priority(goal.getPriority())
+                .progress(goal.getProgress())
+                .status(goal.getStatus())
+                .notes(goal.getNotes())
                 .build();
     }
 }

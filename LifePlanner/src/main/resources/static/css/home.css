@@ -294,12 +294,29 @@
     font-size: 16px;
 }
 
+.post-info-goals {
+    flex: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    font-size: 16px;
+}
+
 /* Bold Username */
 .post-info p strong,
 .post-info-recipes p strong,
+.post-info-goals p strong,
 .post-info p,
-.post-info-recipes p {
+.post-info-recipes p,
+.post-info-goals p {
     color: white;
+}
+
+.post-info-goals p,
+.goal-span{
+    font-size: 25px;
 }
 
 /* LifeHub Content Sections */

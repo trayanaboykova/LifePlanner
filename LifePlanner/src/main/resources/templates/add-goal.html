@@ -9,7 +9,7 @@
     <nav class="books-nav">
         <div class="books-header-left">
             <p class="back-to-books">
-                <a href="/goals">
+                <a href="/goals/my-goals">
                     <img src="https://img.icons8.com/?size=100&id=46652&format=png&color=000000"
                          alt="Back Icon" width="45" height="45"/>
                     Back to My Goals</a>
@@ -26,82 +26,81 @@
 </header>
 <main class="container">
     <section class="add-book-container">
-        <form class="add-book-form" action="/goals/save" method="post">
+        <form class="add-book-form" th:action="@{/goals}" method="post" th:object="${addGoalRequest}">
             <h3>Add Goal</h3>
+
+            <!-- Status Dropdown -->
+            <div class="form-group">
+                <label for="status">Add Status</label>
+                <select id="status" name="status" required th:field="*{status}">
+                    <option value="">-- Select Status --</option>
+                    <option th:each="status : ${T(lifeplanner.goals.model.GoalStatus).values()}"
+                            th:value="${status}"
+                            th:text="${status.label}">
+                    </option>
+                </select>
+                <p class="error-message-add-book" th:if="${#fields.hasErrors('status')}" th:errors="*{status}"></p>
+            </div>
 
             <!-- Goal Name -->
             <div class="form-group">
-                <label for="goal-name">Goal Name</label>
-                <input type="text" id="goal-name" name="goalName" placeholder="Enter goal name" required>
-                <p class="error-message">Error Text Here</p>
+                <label for="goal-name">Add Goal Name</label>
+                <input type="text" id="goal-name" name="goalName" placeholder="Enter goal name" required th:field="*{goalName}">
+                <p class="error-message-add-book" th:if="${#fields.hasErrors('goalName')}" th:errors="*{goalName}"></p>
             </div>
 
             <!-- Category Dropdown -->
             <div class="form-group">
                 <label for="category">Add Category</label>
-                <select id="category" name="category" required>
-                    <option value="" disabled selected>-- Select Category --</option>
-                    <option value="health">Health & Fitness</option>
-                    <option value="career">Career & Education</option>
-                    <option value="finance">Finance</option>
-                    <option value="personal">Personal Growth</option>
-                    <option value="travel">Travel</option>
-                    <option value="relationships">Relationships</option>
+                <select id="category" name="category" required th:field="*{category}">
+                    <option value="">-- Select Category --</option>
+                    <option th:each="category : ${T(lifeplanner.goals.model.GoalCategory).values()}"
+                            th:value="${category}"
+                            th:text="${category.label}">
+                    </option>
                 </select>
-                <p class="error-message">Error Text Here</p>
+                <p class="error-message-add-book" th:if="${#fields.hasErrors('category')}" th:errors="*{category}"></p>
             </div>
 
             <!-- Start Date -->
             <div class="form-group">
                 <label for="start-date">Add Start Date</label>
-                <input type="date" id="start-date" name="startDate" required>
-                <p class="error-message">Error Text Here</p>
+                <input type="date" id="start-date" name="startDate" required th:field="*{startDate}">
+                <p class="error-message-add-book" th:if="${#fields.hasErrors('startDate')}" th:errors="*{startDate}"></p>
             </div>
 
             <!-- End Date -->
             <div class="form-group">
                 <label for="end-date">Add End Date</label>
-                <input type="date" id="end-date" name="endDate" required>
-                <p class="error-message">Error Text Here</p>
+                <input type="date" id="end-date" name="endDate" required th:field="*{endDate}">
+                <p class="error-message-add-book" th:if="${#fields.hasErrors('endDate')}" th:errors="*{endDate}"></p>
             </div>
 
             <!-- Priority Dropdown -->
             <div class="form-group">
                 <label for="priority">Add Priority</label>
-                <select id="priority" name="priority" required>
-                    <option value="" disabled selected>-- Select Priority --</option>
-                    <option value="high">High</option>
-                    <option value="medium">Medium</option>
-                    <option value="low">Low</option>
+                <select id="priority" name="priority" required th:field="*{priority}">
+                    <option value="">-- Select Priority --</option>
+                    <option th:each="priority : ${T(lifeplanner.goals.model.GoalPriority).values()}"
+                            th:value="${priority}"
+                            th:text="${priority.label}">
+                    </option>
                 </select>
-                <p class="error-message">Error Text Here</p>
+                <p class="error-message-add-book" th:if="${#fields.hasErrors('priority')}" th:errors="*{priority}"></p>
             </div>
 
             <!-- Progress (Percentage) -->
             <div class="form-group">
                 <label for="progress">Add Progress (%)</label>
-                <input type="number" id="progress" name="progress" placeholder="Enter progress" min="0" max="100">
-                <p class="error-message">Error Text Here</p>
-            </div>
-
-            <!-- Status Dropdown -->
-            <div class="form-group">
-                <label for="status">Add Status</label>
-                <select id="status" name="status" required>
-                    <option value="" disabled selected>-- Select Status --</option>
-                    <option value="not-started">Not Started</option>
-                    <option value="in-progress">In Progress</option>
-                    <option value="on-hold">On Hold</option>
-                    <option value="completed">Completed</option>
-                </select>
-                <p class="error-message">Error Text Here</p>
+                <input type="number" id="progress" name="progress" placeholder="Enter progress" min="0" max="100" th:field="*{progress}">
+                <p class="error-message-add-book" th:if="${#fields.hasErrors('progress')}" th:errors="*{progress}"></p>
             </div>
 
             <!-- Notes (Textarea) -->
             <div class="form-group">
                 <label for="notes">Add Notes</label>
-                <textarea id="notes" name="notes" placeholder="Any notes..."></textarea>
-                <p class="error-message">Error Text Here</p>
+                <textarea id="notes" name="notes" placeholder="Any notes..." th:field="*{notes}"></textarea>
+                <p class="error-message-add-book" th:if="${#fields.hasErrors('notes')}" th:errors="*{notes}"></p>
             </div>
 
             <!-- Submit Button -->
