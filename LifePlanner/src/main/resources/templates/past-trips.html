@@ -59,7 +59,7 @@
                 </thead>
                 <tbody>
                 <tr th:each="trip : ${trips}"
-                    th:if="${trip.tripStatus.name()} == 'FINISHED'">
+                    th:if="${trip.tripStatus != null and trip.tripStatus.name() == 'FINISHED'}">
                     <td th:text="${trip.tripName}"></td>
                     <td th:text="${trip.destination}"></td>
                     <td th:text="${#temporals.format(trip.startDate, 'dd MMM yyyy', T(java.util.Locale).ENGLISH)}"></td>
