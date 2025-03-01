@@ -54,10 +54,10 @@
                 </thead>
                 <tbody>
                 <tr th:each="book : ${books}"
-                    th:if="${book.bookStatus.name()} == 'WANT_TO_READ'">
+                    th:if="${book.bookStatus != null and book.bookStatus.name() == 'WANT_TO_READ'}">
                     <td th:text="${book.title}"></td>
                     <td th:text="${book.author}"></td>
-                    <td th:text="${book.bookRating?.label}"></td>
+                    <td th:text="${book.bookRating != null ? book.bookRating.label : ''}"></td>
                     <td th:text="${book.genre}"></td>
                     <td>
                         <form th:action="@{/books/{id}/share(id=${book.id})}" method="post"
