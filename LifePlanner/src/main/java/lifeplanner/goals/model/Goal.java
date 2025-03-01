@@ -42,4 +42,6 @@ public class Goal {
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     private User owner;
+
+    private boolean visible;
 }
