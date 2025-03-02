@@ -5,6 +5,7 @@ import lifeplanner.user.model.User;
 import lombok.*;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -40,4 +41,8 @@ public class Book {
     private User owner;
 
     private boolean visible;
+
+    @OneToMany(mappedBy = "book", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<BookLikes> likes;
+
 }

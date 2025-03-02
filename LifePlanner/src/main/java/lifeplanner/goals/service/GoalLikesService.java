@@ -1,8 +1,5 @@
 package lifeplanner.goals.service;
 
-import lifeplanner.books.model.Book;
-import lifeplanner.books.model.BookLikes;
-import lifeplanner.books.model.BookLikesId;
 import lifeplanner.goals.model.Goal;
 import lifeplanner.goals.model.GoalLikes;
 import lifeplanner.goals.model.GoalLikesId;

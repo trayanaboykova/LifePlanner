@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lifeplanner.user.model.User;
 import lombok.*;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -47,4 +48,8 @@ public class Goal {
 
     @Transient
     private String progressBar;
+
+    @OneToMany(mappedBy = "goal", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<GoalLikes> likes;
+
 }

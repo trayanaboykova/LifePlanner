@@ -44,4 +44,7 @@ public class Recipe {
 
     private boolean visible;
 
+    @OneToMany(mappedBy = "recipe", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<RecipeLikes> likes;
+
 }
