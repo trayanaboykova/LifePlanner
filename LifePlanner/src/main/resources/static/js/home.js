@@ -178,3 +178,36 @@ document.querySelectorAll('[data-trip-id] .like-btn').forEach(btn => {
             .catch(err => console.error("Error toggling trip like:", err));
     });
 });
+
+// GOAL LIKES
+document.querySelectorAll('[data-goal-id] .like-btn').forEach(btn => {
+    btn.addEventListener("click", function () {
+        const postCard = this.closest(".post-card");
+        const goalId = postCard.getAttribute("data-goal-id");
+        const img = this.querySelector("img");
+        const countSpan = postCard.querySelector(".like-count");
+
+        // Send POST request to toggle goal like
+        fetch(`/api/goals/${goalId}/like`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' }
+        })
+            .then(response => response.json())
+            .then(data => {
+                // data: { liked: true/false, likeCount: number }
+                const isLiked = data.liked;
+                const newCount = data.likeCount;
+
+                countSpan.textContent = newCount;
+
+                if (isLiked) {
+                    img.src = "https://img.icons8.com/?size=100&id=80137&format=png&color=ff0000";
+                    img.classList.add("liked");
+                } else {
+                    img.src = "https://img.icons8.com/?size=100&id=80137&format=png&color=000000";
+                    img.classList.remove("liked");
+                }
+            })
+            .catch(err => console.error("Error toggling goal like:", err));
+    });
+});

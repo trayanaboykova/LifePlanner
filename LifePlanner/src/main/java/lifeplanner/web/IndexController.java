@@ -6,6 +6,7 @@ import lifeplanner.books.model.Book;
 import lifeplanner.books.service.BookLikesService;
 import lifeplanner.books.service.BookService;
 import lifeplanner.goals.model.Goal;
+import lifeplanner.goals.service.GoalLikesService;
 import lifeplanner.goals.service.GoalService;
 import lifeplanner.media.model.Media;
 import lifeplanner.media.service.MediaLikesService;
@@ -46,9 +47,10 @@ public class IndexController {
     private final TravelService travelService;
     private final TripLikesService tripLikesService;
     private final GoalService goalService;
+    private final GoalLikesService goalLikesService;
 
     @Autowired
-    public IndexController(UserService userService, BookService bookService, BookLikesService bookLikesService, MediaService mediaService, MediaLikesService mediaLikesService, RecipeService recipeService, RecipeLikesService recipeLikesService, TravelService travelService, TripLikesService tripLikesService, GoalService goalService) {
+    public IndexController(UserService userService, BookService bookService, BookLikesService bookLikesService, MediaService mediaService, MediaLikesService mediaLikesService, RecipeService recipeService, RecipeLikesService recipeLikesService, TravelService travelService, TripLikesService tripLikesService, GoalService goalService, GoalLikesService goalLikesService) {
         this.userService = userService;
         this.bookService = bookService;
         this.bookLikesService = bookLikesService;
@@ -59,6 +61,7 @@ public class IndexController {
         this.travelService = travelService;
         this.tripLikesService = tripLikesService;
         this.goalService = goalService;
+        this.goalLikesService = goalLikesService;
     }
 
     @GetMapping("/")
@@ -174,11 +177,11 @@ public class IndexController {
         List<Goal> sharedGoals = goalService.getSharedGoals(user);
 
         // For each goal, retrieve its like count
-//        Map<UUID, Long> goalLikeCounts = new HashMap<>();
-//        for (Goal g : sharedGoals) {
-//            long count = goalLikesService.getLikeCount(g.getId());
-//            goalLikeCounts.put(g.getId(), count);
-//        }
+        Map<UUID, Long> goalLikeCounts = new HashMap<>();
+        for (Goal g : sharedGoals) {
+            long count = goalLikesService.getLikeCount(g.getId());
+            goalLikeCounts.put(g.getId(), count);
+        }
 
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("home");
@@ -202,7 +205,7 @@ public class IndexController {
         // GOALS
         modelAndView.addObject("allGoals", allGoals);
         modelAndView.addObject("sharedGoals", sharedGoals);
-//        model.addAttribute("goalLikeCounts", goalLikeCounts);
+        model.addAttribute("goalLikeCounts", goalLikeCounts);
 
 
         return modelAndView;
