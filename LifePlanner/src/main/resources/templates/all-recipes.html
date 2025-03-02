@@ -57,8 +57,8 @@
                 <tbody>
                 <tr th:each="recipe : ${recipes}">
                     <td th:text="${recipe.name}"></td>
-                    <td th:text="${recipe.category.label}"></td>
-                    <td th:text="${recipe.difficulty.label}"></td>
+                    <td th:text="${recipe.category != null ? recipe.category.label : ''}"></td>
+                    <td th:text="${recipe.difficulty != null ? recipe.difficulty.label : ''}"></td>
                     <td th:text="${recipe.cuisine}"></td>
                     <td th:text="${recipe.cookingTime} + ' minutes'"></td>
                     <td>
