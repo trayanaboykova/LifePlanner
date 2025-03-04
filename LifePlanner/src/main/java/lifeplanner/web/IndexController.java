@@ -14,6 +14,7 @@ import lifeplanner.media.service.MediaFavoriteService;
 import lifeplanner.media.service.MediaLikesService;
 import lifeplanner.media.service.MediaService;
 import lifeplanner.recipes.model.Recipe;
+import lifeplanner.recipes.service.RecipeFavoriteService;
 import lifeplanner.recipes.service.RecipeLikesService;
 import lifeplanner.recipes.service.RecipeService;
 import lifeplanner.travel.model.Travel;
@@ -48,13 +49,14 @@ public class IndexController {
     private final MediaFavoriteService mediaFavoriteService;
     private final RecipeService recipeService;
     private final RecipeLikesService recipeLikesService;
+    private final RecipeFavoriteService recipeFavoriteService;
     private final TravelService travelService;
     private final TripLikesService tripLikesService;
     private final GoalService goalService;
     private final GoalLikesService goalLikesService;
 
     @Autowired
-    public IndexController(UserService userService, BookService bookService, BookLikesService bookLikesService, BookFavoriteService bookFavoriteService, MediaService mediaService, MediaLikesService mediaLikesService, MediaFavoriteService mediaFavoriteService, RecipeService recipeService, RecipeLikesService recipeLikesService, TravelService travelService, TripLikesService tripLikesService, GoalService goalService, GoalLikesService goalLikesService) {
+    public IndexController(UserService userService, BookService bookService, BookLikesService bookLikesService, BookFavoriteService bookFavoriteService, MediaService mediaService, MediaLikesService mediaLikesService, MediaFavoriteService mediaFavoriteService, RecipeService recipeService, RecipeLikesService recipeLikesService, RecipeFavoriteService recipeFavoriteService, TravelService travelService, TripLikesService tripLikesService, GoalService goalService, GoalLikesService goalLikesService) {
         this.userService = userService;
         this.bookService = bookService;
         this.bookLikesService = bookLikesService;
@@ -64,6 +66,7 @@ public class IndexController {
         this.mediaFavoriteService = mediaFavoriteService;
         this.recipeService = recipeService;
         this.recipeLikesService = recipeLikesService;
+        this.recipeFavoriteService = recipeFavoriteService;
         this.travelService = travelService;
         this.tripLikesService = tripLikesService;
         this.goalService = goalService;
@@ -180,6 +183,13 @@ public class IndexController {
             recipeLikeCounts.put(r.getId(), count);
         }
 
+        // For each recipe, retrieve its favorite count
+        Map<UUID, Long> recipeFavoriteCounts = new HashMap<>();
+        for (Recipe r : sharedRecipes) {
+            long count = recipeFavoriteService.getFavoriteCount(r.getId());
+            recipeFavoriteCounts.put(r.getId(), count);
+        }
+
         // TRIPS
         List<Travel> allTrips = travelService.getAllTrips();
         List<Travel> sharedTrips = travelService.getSharedTrips(user);
@@ -202,7 +212,6 @@ public class IndexController {
             goalLikeCounts.put(g.getId(), count);
         }
 
-
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("home");
         modelAndView.addObject("user", user);
@@ -220,6 +229,7 @@ public class IndexController {
         modelAndView.addObject("allRecipes", allRecipes);
         modelAndView.addObject("sharedRecipes", sharedRecipes);
         model.addAttribute("recipeLikeCounts", recipeLikeCounts);
+        model.addAttribute("recipeFavoriteCounts", recipeFavoriteCounts);
         // TRIPS
         modelAndView.addObject("allTrips", allTrips);
         modelAndView.addObject("sharedTrips", sharedTrips);
@@ -243,9 +253,13 @@ public class IndexController {
         List<Book> favoriteBooks = bookFavoriteService.getFavoritesByUser(user);
         model.addAttribute("favoriteBooks", favoriteBooks);
 
-        // Media
+        // MEDIA
         List<Media> favoriteMedia = mediaFavoriteService.getFavoritesByUser(user);
         model.addAttribute("favoriteMedia", favoriteMedia);
+
+        // RECIPES
+        List<Recipe> favoriteRecipe = recipeFavoriteService.getFavoritesByUser(user);
+        model.addAttribute("favoriteRecipe", favoriteRecipe);
 
         model.addAttribute("user", user);
         return "favorites";

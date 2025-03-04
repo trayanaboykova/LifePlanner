@@ -8,7 +8,9 @@
 <header>
     <nav class="books-nav">
             <div class="books-header-left">
-                <h1 th:text="${user.username}">’s LifeHub Favorites</h1>
+                <h1>
+                    <span th:text="${user.username}"></span>’s LifeHub Favorites
+                </h1>
             </div>
         <div class="books-header-right">
             <a href="/home" class="back-home">
@@ -75,10 +77,21 @@
                          class="section-icon">
                     Recipes
                 </summary>
-                <div class="post-card">
-                    <div class="post-info">
-                        <p><strong>@Foodie99</strong> shared a recipe:</p>
-                        <p>"Homemade Pizza - Best Recipe Ever!"</p>
+                <div class="post-card" th:each="recipe : ${favoriteRecipe}" th:attr="data-recipe-id=${recipe.id}">
+                    <div class="post-info-recipes">
+                        <p>
+                            "<span th:text="${recipe.name}"></span>"
+                        </p>
+                        <br>
+                        <p>Ingredients:</p>
+                        <ul>
+                            <li th:each="ingredient : ${recipe.ingredients}"
+                                th:text="|${ingredient.ingredientName} (${ingredient.quantity} ${ingredient.unit})|">
+                            </li>
+                        </ul>
+                        <br>
+                        <p>Instructions:</p>
+                        <p th:text="${recipe.instructions}"></p>
                     </div>
                     <div class="post-actions">
                         <button class="like-btn">
