@@ -2,7 +2,7 @@
 document.querySelectorAll(".like-btn").forEach(btn => {
     btn.addEventListener("click", function () {
         const postCard = this.closest(".post-card");
-        const bookId = postCard.getAttribute("data-book-id"); // e.g. a custom attribute
+        const bookId = postCard.getAttribute("data-book-id");
         const img = this.querySelector("img");
         const countSpan = postCard.querySelector(".like-count");
 
