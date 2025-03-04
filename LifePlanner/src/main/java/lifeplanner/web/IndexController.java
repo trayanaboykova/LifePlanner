@@ -3,6 +3,7 @@ package lifeplanner.web;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import lifeplanner.books.model.Book;
+import lifeplanner.books.service.BookFavoriteService;
 import lifeplanner.books.service.BookLikesService;
 import lifeplanner.books.service.BookService;
 import lifeplanner.goals.model.Goal;
@@ -40,6 +41,7 @@ public class IndexController {
     private final UserService userService;
     private final BookService bookService;
     private final BookLikesService bookLikesService;
+    private final BookFavoriteService bookFavoriteService;
     private final MediaService mediaService;
     private final MediaLikesService mediaLikesService;
     private final RecipeService recipeService;
@@ -50,10 +52,11 @@ public class IndexController {
     private final GoalLikesService goalLikesService;
 
     @Autowired
-    public IndexController(UserService userService, BookService bookService, BookLikesService bookLikesService, MediaService mediaService, MediaLikesService mediaLikesService, RecipeService recipeService, RecipeLikesService recipeLikesService, TravelService travelService, TripLikesService tripLikesService, GoalService goalService, GoalLikesService goalLikesService) {
+    public IndexController(UserService userService, BookService bookService, BookLikesService bookLikesService, BookFavoriteService bookFavoriteService, MediaService mediaService, MediaLikesService mediaLikesService, RecipeService recipeService, RecipeLikesService recipeLikesService, TravelService travelService, TripLikesService tripLikesService, GoalService goalService, GoalLikesService goalLikesService) {
         this.userService = userService;
         this.bookService = bookService;
         this.bookLikesService = bookLikesService;
+        this.bookFavoriteService = bookFavoriteService;
         this.mediaService = mediaService;
         this.mediaLikesService = mediaLikesService;
         this.recipeService = recipeService;
@@ -138,6 +141,12 @@ public class IndexController {
             long count = bookLikesService.getLikeCount(b.getId());
             bookLikeCounts.put(b.getId(), count);
         }
+        // For each book, retrieve its favorite count
+        Map<UUID, Long> bookFavoriteCounts = new HashMap<>();
+        for (Book b : sharedBooks) {
+            long favCount = bookFavoriteService.getFavoriteCount(b.getId());
+            bookFavoriteCounts.put(b.getId(), favCount);
+        }
 
         // MEDIA
         List<Media> allMedia = mediaService.getAllMedia();
@@ -165,7 +174,7 @@ public class IndexController {
         List<Travel> allTrips = travelService.getAllTrips();
         List<Travel> sharedTrips = travelService.getSharedTrips(user);
 
-//        // For each trip, retrieve its like count
+        // For each trip, retrieve its like count
         Map<UUID, Long> tripLikeCounts = new HashMap<>();
         for (Travel t : sharedTrips) {
             long count = tripLikesService.getLikeCount(t.getId());
@@ -183,6 +192,7 @@ public class IndexController {
             goalLikeCounts.put(g.getId(), count);
         }
 
+
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("home");
         modelAndView.addObject("user", user);
@@ -190,6 +200,7 @@ public class IndexController {
         modelAndView.addObject("allBooks", allBooks);
         modelAndView.addObject("sharedBooks", sharedBooks);
         model.addAttribute("bookLikeCounts", bookLikeCounts);
+        model.addAttribute("bookFavoriteCounts", bookFavoriteCounts);
         // MEDIA
         modelAndView.addObject("allMedia", allMedia);
         modelAndView.addObject("sharedMedia", sharedMedia);
@@ -209,6 +220,29 @@ public class IndexController {
 
 
         return modelAndView;
+    }
+
+    @GetMapping("/favorites")
+    public String getFavoritesPage(Model model, HttpSession session) {
+        model.addAttribute("pageTitle", "LifeHub Favorites");
+        UUID userId = (UUID) session.getAttribute("user_id");
+        User user = userService.getById(userId);
+        List<Book> favoriteBooks = bookFavoriteService.getFavoritesByUser(user);
+        model.addAttribute("favoriteBooks", favoriteBooks);
+        model.addAttribute("pageTitle", "LifeHub Favorites");
+        return "favorites";
+    }
+
+    @GetMapping("/pending-approval")
+    public String getPendingApprovalPage(Model model) {
+        model.addAttribute("pageTitle", "Pending Approval");
+        return "pending-approval";
+    }
+
+    @GetMapping("/all-users")
+    public String getAllUsersPage(Model model) {
+        model.addAttribute("pageTitle", "All Users");
+        return "all-users";
     }
 
     @GetMapping("/logout")

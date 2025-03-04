@@ -30,10 +30,12 @@
                          class="section-icon">
                     Books
                 </summary>
-                <div class="post-card">
+                <div class="post-card" th:each="book : ${favoriteBooks}" th:attr="data-book-id=${book.id}">
                     <div class="post-info">
-                        <p><strong>@User123</strong> shared a book:</p>
-                        <p>"The Midnight Library" by Matt Haig</p>
+                        <p>
+                            "<span th:text="${book.title}"></span>" by
+                            <span th:text="${book.author}"></span>
+                        </p>
                     </div>
                     <div class="post-actions">
                         <button class="like-btn">
@@ -156,7 +158,8 @@
         </div>
     </div>
 </div>
-<script src="/js/home.js"></script>
+<script src="/js/likes.js"></script>
+<script src="/js/favorites.js"></script>
 <footer th:replace="~{fragments/commons :: footer}"></footer>
 </body>
 </html>
