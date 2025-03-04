@@ -15,18 +15,18 @@ import java.util.UUID;
 @RequestMapping("/api/books")
 public class BookFavoriteController {
 
-    private final BookFavoriteService favoriteService;
+    private final BookFavoriteService bookFavoriteService;
 
     @Autowired
     public BookFavoriteController(BookFavoriteService favoriteService) {
-        this.favoriteService = favoriteService;
+        this.bookFavoriteService = favoriteService;
     }
 
     @PostMapping("/{bookId}/favorite")
     public Map<String, Object> toggleBookFavorite(@PathVariable UUID bookId, HttpSession session) {
         UUID userId = (UUID) session.getAttribute("user_id");
-        boolean isFavorited = favoriteService.toggleFavorite(bookId, userId);
-        long newCount = favoriteService.getFavoriteCount(bookId);
+        boolean isFavorited = bookFavoriteService.toggleFavorite(bookId, userId);
+        long newCount = bookFavoriteService.getFavoriteCount(bookId);
 
         return Map.of(
                 "favorited", isFavorited,

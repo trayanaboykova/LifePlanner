@@ -16,25 +16,25 @@ import java.util.stream.Collectors;
 
 @Service
 public class BookFavoriteService {
-    private final BookFavoriteRepository favoriteRepository;
+    private final BookFavoriteRepository bookFavoriteRepository;
     private final BookRepository bookRepository;
     private final UserRepository userRepository;
 
     @Autowired
     public BookFavoriteService(BookFavoriteRepository favoriteRepository, BookRepository bookRepository, UserRepository userRepository) {
-        this.favoriteRepository = favoriteRepository;
+        this.bookFavoriteRepository = favoriteRepository;
         this.bookRepository = bookRepository;
         this.userRepository = userRepository;
     }
 
     public long getFavoriteCount(UUID bookId) {
-        return favoriteRepository.countByBookId(bookId);
+        return bookFavoriteRepository.countByBookId(bookId);
     }
 
     public boolean toggleFavorite(UUID bookId, UUID userId) {
         BookFavoriteId favoriteId = new BookFavoriteId(bookId, userId);
-        if (favoriteRepository.existsById(favoriteId)) {
-            favoriteRepository.deleteById(favoriteId);
+        if (bookFavoriteRepository.existsById(favoriteId)) {
+            bookFavoriteRepository.deleteById(favoriteId);
             return false; // now unfavorited
         } else {
             Book book = bookRepository.findById(bookId)
@@ -46,13 +46,13 @@ public class BookFavoriteService {
             favorite.setId(favoriteId);
             favorite.setBook(book);
             favorite.setUser(user);
-            favoriteRepository.save(favorite);
+            bookFavoriteRepository.save(favorite);
             return true; // now favorited
         }
     }
 
     public List<Book> getFavoritesByUser(User user) {
-        List<BookFavorite> favorites = favoriteRepository.findAllByUser(user);
+        List<BookFavorite> favorites = bookFavoriteRepository.findAllByUser(user);
         return favorites.stream()
                 .map(BookFavorite::getBook)
                 .collect(Collectors.toList());

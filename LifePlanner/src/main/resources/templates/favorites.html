@@ -8,7 +8,7 @@
 <header>
     <nav class="books-nav">
             <div class="books-header-left">
-                <h1>User’s LifeHub Favorites</h1>
+                <h1 th:text="${user.username}">’s LifeHub Favorites</h1>
             </div>
         <div class="books-header-right">
             <a href="/home" class="back-home">
@@ -38,11 +38,6 @@
                         </p>
                     </div>
                     <div class="post-actions">
-                        <button class="like-btn">
-                            <img src="https://img.icons8.com/?size=100&id=80137&format=png&color=000000"
-                                 alt="Like Icon">
-                            <span class="like-count">0</span> <!-- Default count -->
-                        </button>
                         <button class="favorite-btn">
                             <img src="https://img.icons8.com/?size=100&id=46336&format=png&color=000000"
                                  alt="Favorite Icon">
@@ -58,17 +53,13 @@
                          class="section-icon">
                     Movies / TV Shows
                 </summary>
-                <div class="post-card">
+                <div class="post-card" th:each="media : ${favoriteMedia}" th:attr="data-media-id=${media.id}">
                     <div class="post-info">
-                        <p><strong>@Oscar</strong> shared a movie/tv-show:</p>
-                        <p>"Currently watching..."</p>
+                        <p>
+                           <span th:text="${media.type != null ? media.type.label : 'Default Type'}"></span>: "<span th:text="${media.title}"></span>"
+                        </p>
                     </div>
                     <div class="post-actions">
-                        <button class="like-btn">
-                            <img src="https://img.icons8.com/?size=100&id=80137&format=png&color=000000"
-                                 alt="Like Icon">
-                            <span class="like-count">0</span> <!-- Default count -->
-                        </button>
                         <button class="favorite-btn">
                             <img src="https://img.icons8.com/?size=100&id=46336&format=png&color=000000"
                                  alt="Favorite Icon">
