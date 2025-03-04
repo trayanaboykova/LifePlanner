@@ -1,7 +1,7 @@
-package lifeplanner.web;
+package lifeplanner.web.goals;
 
 import jakarta.servlet.http.HttpSession;
-import lifeplanner.travel.service.TripLikesService;
+import lifeplanner.goals.service.GoalLikesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -12,21 +12,22 @@ import java.util.Map;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("api/trips")
-public class TripLikesController {
-    private final TripLikesService tripLikesService;
+@RequestMapping("/api/goals")
+public class GoalLikesController {
+
+    private final GoalLikesService goalLikesService;
 
     @Autowired
-    public TripLikesController(TripLikesService tripLikesService) {
-        this.tripLikesService = tripLikesService;
+    public GoalLikesController(GoalLikesService goalLikesService) {
+        this.goalLikesService = goalLikesService;
     }
 
-    @PostMapping("/{tripId}/like")
-    public Map<String, Object> toggleTripLike(@PathVariable UUID tripId,
+    @PostMapping("/{goalId}/like")
+    public Map<String, Object> toggleGoalLike(@PathVariable UUID goalId,
                                               HttpSession session) {
         UUID userId = (UUID) session.getAttribute("user_id");
-        boolean isLiked = tripLikesService.toggleLike(tripId, userId);
-        long newCount = tripLikesService.getLikeCount(tripId);
+        boolean isLiked = goalLikesService.toggleLike(goalId, userId);
+        long newCount = goalLikesService.getLikeCount(goalId);
 
         // Return JSON with new state & count
         return Map.of(
@@ -34,4 +35,6 @@ public class TripLikesController {
                 "likeCount", newCount
         );
     }
+
+
 }

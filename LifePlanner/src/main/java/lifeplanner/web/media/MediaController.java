@@ -1,4 +1,4 @@
-package lifeplanner.web;
+package lifeplanner.web.media;
 
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;

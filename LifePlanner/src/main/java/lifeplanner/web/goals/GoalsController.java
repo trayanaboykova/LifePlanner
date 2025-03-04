@@ -1,15 +1,12 @@
-package lifeplanner.web;
+package lifeplanner.web.goals;
 
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
-import lifeplanner.books.model.Book;
 import lifeplanner.goals.model.Goal;
 import lifeplanner.goals.service.GoalService;
 import lifeplanner.user.model.User;
 import lifeplanner.user.service.UserService;
-import lifeplanner.web.dto.AddBookRequest;
 import lifeplanner.web.dto.AddGoalRequest;
-import lifeplanner.web.dto.EditBookRequest;
 import lifeplanner.web.dto.EditGoalRequest;
 import lifeplanner.web.mapper.DTOMapper;
 import org.springframework.beans.factory.annotation.Autowired;

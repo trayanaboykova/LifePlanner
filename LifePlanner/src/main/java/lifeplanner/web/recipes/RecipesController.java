@@ -1,15 +1,12 @@
-package lifeplanner.web;
+package lifeplanner.web.recipes;
 
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
-import lifeplanner.books.model.Book;
 import lifeplanner.recipes.model.Recipe;
 import lifeplanner.recipes.service.RecipeService;
 import lifeplanner.user.model.User;
 import lifeplanner.user.service.UserService;
-import lifeplanner.web.dto.AddBookRequest;
 import lifeplanner.web.dto.AddRecipeRequest;
-import lifeplanner.web.dto.EditBookRequest;
 import lifeplanner.web.dto.EditRecipeRequest;
 import lifeplanner.web.mapper.DTOMapper;
 import org.springframework.beans.factory.annotation.Autowired;

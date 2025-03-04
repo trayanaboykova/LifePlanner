@@ -1,7 +1,7 @@
-package lifeplanner.web;
+package lifeplanner.web.books;
 
 import jakarta.servlet.http.HttpSession;
-import lifeplanner.media.service.MediaLikesService;
+import lifeplanner.books.service.BookLikesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -12,21 +12,21 @@ import java.util.Map;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/api/media")
-public class MediaLikesController {
-    private final MediaLikesService mediaLikesService;
+@RequestMapping("/api/books")
+public class BookLikesController {
+    private final BookLikesService bookLikesService;
 
     @Autowired
-    public MediaLikesController(MediaLikesService mediaLikesService) {
-        this.mediaLikesService = mediaLikesService;
+    public BookLikesController(BookLikesService booklikesService) {
+        this.bookLikesService = booklikesService;
     }
 
-    @PostMapping("/{mediaId}/like")
-    public Map<String, Object> toggleMediaLike(@PathVariable UUID mediaId,
+    @PostMapping("/{bookId}/like")
+    public Map<String, Object> toggleBookLike(@PathVariable UUID bookId,
                                           HttpSession session) {
         UUID userId = (UUID) session.getAttribute("user_id");
-        boolean isLiked = mediaLikesService.toggleLike(mediaId, userId);
-        long newCount = mediaLikesService.getLikeCount(mediaId);
+        boolean isLiked = bookLikesService.toggleLike(bookId, userId);
+        long newCount = bookLikesService.getLikeCount(bookId);
 
         // Return JSON with new state & count
         return Map.of(
@@ -34,6 +34,4 @@ public class MediaLikesController {
                 "likeCount", newCount
         );
     }
-
-
 }
