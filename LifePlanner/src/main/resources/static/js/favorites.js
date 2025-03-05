@@ -1,19 +1,19 @@
 // BOOK FAVORITES
-document.querySelectorAll(".favorite-btn").forEach(btn => {
+document.querySelectorAll("[data-book-id] .favorite-btn").forEach(btn => {
     btn.addEventListener("click", function () {
         const postCard = this.closest(".post-card");
         const bookId = postCard.getAttribute("data-book-id");
         const img = this.querySelector("img");
         const countSpan = postCard.querySelector(".favorite-count");
 
-        // Send POST request to toggle favorite
+        // Send POST request to toggle favorite for books
         fetch(`/api/books/${bookId}/favorite`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' }
         })
             .then(response => response.json())
             .then(data => {
-                // Expected response: { favorited: true/false, favoriteCount: number }
+                // data => { favorited: true/false, favoriteCount: number }
                 const isFavorited = data.favorited;
                 const newCount = data.favoriteCount;
 
@@ -37,7 +37,7 @@ document.querySelectorAll(".favorite-btn").forEach(btn => {
 document.querySelectorAll("[data-media-id] .favorite-btn").forEach(btn => {
     btn.addEventListener("click", function () {
         const postCard = this.closest(".post-card");
-        const mediaId = postCard.getAttribute("data-media-id"); // Expecting media ID here
+        const mediaId = postCard.getAttribute("data-media-id");
         const img = this.querySelector("img");
         const countSpan = postCard.querySelector(".favorite-count");
 
@@ -48,19 +48,19 @@ document.querySelectorAll("[data-media-id] .favorite-btn").forEach(btn => {
         })
             .then(response => response.json())
             .then(data => {
-                // Expected response: { favorited: true/false, favoriteCount: number }
+                // data => { favorited: true/false, favoriteCount: number }
                 const isFavorited = data.favorited;
                 const newCount = data.favoriteCount;
 
                 // Update the count display
                 countSpan.textContent = newCount;
 
-                // Update the star icon based on favorite state
+                // Update the star icon
                 if (isFavorited) {
-                    img.src = "https://img.icons8.com/?size=100&id=46336&format=png&color=FFD700"; // Gold star for favorited
+                    img.src = "https://img.icons8.com/?size=100&id=46336&format=png&color=FFD700";
                     img.classList.add("favorited");
                 } else {
-                    img.src = "https://img.icons8.com/?size=100&id=46336&format=png&color=000000"; // Default star for unfavorited
+                    img.src = "https://img.icons8.com/?size=100&id=46336&format=png&color=000000";
                     img.classList.remove("favorited");
                 }
             })
@@ -76,26 +76,22 @@ document.querySelectorAll("[data-recipe-id] .favorite-btn").forEach(btn => {
         const img = this.querySelector("img");
         const countSpan = postCard.querySelector(".favorite-count");
 
-        // Send POST request to toggle favorite for the recipe
+        // Send POST request to toggle favorite for recipes
         fetch(`/api/recipes/${recipeId}/favorite`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' }
         })
             .then(response => response.json())
             .then(data => {
-                // Expected response: { favorited: true/false, favoriteCount: number }
                 const isFavorited = data.favorited;
                 const newCount = data.favoriteCount;
 
-                // Update the count display
                 countSpan.textContent = newCount;
-
-                // Update the star icon based on favorite state
                 if (isFavorited) {
-                    img.src = "https://img.icons8.com/?size=100&id=46336&format=png&color=FFD700"; // Gold star for favorited
+                    img.src = "https://img.icons8.com/?size=100&id=46336&format=png&color=FFD700";
                     img.classList.add("favorited");
                 } else {
-                    img.src = "https://img.icons8.com/?size=100&id=46336&format=png&color=000000"; // Default star for unfavorited
+                    img.src = "https://img.icons8.com/?size=100&id=46336&format=png&color=000000";
                     img.classList.remove("favorited");
                 }
             })
@@ -111,26 +107,22 @@ document.querySelectorAll("[data-trip-id] .favorite-btn").forEach(btn => {
         const img = this.querySelector("img");
         const countSpan = postCard.querySelector(".favorite-count");
 
-        // Send POST request to toggle favorite for the trip
+        // Send POST request to toggle favorite for trips
         fetch(`/api/trips/${tripId}/favorite`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' }
         })
             .then(response => response.json())
             .then(data => {
-                // Expected response: { favorited: true/false, favoriteCount: number }
                 const isFavorited = data.favorited;
                 const newCount = data.favoriteCount;
 
-                // Update the count display
                 countSpan.textContent = newCount;
-
-                // Update the star icon based on favorite state
                 if (isFavorited) {
-                    img.src = "https://img.icons8.com/?size=100&id=46336&format=png&color=FFD700"; // Gold star for favorited
+                    img.src = "https://img.icons8.com/?size=100&id=46336&format=png&color=FFD700";
                     img.classList.add("favorited");
                 } else {
-                    img.src = "https://img.icons8.com/?size=100&id=46336&format=png&color=000000"; // Default white star for unfavorited
+                    img.src = "https://img.icons8.com/?size=100&id=46336&format=png&color=000000";
                     img.classList.remove("favorited");
                 }
             })
