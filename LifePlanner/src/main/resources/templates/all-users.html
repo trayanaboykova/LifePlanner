@@ -48,14 +48,14 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr>
-                    <td>001</td>
-                    <td>terra</td>
-                    <td>John</td>
-                    <td>Doe</td>
-                    <td>johndoe@example.com</td>
-                    <td>10 Jan 2024</td>
-                    <td>Admin</td>
+                <tr th:each="user : ${users}">
+                    <td th:text="${user.id}"></td>
+                    <td th:text="${user.username}"></td>
+                    <td th:text="${user.firstName}"></td>
+                    <td th:text="${user.lastName}"></td>
+                    <td th:text="${user.email}"></td>
+                    <td th:text="${#temporals.format(user.registrationDate, 'dd MMM yyyy', T(java.util.Locale).ENGLISH)}"></td>
+                    <td th:text="${user.role}"></td>
                     <td><button class="change-role-btn">Change Role</button></td>
                     <td><span class="status active">Active</span></td>
                     <td><button class="switch-status-btn">Switch Status</button></td>

@@ -1,6 +1,7 @@
 package lifeplanner.web;
 
 import jakarta.validation.Valid;
+import lifeplanner.security.RequireAdminRole;
 import lifeplanner.user.model.User;
 import lifeplanner.user.service.UserService;
 import lifeplanner.web.dto.UserEditRequest;
@@ -12,6 +13,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.List;
 import java.util.UUID;
 
 @Controller
@@ -57,4 +59,17 @@ public class UserController {
 
         return new ModelAndView("redirect:/home");
     }
+
+    @RequireAdminRole
+    @GetMapping("all-users")
+    public ModelAndView getAllUsers() {
+
+        List<User> users = userService.getAllUsers();
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("all-users");
+        modelAndView.addObject("users", users);
+
+        return modelAndView;
+    }
+
 }
