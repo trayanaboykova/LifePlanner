@@ -46,4 +46,7 @@ public class Media {
     @OneToMany(mappedBy = "media", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<MediaLikes> likes;
 
+    @OneToMany(mappedBy = "media", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<MediaFavorite> favorites;
+
 }

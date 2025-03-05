@@ -293,11 +293,11 @@
                    th:classappend="${goalLikeCounts[goal.id]} > 0 ? 'liked' : ''">
               <span class="like-count" th:text="${goalLikeCounts[goal.id]}"></span>
             </button>
-<!--            <button class="favorite-btn">-->
-<!--              <img src="https://img.icons8.com/?size=100&id=46336&format=png&color=000000" alt="Favorite Icon"-->
-<!--                   th:classappend="${goalFavoriteCounts[goal.id]} > 0 ? 'favorited' : ''">-->
-<!--              <span class="favorite-count" th:text="${goalFavoriteCounts[goal.id]}"></span>-->
-<!--            </button>-->
+            <button class="favorite-btn">
+              <img src="https://img.icons8.com/?size=100&id=46336&format=png&color=000000" alt="Favorite Icon"
+                   th:classappend="${goalFavoriteCounts[goal.id]} > 0 ? 'favorited' : ''">
+              <span class="favorite-count" th:text="${goalFavoriteCounts[goal.id]}"></span>
+            </button>
           </div>
         </div>
       </details>

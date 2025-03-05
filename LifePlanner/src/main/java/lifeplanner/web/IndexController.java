@@ -7,6 +7,7 @@ import lifeplanner.books.service.BookFavoriteService;
 import lifeplanner.books.service.BookLikesService;
 import lifeplanner.books.service.BookService;
 import lifeplanner.goals.model.Goal;
+import lifeplanner.goals.service.GoalFavoriteService;
 import lifeplanner.goals.service.GoalLikesService;
 import lifeplanner.goals.service.GoalService;
 import lifeplanner.media.model.Media;
@@ -56,9 +57,10 @@ public class IndexController {
     private final TripFavoriteService tripFavoriteService;
     private final GoalService goalService;
     private final GoalLikesService goalLikesService;
+    private final GoalFavoriteService goalFavoriteService;
 
     @Autowired
-    public IndexController(UserService userService, BookService bookService, BookLikesService bookLikesService, BookFavoriteService bookFavoriteService, MediaService mediaService, MediaLikesService mediaLikesService, MediaFavoriteService mediaFavoriteService, RecipeService recipeService, RecipeLikesService recipeLikesService, RecipeFavoriteService recipeFavoriteService, TravelService travelService, TripLikesService tripLikesService, TripFavoriteService tripFavoriteService, GoalService goalService, GoalLikesService goalLikesService) {
+    public IndexController(UserService userService, BookService bookService, BookLikesService bookLikesService, BookFavoriteService bookFavoriteService, MediaService mediaService, MediaLikesService mediaLikesService, MediaFavoriteService mediaFavoriteService, RecipeService recipeService, RecipeLikesService recipeLikesService, RecipeFavoriteService recipeFavoriteService, TravelService travelService, TripLikesService tripLikesService, TripFavoriteService tripFavoriteService, GoalService goalService, GoalLikesService goalLikesService, GoalFavoriteService goalFavoriteService) {
         this.userService = userService;
         this.bookService = bookService;
         this.bookLikesService = bookLikesService;
@@ -74,6 +76,7 @@ public class IndexController {
         this.tripFavoriteService = tripFavoriteService;
         this.goalService = goalService;
         this.goalLikesService = goalLikesService;
+        this.goalFavoriteService = goalFavoriteService;
     }
 
     @GetMapping("/")
@@ -222,6 +225,13 @@ public class IndexController {
             goalLikeCounts.put(g.getId(), count);
         }
 
+        // For each goal, retrieve its favorite count
+        Map<UUID, Long> goalFavoriteCounts = new HashMap<>();
+        for (Goal g : sharedGoals) {
+            long count = goalFavoriteService.getFavoriteCount(g.getId());
+            goalFavoriteCounts.put(g.getId(), count);
+        }
+
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("home");
         modelAndView.addObject("user", user);
@@ -249,6 +259,7 @@ public class IndexController {
         modelAndView.addObject("allGoals", allGoals);
         modelAndView.addObject("sharedGoals", sharedGoals);
         model.addAttribute("goalLikeCounts", goalLikeCounts);
+        model.addAttribute("goalFavoriteCounts", goalFavoriteCounts);
 
 
         return modelAndView;
@@ -275,6 +286,10 @@ public class IndexController {
         // TRIPS
         List<Travel> favoriteTrip = tripFavoriteService.getFavoritesByUser(user);
         model.addAttribute("favoriteTrip", favoriteTrip);
+
+        // GOALS
+        List<Goal> favoriteGoal = goalFavoriteService.getFavoritesByUser(user);
+        model.addAttribute("favoriteGoal", favoriteGoal);
 
         model.addAttribute("user", user);
         return "favorites";
