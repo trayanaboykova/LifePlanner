@@ -3,6 +3,7 @@
       xmlns:th="http://www.thymeleaf.org">
 <head th:replace="~{fragments/commons :: head}">
   <title th:text="${pageTitle}"></title>
+</head>
 <body>
 <header>
   <nav class="homepage-nav">
@@ -28,7 +29,6 @@
     <h2>LifePlanner</h2>
     <div class="profile">
       <img th:src="${#strings.isEmpty(user.profilePicture) ? 'https://img.icons8.com/?size=100&id=txmnrJwlctOz&format=png&color=000000' : user.profilePicture}" alt="Profile Picture">
-
       <div class="user-info">
         <p th:text="${user.firstName}"></p>
         <p th:text="${user.lastName}"></p>
@@ -200,7 +200,7 @@
             </button>
             <button class="favorite-btn">
               <img src="https://img.icons8.com/?size=100&id=46336&format=png&color=000000" alt="Favorite Icon"
-                   th:classappend="${mediaFavoriteCounts[media.id]} > 0 ? 'liked' : ''">
+                   th:classappend="${mediaFavoriteCounts[media.id]} > 0 ? 'favorited' : ''">
               <span class="favorite-count" th:text="${mediaFavoriteCounts[media.id]}"></span>
             </button>
           </div>
@@ -232,7 +232,6 @@
             <p>Instructions:</p>
             <p th:text="${recipe.instructions}"></p>
           </div>
-
           <div class="post-actions">
             <button class="like-btn">
               <img src="https://img.icons8.com/?size=100&id=80137&format=png&color=000000" alt="Like Icon"
@@ -241,7 +240,7 @@
             </button>
             <button class="favorite-btn">
               <img src="https://img.icons8.com/?size=100&id=46336&format=png&color=000000" alt="Favorite Icon"
-                   th:classappend="${recipeFavoriteCounts[recipe.id]} > 0 ? 'liked' : ''">
+                   th:classappend="${recipeFavoriteCounts[recipe.id]} > 0 ? 'favorited' : ''">
               <span class="favorite-count" th:text="${recipeFavoriteCounts[recipe.id]}"></span>
             </button>
           </div>
@@ -268,7 +267,7 @@
             </button>
             <button class="favorite-btn">
               <img src="https://img.icons8.com/?size=100&id=46336&format=png&color=000000" alt="Favorite Icon"
-                   th:classappend="${tripFavoriteCounts[trip.id]} > 0 ? 'liked' : ''">
+                   th:classappend="${tripFavoriteCounts[trip.id]} > 0 ? 'favorited' : ''">
               <span class="favorite-count" th:text="${tripFavoriteCounts[trip.id]}"></span>
             </button>
           </div>
@@ -285,8 +284,8 @@
             <p>
               <strong>@</strong><strong th:text="${goal.owner.username}"></strong> shared a goal:
               <span th:text="${goal.goalName}"></span>
-            <br>
-              <p>Progress: </p><span class="goal-span" th:text="${goal.status.label}"></span>
+              <br>
+            <p>Progress: </p><span class="goal-span" th:text="${goal.status.label}"></span>
           </div>
           <div class="post-actions">
             <button class="like-btn">
@@ -294,10 +293,11 @@
                    th:classappend="${goalLikeCounts[goal.id]} > 0 ? 'liked' : ''">
               <span class="like-count" th:text="${goalLikeCounts[goal.id]}"></span>
             </button>
-            <button class="favorite-btn">
-              <img src="https://img.icons8.com/?size=100&id=46336&format=png&color=000000" alt="Favorite Icon">
-              <span class="favorite-count">0</span> <!-- Default count -->
-            </button>
+<!--            <button class="favorite-btn">-->
+<!--              <img src="https://img.icons8.com/?size=100&id=46336&format=png&color=000000" alt="Favorite Icon"-->
+<!--                   th:classappend="${goalFavoriteCounts[goal.id]} > 0 ? 'favorited' : ''">-->
+<!--              <span class="favorite-count" th:text="${goalFavoriteCounts[goal.id]}"></span>-->
+<!--            </button>-->
           </div>
         </div>
       </details>
