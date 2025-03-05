@@ -114,10 +114,11 @@
                          class="section-icon">
                     Travel Plans
                 </summary>
-                <div class="post-card">
+                <div class="post-card" th:each="trip : ${favoriteTrip}" th:attr="data-trip-id=${trip.id}">
                     <div class="post-info">
-                        <p><strong>@GlobeTrotter</strong> shared a travel plan:</p>
-                        <p>"Trip to Bali - March 2025"</p>
+                        <p>
+                            "<span th:text="${trip.tripName}"></span>" in "<span th:text="${trip.destination}"></span>"
+                        </p>
                     </div>
                     <div class="post-actions">
                         <button class="like-btn">

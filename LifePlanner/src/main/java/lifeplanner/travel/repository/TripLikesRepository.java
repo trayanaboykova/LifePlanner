@@ -1,6 +1,5 @@
 package lifeplanner.travel.repository;
 
-import lifeplanner.books.model.BookLikesId;
 import lifeplanner.travel.model.TripLikes;
 import lifeplanner.travel.model.TripLikesId;
 import org.springframework.data.jpa.repository.JpaRepository;

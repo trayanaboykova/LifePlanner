@@ -1,8 +1,5 @@
 package lifeplanner.travel.service;
 
-import lifeplanner.books.model.Book;
-import lifeplanner.books.model.BookLikes;
-import lifeplanner.books.model.BookLikesId;
 import lifeplanner.travel.model.Travel;
 import lifeplanner.travel.model.TripLikes;
 import lifeplanner.travel.model.TripLikesId;

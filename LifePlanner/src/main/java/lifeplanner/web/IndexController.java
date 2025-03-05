@@ -19,6 +19,7 @@ import lifeplanner.recipes.service.RecipeLikesService;
 import lifeplanner.recipes.service.RecipeService;
 import lifeplanner.travel.model.Travel;
 import lifeplanner.travel.service.TravelService;
+import lifeplanner.travel.service.TripFavoriteService;
 import lifeplanner.travel.service.TripLikesService;
 import lifeplanner.user.model.User;
 import lifeplanner.user.service.UserService;
@@ -52,11 +53,12 @@ public class IndexController {
     private final RecipeFavoriteService recipeFavoriteService;
     private final TravelService travelService;
     private final TripLikesService tripLikesService;
+    private final TripFavoriteService tripFavoriteService;
     private final GoalService goalService;
     private final GoalLikesService goalLikesService;
 
     @Autowired
-    public IndexController(UserService userService, BookService bookService, BookLikesService bookLikesService, BookFavoriteService bookFavoriteService, MediaService mediaService, MediaLikesService mediaLikesService, MediaFavoriteService mediaFavoriteService, RecipeService recipeService, RecipeLikesService recipeLikesService, RecipeFavoriteService recipeFavoriteService, TravelService travelService, TripLikesService tripLikesService, GoalService goalService, GoalLikesService goalLikesService) {
+    public IndexController(UserService userService, BookService bookService, BookLikesService bookLikesService, BookFavoriteService bookFavoriteService, MediaService mediaService, MediaLikesService mediaLikesService, MediaFavoriteService mediaFavoriteService, RecipeService recipeService, RecipeLikesService recipeLikesService, RecipeFavoriteService recipeFavoriteService, TravelService travelService, TripLikesService tripLikesService, TripFavoriteService tripFavoriteService, GoalService goalService, GoalLikesService goalLikesService) {
         this.userService = userService;
         this.bookService = bookService;
         this.bookLikesService = bookLikesService;
@@ -69,6 +71,7 @@ public class IndexController {
         this.recipeFavoriteService = recipeFavoriteService;
         this.travelService = travelService;
         this.tripLikesService = tripLikesService;
+        this.tripFavoriteService = tripFavoriteService;
         this.goalService = goalService;
         this.goalLikesService = goalLikesService;
     }
@@ -201,6 +204,13 @@ public class IndexController {
             tripLikeCounts.put(t.getId(), count);
         }
 
+        // For each trip, retrieve its favorite count
+        Map<UUID, Long> tripFavoriteCounts = new HashMap<>();
+        for (Travel t : sharedTrips) {
+            long count = tripFavoriteService.getFavoriteCount(t.getId());
+            tripFavoriteCounts.put(t.getId(), count);
+        }
+
         // GOALS
         List<Goal> allGoals = goalService.getAllGoals();
         List<Goal> sharedGoals = goalService.getSharedGoals(user);
@@ -234,6 +244,7 @@ public class IndexController {
         modelAndView.addObject("allTrips", allTrips);
         modelAndView.addObject("sharedTrips", sharedTrips);
         model.addAttribute("tripLikeCounts", tripLikeCounts);
+        model.addAttribute("tripFavoriteCounts", tripFavoriteCounts);
         // GOALS
         modelAndView.addObject("allGoals", allGoals);
         modelAndView.addObject("sharedGoals", sharedGoals);
@@ -260,6 +271,10 @@ public class IndexController {
         // RECIPES
         List<Recipe> favoriteRecipe = recipeFavoriteService.getFavoritesByUser(user);
         model.addAttribute("favoriteRecipe", favoriteRecipe);
+
+        // TRIPS
+        List<Travel> favoriteTrip = tripFavoriteService.getFavoritesByUser(user);
+        model.addAttribute("favoriteTrip", favoriteTrip);
 
         model.addAttribute("user", user);
         return "favorites";
