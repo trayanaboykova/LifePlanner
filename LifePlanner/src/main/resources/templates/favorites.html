@@ -35,7 +35,7 @@
                 <div class="post-card" th:each="book : ${favoriteBooks}" th:attr="data-book-id=${book.id}">
                     <div class="post-info">
                         <p>
-                            "<span th:text="${book.title}"></span>" by
+                            Book: "<span th:text="${book.title}"></span>" by
                             <span th:text="${book.author}"></span>
                         </p>
                     </div>
@@ -67,7 +67,7 @@
                 <div class="post-card" th:each="recipe : ${favoriteRecipe}" th:attr="data-recipe-id=${recipe.id}">
                     <div class="post-info-recipes">
                         <p>
-                            "<span th:text="${recipe.name}"></span>"
+                            Recipe: "<span th:text="${recipe.name}"></span>"
                         </p>
                         <br>
                         <p>Ingredients:</p>
@@ -92,7 +92,7 @@
                 <div class="post-card" th:each="trip : ${favoriteTrip}" th:attr="data-trip-id=${trip.id}">
                     <div class="post-info">
                         <p>
-                            "<span th:text="${trip.tripName}"></span>" in "<span th:text="${trip.destination}"></span>"
+                            Trip: "<span th:text="${trip.tripName}"></span>" in "<span th:text="${trip.destination}"></span>"
                         </p>
                     </div>
                 </div>
@@ -107,7 +107,7 @@
                 <div class="post-card" th:each="goal : ${favoriteGoal}" th:attr="data-goal-id=${goal.id}">
                     <div class="post-info-goals">
                         <p>
-                            <span th:text="${goal.goalName}"></span>
+                            Goal: <span th:text="${goal.goalName}"></span>
                         </p>
                     </div>
                 </div>

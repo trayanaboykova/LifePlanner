@@ -98,8 +98,7 @@
                 <div class="post-card" th:each="recipe : ${sharedRecipes}" th:attr="data-recipe-id=${recipe.id}">
                     <div class="post-info-recipes">
                         <p>
-                            <strong>@</strong>
-                            <strong th:text="${recipe.owner.username}"></strong>
+                            <strong>@</strong><strong th:text="${recipe.owner.username}"></strong>
                             shared a recipe:
                             "<span th:text="${recipe.name}"></span>"
                         </p>
@@ -175,7 +174,6 @@
                             <strong>@</strong><strong th:text="${goal.owner.username}"></strong> shared a goal:
                             <span th:text="${goal.goalName}"></span>
                             <br>
-                        <p>Progress: </p><span class="goal-span" th:text="${goal.status.label}"></span>
                         <!-- Display Approval Status -->
                         <p>
                             Approval Status:
