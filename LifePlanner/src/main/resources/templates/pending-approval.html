@@ -92,11 +92,13 @@
                              class="section-icon">
                         Travel Plans
                     </summary>
-                    <div class="post-card">
-                        <input type="checkbox" name="approve[]" value="travel-1" class="approve-checkbox">
+                    <div class="post-card" th:each="trip : ${pendingTravel}" th:attr="data-trip-id=${trip.id}">
+                        <input type="checkbox" name="selectedItems" th:value="'TRAVEL-' + ${trip.id}" class="approve-checkbox">
                         <div class="post-info">
-                            <p><strong>@GlobeTrotter</strong> shared a travel plan:</p>
-                            <p>"Trip to Bali - March 2025"</p>
+                            <p>
+                                <strong>@</strong><strong th:text="${trip.owner.username}"></strong> shared a trip:
+                                "<span th:text="${trip.tripName}"></span>" in "<span th:text="${trip.destination}"></span>"
+                            </p>
                         </div>
                     </div>
                 </details>

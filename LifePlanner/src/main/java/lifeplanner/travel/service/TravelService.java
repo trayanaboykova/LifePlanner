@@ -4,6 +4,7 @@ import jakarta.validation.Valid;
 import lifeplanner.books.model.Book;
 import lifeplanner.travel.model.Travel;
 import lifeplanner.travel.repository.TravelRepository;
+import lifeplanner.user.model.ApprovalStatus;
 import lifeplanner.user.model.User;
 import lifeplanner.web.dto.AddTripRequest;
 import lifeplanner.web.dto.EditTripRequest;
@@ -103,6 +104,18 @@ public class TravelService {
     }
 
     public List<Travel> getPendingTravel() {
-        return travelRepository.findAllByApprovedFalse();
+        return travelRepository.findAllByApprovalStatus(ApprovalStatus.PENDING);
+    }
+
+    public void approveTrip(UUID tripId) {
+        Travel trip = getTripById(tripId);
+        trip.setApprovalStatus(ApprovalStatus.APPROVED);
+        travelRepository.save(trip);
+    }
+
+    public void rejectTrip(UUID tripId) {
+        Travel trip = getTripById(tripId);
+        trip.setApprovalStatus(ApprovalStatus.REJECTED);
+        travelRepository.save(trip);
     }
 }

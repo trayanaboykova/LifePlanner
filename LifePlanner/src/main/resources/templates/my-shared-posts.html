@@ -149,6 +149,13 @@
                             <strong>@</strong><strong th:text="${trip.owner.username}"></strong> shared a trip:
                             "<span th:text="${trip.tripName}"></span>" in "<span th:text="${trip.destination}"></span>"
                         </p>
+                        <!-- Display Approval Status -->
+                        <p>
+                            Approval Status:
+                            <span th:text="${trip.approvalStatus}"
+                                  th:classappend="${trip.approvalStatus.name() == 'PENDING' ? 'status-pending' :
+                                  (trip.approvalStatus.name() == 'APPROVED' ? 'status-approved' : 'status-rejected')}"></span>
+                        </p>
                     </div>
                     <div class="post-actions">
                         <!-- Remove from shared form -->

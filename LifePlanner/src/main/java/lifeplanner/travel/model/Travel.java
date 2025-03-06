@@ -1,6 +1,7 @@
 package lifeplanner.travel.model;
 
 import jakarta.persistence.*;
+import lifeplanner.user.model.ApprovalStatus;
 import lifeplanner.user.model.User;
 import lombok.*;
 import java.time.LocalDate;
@@ -49,8 +50,9 @@ public class Travel {
 
     private boolean visible;
 
+    @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private boolean approved = false;
+    private ApprovalStatus approvalStatus = ApprovalStatus.PENDING;
 
     @OneToMany(mappedBy = "trip", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<TripLikes> likes;
