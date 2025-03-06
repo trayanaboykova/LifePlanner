@@ -87,5 +87,4 @@ public class UserController {
 
         return "redirect:/users/all-users";
     }
-
 }
