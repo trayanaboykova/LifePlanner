@@ -5,6 +5,7 @@ import lifeplanner.books.model.Book;
 import lifeplanner.recipes.model.Recipe;
 import lifeplanner.recipes.model.RecipeIngredient;
 import lifeplanner.recipes.repository.RecipeRepository;
+import lifeplanner.user.model.ApprovalStatus;
 import lifeplanner.user.model.User;
 import lifeplanner.web.dto.AddRecipeRequest;
 import lifeplanner.web.dto.EditRecipeRequest;
@@ -139,6 +140,18 @@ public class RecipeService {
     }
 
     public List<Recipe> getPendingRecipes() {
-        return recipeRepository.findAllByApprovedFalse();
+        return recipeRepository.findAllByApprovalStatus(ApprovalStatus.PENDING);
+    }
+
+    public void approveRecipe(UUID recipeId) {
+        Recipe recipe = getRecipeById(recipeId);
+        recipe.setApprovalStatus(ApprovalStatus.APPROVED);
+        recipeRepository.save(recipe);
+    }
+
+    public void rejectRecipe(UUID recipeId) {
+        Recipe recipe = getRecipeById(recipeId);
+        recipe.setApprovalStatus(ApprovalStatus.REJECTED);
+        recipeRepository.save(recipe);
     }
 }

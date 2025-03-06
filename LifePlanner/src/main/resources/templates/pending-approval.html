@@ -62,11 +62,25 @@
                              class="section-icon">
                         Recipes
                     </summary>
-                    <div class="post-card">
-                        <input type="checkbox" name="approve[]" value="recipe-1" class="approve-checkbox">
-                        <div class="post-info">
-                            <p><strong>@Foodie99</strong> shared a recipe:</p>
-                            <p>"Homemade Pizza - Best Recipe Ever!"</p>
+                    <div class="post-card" th:each="recipe : ${pendingRecipes}" th:attr="data-recipe-id=${recipe.id}">
+                        <input type="checkbox" name="selectedItems" th:value="'RECIPE-' + ${recipe.id}" class="approve-checkbox">
+                        <div class="post-info-recipes">
+                            <p>
+                                <strong>@</strong>
+                                <strong th:text="${recipe.owner.username}"></strong>
+                                shared a recipe:
+                                "<span th:text="${recipe.name}"></span>"
+                            </p>
+                            <br>
+                            <p>Ingredients:</p>
+                            <ul>
+                                <li th:each="ingredient : ${recipe.ingredients}"
+                                    th:text="|${ingredient.ingredientName} (${ingredient.quantity} ${ingredient.unit})|">
+                                </li>
+                            </ul>
+                            <br>
+                            <p>Instructions:</p>
+                            <p th:text="${recipe.instructions}"></p>
                         </div>
                     </div>
                 </details>

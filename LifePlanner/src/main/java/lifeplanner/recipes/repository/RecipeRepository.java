@@ -1,6 +1,7 @@
 package lifeplanner.recipes.repository;
 
 import lifeplanner.recipes.model.Recipe;
+import lifeplanner.user.model.ApprovalStatus;
 import lifeplanner.user.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
@@ -15,5 +16,5 @@ public interface RecipeRepository extends JpaRepository<Recipe, UUID> {
 
     List<Recipe> findAllByVisibleTrue();
 
-    List<Recipe> findAllByApprovedFalse();
+    List<Recipe> findAllByApprovalStatus(ApprovalStatus pending);
 }

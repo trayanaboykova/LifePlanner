@@ -117,6 +117,13 @@
                         <br>
                         <p>Instructions:</p>
                         <p th:text="${recipe.instructions}"></p>
+                        <!-- Display Approval Status -->
+                        <p>
+                            Approval Status:
+                            <span th:text="${recipe.approvalStatus}"
+                                  th:classappend="${recipe.approvalStatus.name() == 'PENDING' ? 'status-pending' :
+                                  (recipe.approvalStatus.name() == 'APPROVED' ? 'status-approved' : 'status-rejected')}"></span>
+                        </p>
                     </div>
                     <div class="post-actions">
                         <!-- Remove from shared form -->
