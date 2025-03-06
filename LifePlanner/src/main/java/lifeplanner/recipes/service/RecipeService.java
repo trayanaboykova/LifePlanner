@@ -138,4 +138,7 @@ public class RecipeService {
         recipeRepository.deleteById(id);
     }
 
+    public List<Recipe> getPendingRecipes() {
+        return recipeRepository.findAllByApprovedFalse();
+    }
 }

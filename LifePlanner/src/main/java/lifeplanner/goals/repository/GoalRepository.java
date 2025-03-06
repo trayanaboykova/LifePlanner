@@ -16,4 +16,5 @@ public interface GoalRepository extends JpaRepository<Goal, UUID> {
 
     List<Goal> findAllByVisibleTrue();
 
+    List<Goal> findAllByApprovedFalse();
 }

@@ -39,6 +39,13 @@
                             "<span th:text="${book.title}"></span>" by
                             <span th:text="${book.author}"></span>
                         </p>
+                        <!-- Display Approval Status -->
+                        <p>
+                            Approval Status:
+                            <span th:text="${book.approvalStatus}"
+                                  th:classappend="${book.approvalStatus.name() == 'PENDING' ? 'status-pending' :
+                                  (book.approvalStatus.name() == 'APPROVED' ? 'status-approved' : 'status-rejected')}"></span>
+                        </p>
                     </div>
                     <div class="post-actions">
                         <!-- Remove from shared form -->
@@ -51,6 +58,7 @@
                     </div>
                 </div>
             </details>
+
             <!-- Media Section -->
             <details class="toggle-section">
                 <summary>

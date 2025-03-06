@@ -102,4 +102,7 @@ public class TravelService {
         travelRepository.deleteById(id);
     }
 
+    public List<Travel> getPendingTravel() {
+        return travelRepository.findAllByApprovedFalse();
+    }
 }

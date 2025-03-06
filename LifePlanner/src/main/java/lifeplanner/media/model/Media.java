@@ -43,10 +43,12 @@ public class Media {
 
     private boolean visible;
 
+    @Column(nullable = false)
+    private boolean approved = false;
+
     @OneToMany(mappedBy = "media", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<MediaLikes> likes;
 
     @OneToMany(mappedBy = "media", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<MediaFavorite> favorites;
-
 }

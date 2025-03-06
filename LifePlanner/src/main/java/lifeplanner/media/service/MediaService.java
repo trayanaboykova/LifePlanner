@@ -96,4 +96,7 @@ public class MediaService {
         mediaRepository.deleteById(id);
     }
 
+    public List<Media> getPendingMedia() {
+        return mediaRepository.findAllByApprovedFalse();
+    }
 }

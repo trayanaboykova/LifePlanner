@@ -49,6 +49,9 @@ public class Travel {
 
     private boolean visible;
 
+    @Column(nullable = false)
+    private boolean approved = false;
+
     @OneToMany(mappedBy = "trip", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<TripLikes> likes;
 

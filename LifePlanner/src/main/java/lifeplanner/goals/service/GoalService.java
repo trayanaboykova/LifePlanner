@@ -109,4 +109,7 @@ public class GoalService {
         goalRepository.deleteById(id);
     }
 
+    public List<Goal> getPendingGoals() {
+        return goalRepository.findAllByApprovedFalse();
+    }
 }

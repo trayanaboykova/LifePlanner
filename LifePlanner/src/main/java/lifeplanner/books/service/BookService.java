@@ -2,6 +2,7 @@ package lifeplanner.books.service;
 
 import lifeplanner.books.model.Book;
 import lifeplanner.books.repository.BookRepository;
+import lifeplanner.user.model.ApprovalStatus;
 import lifeplanner.user.model.User;
 import lifeplanner.web.dto.AddBookRequest;
 import lifeplanner.web.dto.EditBookRequest;
@@ -31,6 +32,7 @@ public class BookService {
                 .genre(addBookRequest.getGenre())
                 .owner(user)
                 .visible(false)
+                .approvalStatus(ApprovalStatus.PENDING)
                 .build();
 
         bookRepository.save(book);
@@ -94,4 +96,20 @@ public class BookService {
         bookRepository.deleteById(id);
     }
 
+
+    public List<Book> getPendingBooks() {
+        return bookRepository.findAllByApprovalStatus(ApprovalStatus.PENDING);
+    }
+
+    public void approveBook(UUID bookId) {
+        Book book = getBookById(bookId);
+        book.setApprovalStatus(ApprovalStatus.APPROVED);
+        bookRepository.save(book);
+    }
+
+    public void rejectBook(UUID bookId) {
+        Book book = getBookById(bookId);
+        book.setApprovalStatus(ApprovalStatus.REJECTED);
+        bookRepository.save(book);
+    }
 }

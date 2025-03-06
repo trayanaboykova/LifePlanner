@@ -14,4 +14,6 @@ public interface RecipeRepository extends JpaRepository<Recipe, UUID> {
     List<Recipe> findAllByOwner(User owner);
 
     List<Recipe> findAllByVisibleTrue();
+
+    List<Recipe> findAllByApprovedFalse();
 }

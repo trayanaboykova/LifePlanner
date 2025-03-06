@@ -15,4 +15,6 @@ public interface TravelRepository extends JpaRepository<Travel, UUID> {
     List<Travel> findAllByOwner(User user);
 
     List<Travel> findAllByVisibleTrue();
+
+    List<Travel> findAllByApprovedFalse();
 }

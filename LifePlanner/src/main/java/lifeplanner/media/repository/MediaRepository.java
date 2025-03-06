@@ -15,4 +15,5 @@ public interface MediaRepository extends JpaRepository<Media, UUID> {
 
     List<Media> findAllByVisibleTrue();
 
+    List<Media> findAllByApprovedFalse();
 }

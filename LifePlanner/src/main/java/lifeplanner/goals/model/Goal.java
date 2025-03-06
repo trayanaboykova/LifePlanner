@@ -46,6 +46,9 @@ public class Goal {
 
     private boolean visible;
 
+    @Column(nullable = false)
+    private boolean approved = false;
+
     @Transient
     private String progressBar;
 

@@ -24,15 +24,14 @@
                 <!-- Books Section -->
                 <details class="toggle-section">
                     <summary>
-                        <img src="https://img.icons8.com/?size=100&id=43130&format=png&color=000000" alt="Books Icon"
-                             class="section-icon">
+                        <img src="https://img.icons8.com/?size=100&id=43130&format=png&color=000000" alt="Books Icon" class="section-icon">
                         Books
                     </summary>
-                    <div class="post-card">
-                        <input type="checkbox" name="approve[]" value="book-1" class="approve-checkbox">
+                    <div class="post-card" th:each="book : ${pendingBooks}" th:attr="data-book-id=${book.id}">
+                        <input type="checkbox" name="selectedItems" th:value="'BOOK-' + ${book.id}" class="approve-checkbox">
                         <div class="post-info">
-                            <p><strong>@User123</strong> shared a book:</p>
-                            <p>"The Midnight Library" by Matt Haig</p>
+                            <p><strong th:text="${book.owner.username}"></strong> shared a book:</p>
+                            <p>"<span th:text="${book.title}"></span>" by <span th:text="${book.author}"></span></p>
                         </div>
                     </div>
                 </details>
@@ -104,8 +103,8 @@
 
             <!-- Approval Buttons -->
             <div class="approval-actions">
-                <button type="submit" class="approve-btn">Approve Selected</button>
-                <button type="reset" class="reject-btn">Reject Selected</button>
+                <button type="submit" class="approve-btn" name="action" value="approve">Approve Selected</button>
+                <button type="submit" class="reject-btn" name="action" value="reject">Reject Selected</button>
             </div>
         </form>
     </div>

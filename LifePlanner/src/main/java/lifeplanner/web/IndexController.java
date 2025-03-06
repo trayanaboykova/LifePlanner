@@ -308,12 +308,6 @@ public class IndexController {
         return "my-shared-posts";
     }
 
-    @GetMapping("/pending-approval")
-    public String getPendingApprovalPage(Model model) {
-        model.addAttribute("pageTitle", "Pending Approval");
-        return "pending-approval";
-    }
-
     @GetMapping("/logout")
     public String getLogoutPage(HttpSession session) {
         session.invalidate();
