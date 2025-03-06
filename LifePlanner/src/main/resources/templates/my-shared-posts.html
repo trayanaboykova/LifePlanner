@@ -38,9 +38,7 @@
                             <strong>@</strong><strong th:text="${book.owner.username}"></strong> shared a book:
                             "<span th:text="${book.title}"></span>" by
                             <span th:text="${book.author}"></span>
-                        </p>
-                        <!-- Display Approval Status -->
-                        <p>
+                        <br>
                             Approval Status:
                             <span th:text="${book.approvalStatus}"
                                   th:classappend="${book.approvalStatus.name() == 'PENDING' ? 'status-pending' :
@@ -72,9 +70,7 @@
                             <strong>@</strong><strong th:text="${media.owner.username}"></strong>
                             shared a <span th:text="${media.type != null ? media.type.label : 'Default Type'}"></span>:
                             "<span th:text="${media.title}"></span>"
-                        </p>
-                        <!-- Display Approval Status -->
-                        <p>
+                        <br>
                             Approval Status:
                             <span th:text="${media.approvalStatus}"
                                   th:classappend="${media.approvalStatus.name() == 'PENDING' ? 'status-pending' :
@@ -148,9 +144,7 @@
                         <p>
                             <strong>@</strong><strong th:text="${trip.owner.username}"></strong> shared a trip:
                             "<span th:text="${trip.tripName}"></span>" in "<span th:text="${trip.destination}"></span>"
-                        </p>
-                        <!-- Display Approval Status -->
-                        <p>
+                        <br>
                             Approval Status:
                             <span th:text="${trip.approvalStatus}"
                                   th:classappend="${trip.approvalStatus.name() == 'PENDING' ? 'status-pending' :

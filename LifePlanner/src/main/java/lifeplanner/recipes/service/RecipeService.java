@@ -56,6 +56,7 @@ public class RecipeService {
                 .owner(user)
                 .ingredients(ingredients)
                 .visible(false)
+                .approvalStatus(ApprovalStatus.PENDING)
                 .build();
 
         for (RecipeIngredient ingredient : ingredients) {

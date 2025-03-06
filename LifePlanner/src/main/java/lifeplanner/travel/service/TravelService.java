@@ -41,6 +41,7 @@ public class TravelService {
                 .notes(addTripRequest.getNotes())
                 .owner(user)
                 .visible(false)
+                .approvalStatus(ApprovalStatus.PENDING)
                 .build();
 
         travelRepository.save(travel);

@@ -49,6 +49,7 @@ public class GoalService {
                 .notes(addGoalRequest.getNotes())
                 .owner(user)
                 .visible(false)
+                .approvalStatus(ApprovalStatus.PENDING)
                 .build();
 
         goalRepository.save(goal);
