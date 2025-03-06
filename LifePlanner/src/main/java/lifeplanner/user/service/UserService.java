@@ -82,4 +82,16 @@ public class UserService {
     public List<User> getAllUsers() {
         return userRepository.findAll();
     }
+
+    public void switchRole(UUID userId) {
+        User user = getById(userId);
+
+        if (user.getRole() == UserRole.USER) {
+            user.setRole(UserRole.ADMIN);
+        } else {
+            user.setRole(UserRole.USER);
+        }
+
+        userRepository.save(user);
+    }
 }

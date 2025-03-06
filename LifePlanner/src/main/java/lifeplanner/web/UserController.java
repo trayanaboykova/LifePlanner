@@ -72,4 +72,12 @@ public class UserController {
         return modelAndView;
     }
 
+    @PutMapping("/{id}/role") // PUT /users/{id}/role
+    public String switchUserRole(@PathVariable UUID id) {
+
+        userService.switchRole(id);
+
+        return "redirect:/users/all-users";
+    }
+
 }

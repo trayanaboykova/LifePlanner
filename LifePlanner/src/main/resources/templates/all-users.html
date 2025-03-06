@@ -56,9 +56,15 @@
                     <td th:text="${user.email}"></td>
                     <td th:text="${#temporals.format(user.registrationDate, 'dd MMM yyyy', T(java.util.Locale).ENGLISH)}"></td>
                     <td th:text="${user.role}"></td>
-                    <td><button class="change-role-btn">Change Role</button></td>
+                    <td>
+                        <form th:action="@{'/users/' + ${user.id} + '/role'}" th:method="PUT">
+                            <button class="change-role-btn">Change Role</button>
+                        </form>
+                    </td>
                     <td><span class="status active">Active</span></td>
-                    <td><button class="switch-status-btn">Switch Status</button></td>
+                    <td>
+                        <button class="switch-status-btn">Switch Status</button>
+                    </td>
                 </tr>
                 </tbody>
             </table>
