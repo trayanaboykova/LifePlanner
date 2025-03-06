@@ -52,17 +52,26 @@ public class PendingApprovalController {
             @RequestParam(name = "selectedItems", required = false) List<String> selectedItems,
             @RequestParam("action") String action) {
 
-        // BOOK APPROVAL
         if (selectedItems != null) {
             for (String item : selectedItems) {
+                // Handle Book approvals
                 if (item.startsWith("BOOK-")) {
                     String idStr = item.substring("BOOK-".length());
                     UUID id = UUID.fromString(idStr);
-
                     if ("approve".equalsIgnoreCase(action)) {
                         bookService.approveBook(id);
                     } else if ("reject".equalsIgnoreCase(action)) {
                         bookService.rejectBook(id);
+                    }
+                }
+                // Handle Media approvals
+                if (item.startsWith("MEDIA-")) {
+                    String idStr = item.substring("MEDIA-".length());
+                    UUID id = UUID.fromString(idStr);
+                    if ("approve".equalsIgnoreCase(action)) {
+                        mediaService.approveMedia(id);
+                    } else if ("reject".equalsIgnoreCase(action)) {
+                        mediaService.rejectMedia(id);
                     }
                 }
 

@@ -73,6 +73,13 @@
                             shared a <span th:text="${media.type != null ? media.type.label : 'Default Type'}"></span>:
                             "<span th:text="${media.title}"></span>"
                         </p>
+                        <!-- Display Approval Status -->
+                        <p>
+                            Approval Status:
+                            <span th:text="${media.approvalStatus}"
+                                  th:classappend="${media.approvalStatus.name() == 'PENDING' ? 'status-pending' :
+                                  (media.approvalStatus.name() == 'APPROVED' ? 'status-approved' : 'status-rejected')}"></span>
+                        </p>
                     </div>
                     <div class="post-actions">
                         <!-- Remove from shared form -->

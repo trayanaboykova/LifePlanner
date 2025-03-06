@@ -1,6 +1,7 @@
 package lifeplanner.media.repository;
 
 import lifeplanner.media.model.Media;
+import lifeplanner.user.model.ApprovalStatus;
 import lifeplanner.user.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
@@ -15,5 +16,5 @@ public interface MediaRepository extends JpaRepository<Media, UUID> {
 
     List<Media> findAllByVisibleTrue();
 
-    List<Media> findAllByApprovedFalse();
+    List<Media> findAllByApprovalStatus(ApprovalStatus pending);
 }

@@ -4,6 +4,7 @@ import jakarta.validation.Valid;
 import lifeplanner.books.model.Book;
 import lifeplanner.media.model.Media;
 import lifeplanner.media.repository.MediaRepository;
+import lifeplanner.user.model.ApprovalStatus;
 import lifeplanner.user.model.User;
 import lifeplanner.web.dto.AddMediaRequest;
 import lifeplanner.web.dto.EditMediaRequest;
@@ -37,6 +38,7 @@ public class MediaService {
                 .genre(addMediaRequest.getGenre())
                 .owner(user)
                 .visible(false)
+                .approvalStatus(ApprovalStatus.PENDING)
                 .build();
 
         mediaRepository.save(media);
@@ -97,6 +99,18 @@ public class MediaService {
     }
 
     public List<Media> getPendingMedia() {
-        return mediaRepository.findAllByApprovedFalse();
+        return mediaRepository.findAllByApprovalStatus(ApprovalStatus.PENDING);
+    }
+
+    public void approveMedia(UUID mediaId) {
+        Media media = getMediaById(mediaId);
+        media.setApprovalStatus(ApprovalStatus.APPROVED);
+        mediaRepository.save(media);
+    }
+
+    public void rejectMedia(UUID mediaId) {
+        Media media = getMediaById(mediaId);
+        media.setApprovalStatus(ApprovalStatus.REJECTED);
+        mediaRepository.save(media);
     }
 }

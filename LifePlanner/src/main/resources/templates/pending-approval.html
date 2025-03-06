@@ -43,11 +43,14 @@
                              class="section-icon">
                         Movies / TV Shows
                     </summary>
-                    <div class="post-card">
-                        <input type="checkbox" name="approve[]" value="media-1" class="approve-checkbox">
+                    <div class="post-card" th:each="media : ${pendingMedia}" th:attr="data-media-id=${media.id}">
+                        <input type="checkbox" name="selectedItems" th:value="'MEDIA-' + ${media.id}" class="approve-checkbox">
                         <div class="post-info">
-                            <p><strong>@Oscar</strong> shared a movie/tv-show:</p>
-                            <p>"Currently watching..."</p>
+                            <p>
+                                <strong>@</strong><strong th:text="${media.owner.username}"></strong>
+                                shared a <span th:text="${media.type != null ? media.type.label : 'Default Type'}"></span>:
+                                "<span th:text="${media.title}"></span>"
+                            </p>
                         </div>
                     </div>
                 </details>

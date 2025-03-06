@@ -22,6 +22,10 @@ public class BookService {
         this.bookRepository = bookRepository;
     }
 
+    public List<Book> getBooksByUser(User user) {
+        return bookRepository.findAllByOwner(user);
+    }
+
     public void addBook(AddBookRequest addBookRequest, User user) {
         Book book = Book.builder()
                 .bookStatus(addBookRequest.getBookStatus())
@@ -48,10 +52,6 @@ public class BookService {
         book.setBookStatus(editBookRequest.getBookStatus());
 
         bookRepository.save(book);
-    }
-
-    public List<Book> getBooksByUser(User user) {
-        return bookRepository.findAllByOwner(user);
     }
 
     public List<Book> getAllBooks() {
@@ -95,7 +95,6 @@ public class BookService {
     public void deleteBookById(UUID id) {
         bookRepository.deleteById(id);
     }
-
 
     public List<Book> getPendingBooks() {
         return bookRepository.findAllByApprovalStatus(ApprovalStatus.PENDING);
