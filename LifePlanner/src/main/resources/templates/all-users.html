@@ -61,9 +61,12 @@
                             <button class="change-role-btn">Change Role</button>
                         </form>
                     </td>
-                    <td><span class="status active">Active</span></td>
                     <td>
-                        <button class="switch-status-btn">Switch Status</button>
+                        <span class="status" th:text="${user.active} ? 'Active' : 'Inactive'"></span>
+                    <td>
+                        <form th:action="@{'/users/' + ${user.id} + '/status'}" th:method="PUT">
+                            <button class="switch-status-btn">Switch Status</button>
+                        </form>
                     </td>
                 </tr>
                 </tbody>

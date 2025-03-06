@@ -80,4 +80,12 @@ public class UserController {
         return "redirect:/users/all-users";
     }
 
+    @PutMapping("/{id}/status")
+    public String switchUserStatus(@PathVariable UUID id) {
+
+        userService.switchStatus(id);
+
+        return "redirect:/users/all-users";
+    }
+
 }

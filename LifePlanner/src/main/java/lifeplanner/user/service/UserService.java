@@ -94,4 +94,10 @@ public class UserService {
 
         userRepository.save(user);
     }
+
+    public void switchStatus(UUID userId) {
+        User user = getById(userId);
+        user.setActive(!user.isActive());
+        userRepository.save(user);
+    }
 }
