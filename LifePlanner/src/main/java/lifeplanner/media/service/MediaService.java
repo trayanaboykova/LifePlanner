@@ -78,7 +78,22 @@ public class MediaService {
                 .toList();
     }
 
+    public List<Media> getMySharedMedia(User currentUser) {
+        return mediaRepository.findAllByVisibleTrue()
+                .stream()
+                .filter(media -> media.getOwner().getId().equals(currentUser.getId()))
+                .toList();
+    }
+
+    public void removeSharing(UUID mediaId) {
+        Media media = mediaRepository.findById(mediaId)
+                .orElseThrow(() -> new RuntimeException("Media not found"));
+        media.setVisible(false);
+        mediaRepository.save(media);
+    }
+
     public void deleteMediaById(UUID id) {
         mediaRepository.deleteById(id);
     }
+
 }

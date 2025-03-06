@@ -166,6 +166,11 @@ public class BooksController {
         return "redirect:/books/my-books";
     }
 
+    @PostMapping("/{id}/remove")
+    public String removeSharing(@PathVariable UUID id) {
+        bookService.removeSharing(id);
+        return "redirect:/my-shared-posts";
+    }
 
     @DeleteMapping("/{id}")
     public String deleteBook(@PathVariable UUID id) {

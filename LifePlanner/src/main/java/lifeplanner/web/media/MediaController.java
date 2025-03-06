@@ -150,6 +150,12 @@ public class MediaController {
         return "redirect:/media/all-media";
     }
 
+    @PostMapping("/{id}/remove")
+    public String removeSharing(@PathVariable UUID id) {
+        mediaService.removeSharing(id);
+        return "redirect:/my-shared-posts";
+    }
+
     @DeleteMapping("/{id}")
     public String deleteMedia(@PathVariable UUID id) {
 

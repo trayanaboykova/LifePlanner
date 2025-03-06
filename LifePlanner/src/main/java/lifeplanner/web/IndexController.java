@@ -271,40 +271,47 @@ public class IndexController {
         UUID userId = (UUID) session.getAttribute("user_id");
         User user = userService.getById(userId);
 
-        // BOOKS
         List<Book> favoriteBooks = bookFavoriteService.getFavoritesByUser(user);
-        model.addAttribute("favoriteBooks", favoriteBooks);
-
-        // MEDIA
         List<Media> favoriteMedia = mediaFavoriteService.getFavoritesByUser(user);
-        model.addAttribute("favoriteMedia", favoriteMedia);
-
-        // RECIPES
         List<Recipe> favoriteRecipe = recipeFavoriteService.getFavoritesByUser(user);
-        model.addAttribute("favoriteRecipe", favoriteRecipe);
-
-        // TRIPS
         List<Travel> favoriteTrip = tripFavoriteService.getFavoritesByUser(user);
-        model.addAttribute("favoriteTrip", favoriteTrip);
-
-        // GOALS
         List<Goal> favoriteGoal = goalFavoriteService.getFavoritesByUser(user);
-        model.addAttribute("favoriteGoal", favoriteGoal);
 
+        model.addAttribute("favoriteBooks", favoriteBooks);
+        model.addAttribute("favoriteMedia", favoriteMedia);
+        model.addAttribute("favoriteRecipe", favoriteRecipe);
+        model.addAttribute("favoriteTrip", favoriteTrip);
+        model.addAttribute("favoriteGoal", favoriteGoal);
         model.addAttribute("user", user);
         return "favorites";
+    }
+
+    @GetMapping("/my-shared-posts")
+    public String getMySharedPostsPage(Model model, HttpSession session) {
+        model.addAttribute("pageTitle", "My Shared Posts");
+        UUID userId = (UUID) session.getAttribute("user_id");
+        User user = userService.getById(userId);
+
+        List<Book> sharedBooks = bookService.getMySharedBooks(user);
+        List<Media> sharedMedia = mediaService.getMySharedMedia(user);
+        List<Recipe> sharedRecipes = recipeService.getMySharedRecipes(user);
+        List<Travel> sharedTrips = travelService.getMySharedTrips(user);
+        List<Goal> sharedGoals = goalService.getMySharedGoals(user);
+
+        model.addAttribute("user", user);
+        model.addAttribute("sharedBooks", sharedBooks);
+        model.addAttribute("sharedMedia", sharedMedia);
+        model.addAttribute("sharedRecipes", sharedRecipes);
+        model.addAttribute("sharedTrips", sharedTrips);
+        model.addAttribute("sharedGoals", sharedGoals);
+
+        return "my-shared-posts";
     }
 
     @GetMapping("/pending-approval")
     public String getPendingApprovalPage(Model model) {
         model.addAttribute("pageTitle", "Pending Approval");
         return "pending-approval";
-    }
-
-    @GetMapping("/all-users")
-    public String getAllUsersPage(Model model) {
-        model.addAttribute("pageTitle", "All Users");
-        return "all-users";
     }
 
     @GetMapping("/logout")

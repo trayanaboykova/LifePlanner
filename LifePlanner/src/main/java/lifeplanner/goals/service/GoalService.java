@@ -91,7 +91,22 @@ public class GoalService {
                 .toList();
     }
 
+    public List<Goal> getMySharedGoals(User currentUser) {
+        return goalRepository.findAllByVisibleTrue()
+                .stream()
+                .filter(goal -> goal.getOwner().getId().equals(currentUser.getId()))
+                .toList();
+    }
+
+    public void removeSharing(UUID goalId) {
+        Goal goal = goalRepository.findById(goalId)
+                .orElseThrow(() -> new RuntimeException("Goal not found"));
+        goal.setVisible(false);
+        goalRepository.save(goal);
+    }
+
     public void deleteGoalById(UUID id) {
         goalRepository.deleteById(id);
     }
+
 }

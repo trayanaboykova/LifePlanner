@@ -76,6 +76,20 @@ public class BookService {
                 .toList();
     }
 
+    public List<Book> getMySharedBooks(User currentUser) {
+        return bookRepository.findAllByVisibleTrue()
+                .stream()
+                .filter(book -> book.getOwner().getId().equals(currentUser.getId()))
+                .toList();
+    }
+
+    public void removeSharing(UUID bookId) {
+        Book book = bookRepository.findById(bookId)
+                .orElseThrow(() -> new RuntimeException("Book not found"));
+        book.setVisible(false);
+        bookRepository.save(book);
+    }
+
     public void deleteBookById(UUID id) {
         bookRepository.deleteById(id);
     }

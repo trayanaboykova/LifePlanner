@@ -152,6 +152,11 @@ public class TravelController {
         return "redirect:/trips/travel";
     }
 
+    @PostMapping("/{id}/remove")
+    public String removeSharing(@PathVariable UUID id) {
+        travelService.removeSharing(id);
+        return "redirect:/my-shared-posts";
+    }
 
     @DeleteMapping("/{id}")
     public String deleteTrip(@PathVariable UUID id) {

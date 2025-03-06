@@ -152,6 +152,11 @@ public class GoalsController {
         return "redirect:/goals/my-goals";
     }
 
+    @PostMapping("/{id}/remove")
+    public String removeSharing(@PathVariable UUID id) {
+        goalService.removeSharing(id);
+        return "redirect:/my-shared-posts";
+    }
 
     @DeleteMapping("/{id}")
     public String deleteGoal(@PathVariable UUID id) {

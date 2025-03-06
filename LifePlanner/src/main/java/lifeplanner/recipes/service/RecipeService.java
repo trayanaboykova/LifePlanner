@@ -1,6 +1,7 @@
 package lifeplanner.recipes.service;
 
 import jakarta.validation.Valid;
+import lifeplanner.books.model.Book;
 import lifeplanner.recipes.model.Recipe;
 import lifeplanner.recipes.model.RecipeIngredient;
 import lifeplanner.recipes.repository.RecipeRepository;
@@ -119,7 +120,22 @@ public class RecipeService {
                 .toList();
     }
 
+    public List<Recipe> getMySharedRecipes(User currentUser) {
+        return recipeRepository.findAllByVisibleTrue()
+                .stream()
+                .filter(recipe -> recipe.getOwner().getId().equals(currentUser.getId()))
+                .toList();
+    }
+
+    public void removeSharing(UUID recipeId) {
+        Recipe recipe = recipeRepository.findById(recipeId)
+                .orElseThrow(() -> new RuntimeException("Recipe not found"));
+        recipe.setVisible(false);
+        recipeRepository.save(recipe);
+    }
+
     public void deleteRecipeById(UUID id) {
         recipeRepository.deleteById(id);
     }
+
 }

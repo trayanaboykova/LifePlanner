@@ -127,6 +127,12 @@ public class RecipesController {
         return "redirect:/recipes/all-recipes";
     }
 
+    @PostMapping("/{id}/remove")
+    public String removeSharing(@PathVariable UUID id) {
+        recipeService.removeSharing(id);
+        return "redirect:/my-shared-posts";
+    }
+
     @DeleteMapping("/{id}")
     public String deleteRecipe(@PathVariable UUID id) {
 

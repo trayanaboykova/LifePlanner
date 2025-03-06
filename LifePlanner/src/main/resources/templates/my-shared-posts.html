@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/commons :: head}">
+    <title th:text="${pageTitle}"></title>
+</head>
+<body>
+<header>
+    <nav class="books-nav">
+        <div class="books-header-left">
+            <h1>
+                <span th:text="${user.username}"></span>’s LifeHub Favorites
+            </h1>
+        </div>
+        <div class="books-header-right">
+            <a href="/home" class="back-home">
+                <img src="https://img.icons8.com/?size=100&id=42814&format=png&color=000000"
+                     alt="Home Icon" width="45" height="45"/>
+                Back to Home
+            </a>
+        </div>
+    </nav>
+</header>
+<div class="dashboard-fav">
+    <div class="lifehub-fav">
+        <h2>LifeHub Favorites</h2>
+        <div class="shared-content">
+            <!-- Books Section -->
+            <details class="toggle-section">
+                <summary>
+                    <img src="https://img.icons8.com/?size=100&id=43130&format=png&color=000000" alt="Books Icon"
+                         class="section-icon">
+                    Books
+                </summary>
+                <div class="post-card" th:each="book : ${sharedBooks}" th:attr="data-book-id=${book.id}">
+                    <div class="post-info">
+                        <p>
+                            <strong>@</strong><strong th:text="${book.owner.username}"></strong> shared a book:
+                            "<span th:text="${book.title}"></span>" by
+                            <span th:text="${book.author}"></span>
+                        </p>
+                    </div>
+                    <div class="post-actions">
+                        <!-- Remove from shared form -->
+                        <form th:action="@{'/books/' + ${book.id} + '/remove'}" method="post">
+                            <button type="submit" style="border: none; background: none;">
+                                <img src="https://img.icons8.com/?size=100&id=46424&format=png&color=000000"
+                                     alt="Remove Icon" width="45" height="45">
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </details>
+            <!-- Media Section -->
+            <details class="toggle-section">
+                <summary>
+                    <img src="https://img.icons8.com/?size=100&id=54994&format=png&color=000000" alt="Media Icon"
+                         class="section-icon">
+                    Movies / TV Shows
+                </summary>
+                <div class="post-card" th:each="media : ${sharedMedia}" th:attr="data-media-id=${media.id}">
+                    <div class="post-info">
+                        <p>
+                            <strong>@</strong><strong th:text="${media.owner.username}"></strong>
+                            shared a <span th:text="${media.type != null ? media.type.label : 'Default Type'}"></span>:
+                            "<span th:text="${media.title}"></span>"
+                        </p>
+                    </div>
+                    <div class="post-actions">
+                        <!-- Remove from shared form -->
+                        <form th:action="@{'/media/' + ${media.id} + '/remove'}" method="post">
+                            <button type="submit" style="border: none; background: none;">
+                                <img src="https://img.icons8.com/?size=100&id=46424&format=png&color=000000"
+                                     alt="Remove Icon" width="45" height="45">
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </details>
+            <!-- Recipes Section -->
+            <details class="toggle-section">
+                <summary>
+                    <img src="https://img.icons8.com/?size=100&id=46406&format=png&color=000000"
+                         alt="Recipe Icon" class="section-icon">
+                    Recipes
+                </summary>
+                <div class="post-card" th:each="recipe : ${sharedRecipes}" th:attr="data-recipe-id=${recipe.id}">
+                    <div class="post-info-recipes">
+                        <p>
+                            <strong>@</strong>
+                            <strong th:text="${recipe.owner.username}"></strong>
+                            shared a recipe:
+                            "<span th:text="${recipe.name}"></span>"
+                        </p>
+                        <br>
+                        <p>Ingredients:</p>
+                        <ul>
+                            <li th:each="ingredient : ${recipe.ingredients}"
+                                th:text="|${ingredient.ingredientName} (${ingredient.quantity} ${ingredient.unit})|">
+                            </li>
+                        </ul>
+                        <br>
+                        <p>Instructions:</p>
+                        <p th:text="${recipe.instructions}"></p>
+                    </div>
+                    <div class="post-actions">
+                        <!-- Remove from shared form -->
+                        <form th:action="@{'/recipes/' + ${recipe.id} + '/remove'}" method="post">
+                            <button type="submit" style="border: none; background: none;">
+                                <img src="https://img.icons8.com/?size=100&id=46424&format=png&color=000000"
+                                     alt="Remove Icon" width="45" height="45">
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </details>
+            <!-- Travel Section -->
+            <details class="toggle-section">
+                <summary>
+                    <img src="https://img.icons8.com/?size=100&id=43121&format=png&color=000000" alt="Travel Icon"
+                         class="section-icon">
+                    Travel Plans
+                </summary>
+                <div class="post-card" th:each="trip : ${sharedTrips}" th:attr="data-trip-id=${trip.id}">
+                    <div class="post-info">
+                        <p>
+                            <strong>@</strong><strong th:text="${trip.owner.username}"></strong> shared a trip:
+                            "<span th:text="${trip.tripName}"></span>" in "<span th:text="${trip.destination}"></span>"
+                        </p>
+                    </div>
+                    <div class="post-actions">
+                        <!-- Remove from shared form -->
+                        <form th:action="@{'/trips/' + ${trip.id} + '/remove'}" method="post">
+                            <button type="submit" style="border: none; background: none;">
+                                <img src="https://img.icons8.com/?size=100&id=46424&format=png&color=000000"
+                                     alt="Remove Icon" width="45" height="45">
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </details>
+            <!-- Goals Section -->
+            <details class="toggle-section">
+                <summary>
+                    <img src="https://img.icons8.com/?size=100&id=49297&format=png&color=000000" alt="Goals Icon"
+                         class="section-icon">
+                    Goals
+                </summary>
+                <div class="post-card" th:each="goal : ${sharedGoals}" th:attr="data-goal-id=${goal.id}">
+                    <div class="post-info-goals">
+                        <p>
+                            <strong>@</strong><strong th:text="${goal.owner.username}"></strong> shared a goal:
+                            <span th:text="${goal.goalName}"></span>
+                            <br>
+                        <p>Progress: </p><span class="goal-span" th:text="${goal.status.label}"></span>
+                    </div>
+                    <div class="post-actions">
+                        <!-- Remove from shared form -->
+                        <form th:action="@{'/goals/' + ${goal.id} + '/remove'}" method="post">
+                            <button type="submit" style="border: none; background: none;">
+                                <img src="https://img.icons8.com/?size=100&id=46424&format=png&color=000000"
+                                     alt="Remove Icon" width="45" height="45">
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </details>
+        </div>
+    </div>
+</div>
+<script src="/js/likes.js"></script>
+<script src="/js/favorites.js"></script>
+<footer th:replace="~{fragments/commons :: footer}"></footer>
+</body>
+</html>

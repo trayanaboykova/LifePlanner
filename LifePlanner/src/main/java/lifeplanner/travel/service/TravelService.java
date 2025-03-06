@@ -84,7 +84,22 @@ public class TravelService {
                 .toList();
     }
 
+    public List<Travel> getMySharedTrips(User currentUser) {
+        return travelRepository.findAllByVisibleTrue()
+                .stream()
+                .filter(trip -> trip.getOwner().getId().equals(currentUser.getId()))
+                .toList();
+    }
+
+    public void removeSharing(UUID tripId) {
+        Travel trip = travelRepository.findById(tripId)
+                .orElseThrow(() -> new RuntimeException("Trip not found"));
+        trip.setVisible(false);
+        travelRepository.save(trip);
+    }
+
     public void deleteTripById(UUID id) {
         travelRepository.deleteById(id);
     }
+
 }
