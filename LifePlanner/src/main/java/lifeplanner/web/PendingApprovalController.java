@@ -93,6 +93,16 @@ public class PendingApprovalController {
                         travelService.rejectTrip(id);
                     }
                 }
+                // Handle Goal approvals
+                else if (item.startsWith("GOAL-")) {
+                    String idStr = item.substring("GOAL-".length());
+                    UUID id = UUID.fromString(idStr);
+                    if ("approve".equalsIgnoreCase(action)) {
+                        goalService.approveGoal(id);
+                    } else if ("reject".equalsIgnoreCase(action)) {
+                        goalService.rejectGoal(id);
+                    }
+                }
             }
         }
         return "redirect:/pending-approval";

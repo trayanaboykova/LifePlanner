@@ -1,6 +1,7 @@
 package lifeplanner.goals.model;
 
 import jakarta.persistence.*;
+import lifeplanner.user.model.ApprovalStatus;
 import lifeplanner.user.model.User;
 import lombok.*;
 import java.time.LocalDate;
@@ -46,8 +47,9 @@ public class Goal {
 
     private boolean visible;
 
+    @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private boolean approved = false;
+    private ApprovalStatus approvalStatus = ApprovalStatus.PENDING;
 
     @Transient
     private String progressBar;

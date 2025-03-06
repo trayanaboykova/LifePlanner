@@ -110,11 +110,14 @@
                              class="section-icon">
                         Goals
                     </summary>
-                    <div class="post-card">
-                        <input type="checkbox" name="approve[]" value="goal-1" class="approve-checkbox">
+                    <div class="post-card" th:each="goal : ${pendingGoals}" th:attr="data-goal-id=${goal.id}">
+                        <input type="checkbox" name="selectedItems" th:value="'GOAL-' + ${goal.id}" class="approve-checkbox">
                         <div class="post-info">
-                            <p><strong>@123r</strong> shared a goal:</p>
-                            <p>"Lose weight"</p>
+                            <p>
+                                <strong>@</strong><strong th:text="${goal.owner.username}"></strong> shared a goal:
+                                <span th:text="${goal.goalName}"></span>
+                                <br>
+                            <p>Progress: </p><span class="goal-span" th:text="${goal.status.label}"></span>
                         </div>
                     </div>
                 </details>

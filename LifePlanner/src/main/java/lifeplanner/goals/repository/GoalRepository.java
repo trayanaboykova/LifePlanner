@@ -1,6 +1,7 @@
 package lifeplanner.goals.repository;
 
 import lifeplanner.goals.model.Goal;
+import lifeplanner.user.model.ApprovalStatus;
 import lifeplanner.user.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
@@ -16,5 +17,5 @@ public interface GoalRepository extends JpaRepository<Goal, UUID> {
 
     List<Goal> findAllByVisibleTrue();
 
-    List<Goal> findAllByApprovedFalse();
+    List<Goal> findAllByApprovalStatus(ApprovalStatus pending);
 }

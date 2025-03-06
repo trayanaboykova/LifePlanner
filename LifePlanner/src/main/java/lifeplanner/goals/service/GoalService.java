@@ -4,6 +4,7 @@ import jakarta.validation.Valid;
 import lifeplanner.books.model.Book;
 import lifeplanner.goals.model.Goal;
 import lifeplanner.goals.repository.GoalRepository;
+import lifeplanner.user.model.ApprovalStatus;
 import lifeplanner.user.model.User;
 import lifeplanner.util.ProgressUtil;
 import lifeplanner.web.dto.AddGoalRequest;
@@ -110,6 +111,18 @@ public class GoalService {
     }
 
     public List<Goal> getPendingGoals() {
-        return goalRepository.findAllByApprovedFalse();
+        return goalRepository.findAllByApprovalStatus(ApprovalStatus.PENDING);
+    }
+
+    public void approveGoal(UUID goalId) {
+        Goal goal = getGoalById(goalId);
+        goal.setApprovalStatus(ApprovalStatus.APPROVED);
+        goalRepository.save(goal);
+    }
+
+    public void rejectGoal(UUID goalId) {
+        Goal goal = getGoalById(goalId);
+        goal.setApprovalStatus(ApprovalStatus.REJECTED);
+        goalRepository.save(goal);
     }
 }

@@ -182,6 +182,13 @@
                             <span th:text="${goal.goalName}"></span>
                             <br>
                         <p>Progress: </p><span class="goal-span" th:text="${goal.status.label}"></span>
+                        <!-- Display Approval Status -->
+                        <p>
+                            Approval Status:
+                            <span th:text="${goal.approvalStatus}"
+                                  th:classappend="${goal.approvalStatus.name() == 'PENDING' ? 'status-pending' :
+                                  (goal.approvalStatus.name() == 'APPROVED' ? 'status-approved' : 'status-rejected')}"></span>
+                        </p>
                     </div>
                     <div class="post-actions">
                         <!-- Remove from shared form -->
