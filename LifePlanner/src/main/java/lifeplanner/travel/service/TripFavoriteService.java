@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -59,5 +60,10 @@ public class TripFavoriteService {
         return favorites.stream()
                 .map(TripFavorite::getTrip)
                 .collect(Collectors.toList());
+    }
+
+    public void removeFavorite(User user, UUID tripId) {
+        Optional<TripFavorite> favoriteOpt = tripFavoriteRepository.findByUserAndTripId(user, tripId);
+        favoriteOpt.ifPresent(tripFavoriteRepository::delete);
     }
 }

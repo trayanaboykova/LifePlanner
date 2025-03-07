@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Repository
@@ -14,4 +15,5 @@ public interface MediaFavoriteRepository extends JpaRepository<MediaFavorite, Me
     long countByMediaId(UUID mediaId);
     boolean existsById(MediaFavoriteId id);
     List<MediaFavorite> findAllByUser(User user);
+    Optional<MediaFavorite> findByUserAndMediaId(User user, UUID mediaId);
 }

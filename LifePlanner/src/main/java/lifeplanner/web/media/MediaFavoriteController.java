@@ -2,6 +2,8 @@ package lifeplanner.web.media;
 
 import jakarta.servlet.http.HttpSession;
 import lifeplanner.media.service.MediaFavoriteService;
+import lifeplanner.user.model.User;
+import lifeplanner.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;

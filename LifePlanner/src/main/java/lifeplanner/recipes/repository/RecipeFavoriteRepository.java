@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Repository
@@ -15,4 +16,5 @@ public interface RecipeFavoriteRepository extends JpaRepository<RecipeFavorite, 
     long countByRecipeId(UUID recipeId);
     boolean existsById(RecipeFavoriteId id);
     List<RecipeFavorite> findAllByUser(User user);
+    Optional<RecipeFavorite> findByUserAndRecipeId(User user, UUID recipeId);
 }

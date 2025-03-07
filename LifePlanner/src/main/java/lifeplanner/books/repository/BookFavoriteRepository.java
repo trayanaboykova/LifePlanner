@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Repository
@@ -14,4 +15,5 @@ public interface BookFavoriteRepository extends JpaRepository<BookFavorite, Book
     long countByBookId(UUID bookId);
     boolean existsById(BookFavoriteId id);
     List<BookFavorite> findAllByUser(User user);
+    Optional<BookFavorite> findByUserAndBookId(User user, UUID bookId);
 }
