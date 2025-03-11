@@ -19,6 +19,7 @@ import lifeplanner.recipes.service.RecipeFavoriteService;
 import lifeplanner.recipes.service.RecipeLikesService;
 import lifeplanner.recipes.service.RecipeService;
 import lifeplanner.scheduler.DailyQuotesScheduler;
+import lifeplanner.scheduler.DateAndTimeScheduler;
 import lifeplanner.travel.model.Travel;
 import lifeplanner.travel.service.TravelService;
 import lifeplanner.travel.service.TripFavoriteService;
@@ -60,10 +61,11 @@ public class IndexController {
     private final GoalLikesService goalLikesService;
     private final GoalFavoriteService goalFavoriteService;
     private final DailyQuotesScheduler dailyQuoteScheduler;
+    private final DateAndTimeScheduler dateAndTimeScheduler;
 
 
     @Autowired
-    public IndexController(UserService userService, BookService bookService, BookLikesService bookLikesService, BookFavoriteService bookFavoriteService, MediaService mediaService, MediaLikesService mediaLikesService, MediaFavoriteService mediaFavoriteService, RecipeService recipeService, RecipeLikesService recipeLikesService, RecipeFavoriteService recipeFavoriteService, TravelService travelService, TripLikesService tripLikesService, TripFavoriteService tripFavoriteService, GoalService goalService, GoalLikesService goalLikesService, GoalFavoriteService goalFavoriteService, DailyQuotesScheduler dailyQuoteScheduler) {
+    public IndexController(UserService userService, BookService bookService, BookLikesService bookLikesService, BookFavoriteService bookFavoriteService, MediaService mediaService, MediaLikesService mediaLikesService, MediaFavoriteService mediaFavoriteService, RecipeService recipeService, RecipeLikesService recipeLikesService, RecipeFavoriteService recipeFavoriteService, TravelService travelService, TripLikesService tripLikesService, TripFavoriteService tripFavoriteService, GoalService goalService, GoalLikesService goalLikesService, GoalFavoriteService goalFavoriteService, DailyQuotesScheduler dailyQuoteScheduler, DateAndTimeScheduler dateAndTimeScheduler) {
         this.userService = userService;
         this.bookService = bookService;
         this.bookLikesService = bookLikesService;
@@ -81,6 +83,7 @@ public class IndexController {
         this.goalLikesService = goalLikesService;
         this.goalFavoriteService = goalFavoriteService;
         this.dailyQuoteScheduler = dailyQuoteScheduler;
+        this.dateAndTimeScheduler = dateAndTimeScheduler;
     }
 
     @GetMapping("/")
@@ -265,8 +268,9 @@ public class IndexController {
         model.addAttribute("goalLikeCounts", goalLikeCounts);
         model.addAttribute("goalFavoriteCounts", goalFavoriteCounts);
 
-        // Daily Quote
+        // Schedulers
         model.addAttribute("dailyQuoteImageUrl", dailyQuoteScheduler.getCurrentQuoteUrl());
+        model.addAttribute("currentDateTime", dateAndTimeScheduler.getCurrentDateTime());
 
         return modelAndView;
     }
