@@ -15,7 +15,7 @@
       </h1>
     </div>
     <div class="current-date-time">
-      <p th:text="${#temporals.format(currentDateTime, 'EEEE, dd MMMM yyyy HH:mm', T(java.util.Locale).ENGLISH)}"></p>
+      <p th:text="${#temporals.format(currentDateTime, 'EEEE, dd MMMM yyyy, HH:mm', T(java.util.Locale).ENGLISH)}"></p>
     </div>
     <div class="homepage-header-right">
       <a href="/" class="logout">
