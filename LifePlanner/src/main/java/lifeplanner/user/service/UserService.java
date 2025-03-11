@@ -9,8 +9,11 @@ import lifeplanner.web.dto.LoginRequest;
 import lifeplanner.web.dto.RegisterRequest;
 import lifeplanner.web.dto.UserEditRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -29,6 +32,8 @@ public class UserService {
         this.passwordEncoder = passwordEncoder;
     }
 
+    @CacheEvict(value = "users", allEntries = true)
+    @Transactional
     public void registerUser(RegisterRequest registerRequest) {
         Optional<User> optionalUser = userRepository.findByUsername((registerRequest.getUsername()));
 
@@ -68,6 +73,7 @@ public class UserService {
         return userRepository.findById(userId).orElseThrow(() -> new RuntimeException("User with id [" + userId + "] does not exist."));
     }
 
+    @CacheEvict(value = "users", allEntries = true)
     public void editUserDetails(UUID id, @Valid UserEditRequest userEditRequest) {
         User user = getById(id);
 
@@ -79,10 +85,12 @@ public class UserService {
         userRepository.save(user);
     }
 
+    @Cacheable("users")
     public List<User> getAllUsers() {
         return userRepository.findAll();
     }
 
+    @CacheEvict(value = "users", allEntries = true)
     public void switchRole(UUID userId) {
         User user = getById(userId);
 
@@ -95,6 +103,7 @@ public class UserService {
         userRepository.save(user);
     }
 
+    @CacheEvict(value = "users", allEntries = true)
     public void switchStatus(UUID userId) {
         User user = getById(userId);
         user.setActive(!user.isActive());
