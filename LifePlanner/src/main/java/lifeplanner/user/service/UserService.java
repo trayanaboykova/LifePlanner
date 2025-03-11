@@ -2,6 +2,7 @@ package lifeplanner.user.service;
 
 import jakarta.validation.Valid;
 import lifeplanner.exception.DomainException;
+import lifeplanner.security.AuthenticationMetadata;
 import lifeplanner.user.model.User;
 import lifeplanner.user.model.UserRole;
 import lifeplanner.user.repository.UserRepository;
@@ -11,6 +12,9 @@ import lifeplanner.web.dto.UserEditRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,7 +25,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Service
-public class UserService {
+public class UserService implements UserDetailsService {
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
@@ -51,22 +55,6 @@ public class UserService {
                 .build();
 
         userRepository.save(user);
-    }
-
-    public User loginUser(LoginRequest loginRequest) {
-        Optional<User> optionalUser = userRepository.findByUsername(loginRequest.getUsername());
-
-        if (optionalUser.isEmpty()) {
-            throw new RuntimeException("Incorrect username or password.");
-        }
-
-        User user = optionalUser.get();
-
-        if (!passwordEncoder.matches(loginRequest.getPassword(), user.getPassword())) {
-            throw new RuntimeException("Incorrect username or password.");
-        }
-
-        return user;
     }
 
     public User getById(UUID userId) {
@@ -108,5 +96,13 @@ public class UserService {
         User user = getById(userId);
         user.setActive(!user.isActive());
         userRepository.save(user);
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+
+        User user = userRepository.findByUsername(username).orElseThrow(() -> new DomainException("User with this username does not exist."));
+
+        return new AuthenticationMetadata(user.getId(), username, user.getPassword(), user.getRole(), user.isActive());
     }
 }

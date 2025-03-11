@@ -20,6 +20,7 @@ import lifeplanner.recipes.service.RecipeLikesService;
 import lifeplanner.recipes.service.RecipeService;
 import lifeplanner.scheduler.DailyQuotesScheduler;
 import lifeplanner.scheduler.DateAndTimeScheduler;
+import lifeplanner.security.AuthenticationMetadata;
 import lifeplanner.travel.model.Travel;
 import lifeplanner.travel.service.TravelService;
 import lifeplanner.travel.service.TripFavoriteService;
@@ -29,11 +30,13 @@ import lifeplanner.user.service.UserService;
 import lifeplanner.web.dto.LoginRequest;
 import lifeplanner.web.dto.RegisterRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.HashMap;
@@ -103,11 +106,15 @@ public class IndexController {
     }
 
     @GetMapping("/login")
-    public ModelAndView getLoginPage(Model model) {
+    public ModelAndView getLoginPage(@RequestParam(value = "error", required = false) String errorParam, Model model) {
         model.addAttribute("pageTitle", "Login");
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("login");
         modelAndView.addObject("loginRequest", new LoginRequest());
+
+        if (errorParam != null) {
+            modelAndView.addObject("errorMessage", "Incorrect username or password!");
+        }
 
         return modelAndView;
     }
@@ -125,28 +132,12 @@ public class IndexController {
         return "redirect:/login";
     }
 
-    @PostMapping("/login")
-    public String loginUser(@Valid LoginRequest loginRequest, BindingResult bindingResult, HttpSession session, Model model) {
-        model.addAttribute("pageTitle", "Login");
-
-        if (bindingResult.hasErrors()) {
-            return "login";
-        }
-
-        User user = userService.loginUser(loginRequest);
-        session.setAttribute("user_id", user.getId());
-
-        return "redirect:/home";
-
-    }
-
     @GetMapping("/home")
-    public ModelAndView getHomePage(HttpSession session, Model model) {
+    public ModelAndView getHomePage(@AuthenticationPrincipal AuthenticationMetadata authenticationMetadata, Model model) {
         model.addAttribute("pageTitle", "Home");
-        UUID userId = (UUID) session.getAttribute("user_id");
-        User user = userService.getById(userId);
+        User user = userService.getById(authenticationMetadata.getUserId());
 
-        if (userId == null) {
+        if (user == null) {
             return new ModelAndView("redirect:/login");
         }
 
@@ -316,12 +307,5 @@ public class IndexController {
         model.addAttribute("sharedGoals", sharedGoals);
 
         return "my-shared-posts";
-    }
-
-    @GetMapping("/logout")
-    public String getLogoutPage(HttpSession session) {
-        session.invalidate();
-
-        return "redirect:/";
     }
 }
