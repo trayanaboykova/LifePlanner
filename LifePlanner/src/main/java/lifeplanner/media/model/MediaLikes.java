@@ -11,6 +11,7 @@ import lombok.*;
 @Getter
 @Setter
 public class MediaLikes {
+
     @EmbeddedId
     private MediaLikesId id;
 
@@ -23,4 +24,5 @@ public class MediaLikes {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
+
 }

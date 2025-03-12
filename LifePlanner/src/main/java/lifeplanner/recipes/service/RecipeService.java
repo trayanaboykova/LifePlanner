@@ -1,7 +1,6 @@
 package lifeplanner.recipes.service;
 
 import jakarta.validation.Valid;
-import lifeplanner.books.model.Book;
 import lifeplanner.recipes.model.Recipe;
 import lifeplanner.recipes.model.RecipeIngredient;
 import lifeplanner.recipes.repository.RecipeRepository;

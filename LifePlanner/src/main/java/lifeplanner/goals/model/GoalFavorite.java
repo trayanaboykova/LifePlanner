@@ -11,6 +11,7 @@ import lombok.*;
 @Getter
 @Setter
 public class GoalFavorite {
+
     @EmbeddedId
     private GoalFavoriteId id;
 
@@ -23,4 +24,5 @@ public class GoalFavorite {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
+
 }

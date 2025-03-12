@@ -12,8 +12,13 @@ import java.util.UUID;
 
 @Repository
 public interface BookFavoriteRepository extends JpaRepository<BookFavorite, BookFavoriteId> {
+
     long countByBookId(UUID bookId);
+
     boolean existsById(BookFavoriteId id);
+
     List<BookFavorite> findAllByUser(User user);
+
     Optional<BookFavorite> findByUserAndBookId(User user, UUID bookId);
+
 }

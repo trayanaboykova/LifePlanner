@@ -171,5 +171,4 @@ public class BooksController {
 
         return "redirect:/books/my-books";
     }
-
 }

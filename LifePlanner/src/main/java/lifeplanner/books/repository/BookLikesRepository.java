@@ -5,7 +5,6 @@ import lifeplanner.books.model.BookLikesId;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
 import java.util.UUID;
 
 @Repository
@@ -15,5 +14,4 @@ public interface BookLikesRepository extends JpaRepository<BookLikes, BookLikesI
 
     // Check if a user has already liked a book
     boolean existsById(BookLikesId id);
-
 }

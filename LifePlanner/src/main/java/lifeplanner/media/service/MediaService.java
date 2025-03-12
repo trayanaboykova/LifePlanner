@@ -1,7 +1,6 @@
 package lifeplanner.media.service;
 
 import jakarta.validation.Valid;
-import lifeplanner.books.model.Book;
 import lifeplanner.media.model.Media;
 import lifeplanner.media.repository.MediaRepository;
 import lifeplanner.user.model.ApprovalStatus;
