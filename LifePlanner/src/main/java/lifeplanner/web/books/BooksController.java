@@ -1,15 +1,16 @@
 package lifeplanner.web.books;
 
-import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import lifeplanner.books.model.Book;
 import lifeplanner.books.service.BookService;
+import lifeplanner.security.AuthenticationMetadata;
 import lifeplanner.user.model.User;
 import lifeplanner.user.service.UserService;
 import lifeplanner.web.dto.AddBookRequest;
 import lifeplanner.web.dto.EditBookRequest;
 import lifeplanner.web.mapper.DTOMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -33,11 +34,10 @@ public class BooksController {
     }
 
     @GetMapping("/my-books")
-    public String getMyBooksPage(Model model, HttpSession session) {
+    public String getMyBooksPage(Model model, @AuthenticationPrincipal AuthenticationMetadata authenticationMetadata) {
         model.addAttribute("pageTitle", "My Books");
-        UUID userId = (UUID) session.getAttribute("user_id");
 
-        User user = userService.getById(userId);
+        User user = userService.getById(authenticationMetadata.getUserId());
 
         List<Book> userBooks = bookService.getBooksByUser(user);
 
@@ -48,12 +48,10 @@ public class BooksController {
     }
 
     @GetMapping("/all-books")
-    public String getAllBooksPage(Model model, HttpSession session) {
+    public String getAllBooksPage(Model model, @AuthenticationPrincipal AuthenticationMetadata authenticationMetadata) {
         model.addAttribute("pageTitle", "All Books");
 
-        UUID userId = (UUID) session.getAttribute("user_id");
-
-        User user = userService.getById(userId);
+        User user = userService.getById(authenticationMetadata.getUserId());
 
         List<Book> userBooks = bookService.getBooksByUser(user);
 
@@ -63,12 +61,10 @@ public class BooksController {
     }
 
     @GetMapping("/read-books")
-    public String getAllReadPage(Model model, HttpSession session) {
+    public String getAllReadPage(Model model, @AuthenticationPrincipal AuthenticationMetadata authenticationMetadata) {
         model.addAttribute("pageTitle", "Read Books");
 
-        UUID userId = (UUID) session.getAttribute("user_id");
-
-        User user = userService.getById(userId);
+        User user = userService.getById(authenticationMetadata.getUserId());
 
         List<Book> userBooks = bookService.getBooksByUser(user);
 
@@ -78,12 +74,10 @@ public class BooksController {
     }
 
     @GetMapping("/wished-books")
-    public String getWishListPage(Model model, HttpSession session) {
+    public String getWishListPage(Model model, @AuthenticationPrincipal AuthenticationMetadata authenticationMetadata) {
         model.addAttribute("pageTitle", "Wish List");
 
-        UUID userId = (UUID) session.getAttribute("user_id");
-
-        User user = userService.getById(userId);
+        User user = userService.getById(authenticationMetadata.getUserId());
 
         List<Book> userBooks = bookService.getBooksByUser(user);
 
@@ -93,12 +87,11 @@ public class BooksController {
     }
 
     @GetMapping("/new")
-    public ModelAndView showAddBookRequest(HttpSession session, Model model) {
+    public ModelAndView showAddBookRequest(Model model, @AuthenticationPrincipal AuthenticationMetadata authenticationMetadata) {
 
         model.addAttribute("pageTitle", "Add Book");
 
-        UUID userId = (UUID) session.getAttribute("user_id");
-        User user = userService.getById(userId);
+        User user = userService.getById(authenticationMetadata.getUserId());
 
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("add-books");
@@ -111,8 +104,8 @@ public class BooksController {
     @PostMapping
     public String addBook(@Valid AddBookRequest addBookRequest,
                           BindingResult bindingResult,
-                          HttpSession session,
-                          Model model) {
+                          Model model,
+                          @AuthenticationPrincipal AuthenticationMetadata authenticationMetadata) {
 
         model.addAttribute("pageTitle", "Add Book");
 
@@ -120,8 +113,7 @@ public class BooksController {
             return "add-books";
         }
 
-        UUID userId = (UUID) session.getAttribute("user_id");
-        User user = userService.getById(userId);
+        User user = userService.getById(authenticationMetadata.getUserId());
 
         bookService.addBook(addBookRequest, user);
 

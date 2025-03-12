@@ -1,15 +1,16 @@
 package lifeplanner.web.recipes;
 
-import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import lifeplanner.recipes.model.Recipe;
 import lifeplanner.recipes.service.RecipeService;
+import lifeplanner.security.AuthenticationMetadata;
 import lifeplanner.user.model.User;
 import lifeplanner.user.service.UserService;
 import lifeplanner.web.dto.AddRecipeRequest;
 import lifeplanner.web.dto.EditRecipeRequest;
 import lifeplanner.web.mapper.DTOMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -33,12 +34,10 @@ public class RecipesController {
     }
 
     @GetMapping("/all-recipes")
-    public String getAllRecipesPage(Model model, HttpSession session) {
+    public String getAllRecipesPage(Model model, @AuthenticationPrincipal AuthenticationMetadata authenticationMetadata) {
         model.addAttribute("pageTitle", "All Recipes");
 
-        UUID userId = (UUID) session.getAttribute("user_id");
-
-        User user = userService.getById(userId);
+        User user = userService.getById(authenticationMetadata.getUserId());
 
         List<Recipe> userRecipe = recipeService.getRecipeByUser(user);
 
@@ -48,12 +47,11 @@ public class RecipesController {
     }
 
     @GetMapping("/new")
-    public ModelAndView showAddRecipeRequest(HttpSession session, Model model) {
+    public ModelAndView showAddRecipeRequest(Model model, @AuthenticationPrincipal AuthenticationMetadata authenticationMetadata) {
 
         model.addAttribute("pageTitle", "Add Recipe");
 
-        UUID userId = (UUID) session.getAttribute("user_id");
-        User user = userService.getById(userId);
+        User user = userService.getById(authenticationMetadata.getUserId());
 
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("add-recipe");
@@ -65,9 +63,9 @@ public class RecipesController {
 
     @PostMapping
     public String addRecipe(@Valid AddRecipeRequest addRecipeRequest,
-                          BindingResult bindingResult,
-                          HttpSession session,
-                          Model model) {
+                            BindingResult bindingResult,
+                            Model model,
+                            @AuthenticationPrincipal AuthenticationMetadata authenticationMetadata) {
 
         model.addAttribute("pageTitle", "Add Recipe");
 
@@ -75,8 +73,7 @@ public class RecipesController {
             return "add-recipe";
         }
 
-        UUID userId = (UUID) session.getAttribute("user_id");
-        User user = userService.getById(userId);
+        User user = userService.getById(authenticationMetadata.getUserId());
 
         recipeService.addRecipe(addRecipeRequest, user);
 

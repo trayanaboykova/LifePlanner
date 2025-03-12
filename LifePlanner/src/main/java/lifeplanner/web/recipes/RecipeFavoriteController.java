@@ -1,8 +1,9 @@
 package lifeplanner.web.recipes;
 
-import jakarta.servlet.http.HttpSession;
 import lifeplanner.recipes.service.RecipeFavoriteService;
+import lifeplanner.security.AuthenticationMetadata;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,8 +23,11 @@ public class RecipeFavoriteController {
     }
 
     @PostMapping("/{recipeId}/favorite")
-    public Map<String, Object> toggleRecipeFavorite(@PathVariable UUID recipeId, HttpSession session) {
-        UUID userId = (UUID) session.getAttribute("user_id");
+    public Map<String, Object> toggleRecipeFavorite(@PathVariable UUID recipeId,
+                                                    @AuthenticationPrincipal AuthenticationMetadata authenticationMetadata) {
+
+        UUID userId = authenticationMetadata.getUserId();
+
         boolean isFavorited = recipeFavoriteService.toggleFavorite(recipeId, userId);
         long newCount = recipeFavoriteService.getFavoriteCount(recipeId);
 

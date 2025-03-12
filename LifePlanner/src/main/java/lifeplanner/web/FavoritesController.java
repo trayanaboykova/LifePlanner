@@ -1,14 +1,15 @@
 package lifeplanner.web;
 
-import jakarta.servlet.http.HttpSession;
 import lifeplanner.books.service.BookFavoriteService;
 import lifeplanner.goals.service.GoalFavoriteService;
 import lifeplanner.media.service.MediaFavoriteService;
 import lifeplanner.recipes.service.RecipeFavoriteService;
+import lifeplanner.security.AuthenticationMetadata;
 import lifeplanner.travel.service.TripFavoriteService;
 import lifeplanner.user.model.User;
 import lifeplanner.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -43,42 +44,37 @@ public class FavoritesController {
     }
 
     @PostMapping("/books/{bookId}/remove")
-    public String removeBookFavorite(@PathVariable UUID bookId, HttpSession session) {
-        UUID userId = (UUID) session.getAttribute("user_id");
-        User user = userService.getById(userId);
-        bookFavoriteService.removeFavorite(user, bookId);
+    public String removeBookFavorite(@PathVariable UUID bookId, @AuthenticationPrincipal AuthenticationMetadata authenticationMetadata) {
+        UUID userId = authenticationMetadata.getUserId();
+        bookFavoriteService.removeFavorite(userService.getById(userId), bookId);
         return "redirect:/favorites";
     }
 
     @PostMapping("/media/{mediaId}/remove")
-    public String removeMediaFavorite(@PathVariable UUID mediaId, HttpSession session) {
-        UUID userId = (UUID) session.getAttribute("user_id");
-        User user = userService.getById(userId);
-        mediaFavoriteService.removeFavorite(user, mediaId);
+    public String removeMediaFavorite(@PathVariable UUID mediaId, @AuthenticationPrincipal AuthenticationMetadata authenticationMetadata) {
+        UUID userId = authenticationMetadata.getUserId();
+        mediaFavoriteService.removeFavorite(userService.getById(userId), mediaId);
         return "redirect:/favorites";
     }
 
     @PostMapping("/recipes/{recipeId}/remove")
-    public String removeRecipeFavorite(@PathVariable UUID recipeId, HttpSession session) {
-        UUID userId = (UUID) session.getAttribute("user_id");
-        User user = userService.getById(userId);
-        recipeFavoriteService.removeFavorite(user, recipeId);
+    public String removeRecipeFavorite(@PathVariable UUID recipeId, @AuthenticationPrincipal AuthenticationMetadata authenticationMetadata) {
+        UUID userId = authenticationMetadata.getUserId();
+        recipeFavoriteService.removeFavorite(userService.getById(userId), recipeId);
         return "redirect:/favorites";
     }
 
     @PostMapping("/trips/{tripId}/remove")
-    public String removeTripFavorite(@PathVariable UUID tripId, HttpSession session) {
-        UUID userId = (UUID) session.getAttribute("user_id");
-        User user = userService.getById(userId);
-        tripFavoriteService.removeFavorite(user, tripId);
+    public String removeTripFavorite(@PathVariable UUID tripId, @AuthenticationPrincipal AuthenticationMetadata authenticationMetadata) {
+        UUID userId = authenticationMetadata.getUserId();
+        tripFavoriteService.removeFavorite(userService.getById(userId), tripId);
         return "redirect:/favorites";
     }
 
     @PostMapping("/goals/{goalId}/remove")
-    public String removeGoalFavorite(@PathVariable UUID goalId, HttpSession session) {
-        UUID userId = (UUID) session.getAttribute("user_id");
-        User user = userService.getById(userId);
-        goalFavoriteService.removeFavorite(user, goalId);
+    public String removeGoalFavorite(@PathVariable UUID goalId, @AuthenticationPrincipal AuthenticationMetadata authenticationMetadata) {
+        UUID userId = authenticationMetadata.getUserId();
+        goalFavoriteService.removeFavorite(userService.getById(userId), goalId);
         return "redirect:/favorites";
     }
 }

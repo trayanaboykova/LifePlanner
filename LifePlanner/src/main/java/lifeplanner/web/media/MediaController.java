@@ -1,15 +1,16 @@
 package lifeplanner.web.media;
 
-import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import lifeplanner.media.model.Media;
 import lifeplanner.media.service.MediaService;
+import lifeplanner.security.AuthenticationMetadata;
 import lifeplanner.user.model.User;
 import lifeplanner.user.service.UserService;
 import lifeplanner.web.dto.AddMediaRequest;
 import lifeplanner.web.dto.EditMediaRequest;
 import lifeplanner.web.mapper.DTOMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -33,12 +34,10 @@ public class MediaController {
     }
 
     @GetMapping("/all-media")
-    public String getAllMediaPage(Model model, HttpSession session) {
+    public String getAllMediaPage(Model model, @AuthenticationPrincipal AuthenticationMetadata authenticationMetadata) {
         model.addAttribute("pageTitle", "All Media");
 
-        UUID userId = (UUID) session.getAttribute("user_id");
-
-        User user = userService.getById(userId);
+        User user = userService.getById(authenticationMetadata.getUserId());
 
         List<Media> userMedia = mediaService.getMediaByUser(user);
 
@@ -48,12 +47,10 @@ public class MediaController {
     }
 
     @GetMapping("/watched")
-    public String getWatchedPage(Model model, HttpSession session) {
+    public String getWatchedPage(Model model, @AuthenticationPrincipal AuthenticationMetadata authenticationMetadata) {
         model.addAttribute("pageTitle", "Watched");
 
-        UUID userId = (UUID) session.getAttribute("user_id");
-
-        User user = userService.getById(userId);
+        User user = userService.getById(authenticationMetadata.getUserId());
 
         List<Media> userMedia = mediaService.getMediaByUser(user);
 
@@ -63,12 +60,10 @@ public class MediaController {
     }
 
     @GetMapping("/watchlist")
-    public String getWatchlistPage(Model model, HttpSession session) {
+    public String getWatchlistPage(Model model, @AuthenticationPrincipal AuthenticationMetadata authenticationMetadata) {
         model.addAttribute("pageTitle", "Watchlist");
 
-        UUID userId = (UUID) session.getAttribute("user_id");
-
-        User user = userService.getById(userId);
+        User user = userService.getById(authenticationMetadata.getUserId());
 
         List<Media> userMedia = mediaService.getMediaByUser(user);
 
@@ -78,11 +73,10 @@ public class MediaController {
     }
 
     @GetMapping("/new")
-    public ModelAndView showAddMediaRequest(Model model, HttpSession session) {
+    public ModelAndView showAddMediaRequest(Model model, @AuthenticationPrincipal AuthenticationMetadata authenticationMetadata) {
         model.addAttribute("pageTitle", "Add Media");
 
-        UUID userId = (UUID) session.getAttribute("user_id");
-        User user = userService.getById(userId);
+        User user = userService.getById(authenticationMetadata.getUserId());
 
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("add-media");
@@ -94,9 +88,9 @@ public class MediaController {
 
     @PostMapping
     public String addMedia(@Valid AddMediaRequest addMediaRequest,
-                          BindingResult bindingResult,
-                          HttpSession session,
-                          Model model) {
+                           BindingResult bindingResult,
+                           Model model,
+                           @AuthenticationPrincipal AuthenticationMetadata authenticationMetadata) {
 
         model.addAttribute("pageTitle", "Add Media");
 
@@ -104,8 +98,7 @@ public class MediaController {
             return "add-media";
         }
 
-        UUID userId = (UUID) session.getAttribute("user_id");
-        User user = userService.getById(userId);
+        User user = userService.getById(authenticationMetadata.getUserId());
 
         mediaService.addMedia(addMediaRequest, user);
 

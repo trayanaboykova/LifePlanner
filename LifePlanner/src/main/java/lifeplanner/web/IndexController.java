@@ -1,6 +1,5 @@
 package lifeplanner.web;
 
-import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import lifeplanner.books.model.Book;
 import lifeplanner.books.service.BookFavoriteService;
@@ -267,10 +266,10 @@ public class IndexController {
     }
 
     @GetMapping("/favorites")
-    public String getFavoritesPage(Model model, HttpSession session) {
+    public String getFavoritesPage(Model model, @AuthenticationPrincipal AuthenticationMetadata authenticationMetadata) {
         model.addAttribute("pageTitle", "LifeHub Favorites");
-        UUID userId = (UUID) session.getAttribute("user_id");
-        User user = userService.getById(userId);
+
+        User user = userService.getById(authenticationMetadata.getUserId());
 
         List<Book> favoriteBooks = bookFavoriteService.getFavoritesByUser(user);
         List<Media> favoriteMedia = mediaFavoriteService.getFavoritesByUser(user);
@@ -288,10 +287,10 @@ public class IndexController {
     }
 
     @GetMapping("/my-shared-posts")
-    public String getMySharedPostsPage(Model model, HttpSession session) {
+    public String getMySharedPostsPage(Model model, @AuthenticationPrincipal AuthenticationMetadata authenticationMetadata) {
         model.addAttribute("pageTitle", "My Shared Posts");
-        UUID userId = (UUID) session.getAttribute("user_id");
-        User user = userService.getById(userId);
+
+        User user = userService.getById(authenticationMetadata.getUserId());
 
         List<Book> sharedBooks = bookService.getMySharedBooks(user);
         List<Media> sharedMedia = mediaService.getMySharedMedia(user);

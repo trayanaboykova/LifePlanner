@@ -1,12 +1,13 @@
 package lifeplanner.web;
 
-import jakarta.servlet.http.HttpSession;
 import lifeplanner.books.service.BookService;
 import lifeplanner.goals.service.GoalService;
 import lifeplanner.media.service.MediaService;
 import lifeplanner.recipes.service.RecipeService;
+import lifeplanner.security.AuthenticationMetadata;
 import lifeplanner.travel.service.TravelService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -34,7 +35,7 @@ public class PendingApprovalController {
     }
 
     @GetMapping("/pending-approval")
-    public String getPendingApprovalPage(Model model, HttpSession session) {
+    public String getPendingApprovalPage(Model model, @AuthenticationPrincipal AuthenticationMetadata authenticationMetadata) {
         model.addAttribute("pageTitle", "Pending Approval");
 
         model.addAttribute("pendingBooks", bookService.getPendingBooks());

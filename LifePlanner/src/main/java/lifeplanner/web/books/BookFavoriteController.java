@@ -1,8 +1,9 @@
 package lifeplanner.web.books;
 
-import jakarta.servlet.http.HttpSession;
 import lifeplanner.books.service.BookFavoriteService;
+import lifeplanner.security.AuthenticationMetadata;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,11 +24,15 @@ public class BookFavoriteController {
     }
 
     @PostMapping("/{bookId}/favorite")
-    public Map<String, Object> toggleBookFavorite(@PathVariable UUID bookId, HttpSession session) {
-        UUID userId = (UUID) session.getAttribute("user_id");
+    public Map<String, Object> toggleBookFavorite(@PathVariable UUID bookId,
+                                                  @AuthenticationPrincipal AuthenticationMetadata authenticationMetadata) {
+
+        UUID userId = authenticationMetadata.getUserId();
+
         boolean isFavorited = bookFavoriteService.toggleFavorite(bookId, userId);
         long newCount = bookFavoriteService.getFavoriteCount(bookId);
 
+        // Return JSON with new state & count
         return Map.of(
                 "favorited", isFavorited,
                 "favoriteCount", newCount

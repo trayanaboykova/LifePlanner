@@ -1,15 +1,16 @@
 package lifeplanner.web.goals;
 
-import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import lifeplanner.goals.model.Goal;
 import lifeplanner.goals.service.GoalService;
+import lifeplanner.security.AuthenticationMetadata;
 import lifeplanner.user.model.User;
 import lifeplanner.user.service.UserService;
 import lifeplanner.web.dto.AddGoalRequest;
 import lifeplanner.web.dto.EditGoalRequest;
 import lifeplanner.web.mapper.DTOMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -33,12 +34,10 @@ public class GoalsController {
     }
 
     @GetMapping("/my-goals")
-    public String getMyGoalsPage(Model model, HttpSession session) {
+    public String getMyGoalsPage(Model model, @AuthenticationPrincipal AuthenticationMetadata authenticationMetadata) {
         model.addAttribute("pageTitle", "Goals");
 
-        UUID userId = (UUID) session.getAttribute("user_id");
-
-        User user = userService.getById(userId);
+        User user = userService.getById(authenticationMetadata.getUserId());
 
         List<Goal> userGoals = goalService.getGoalsByUser(user);
 
@@ -49,12 +48,10 @@ public class GoalsController {
     }
 
     @GetMapping("/all-goals")
-    public String getAllGoalsPage(Model model, HttpSession session) {
+    public String getAllGoalsPage(Model model, @AuthenticationPrincipal AuthenticationMetadata authenticationMetadata) {
         model.addAttribute("pageTitle", "All Goals");
 
-        UUID userId = (UUID) session.getAttribute("user_id");
-
-        User user = userService.getById(userId);
+        User user = userService.getById(authenticationMetadata.getUserId());
 
         List<Goal> userGoals = goalService.getGoalsByUser(user);
 
@@ -64,12 +61,10 @@ public class GoalsController {
     }
 
     @GetMapping("/completed-goals")
-    public String getCompletedGoalsPage(Model model, HttpSession session) {
+    public String getCompletedGoalsPage(Model model, @AuthenticationPrincipal AuthenticationMetadata authenticationMetadata) {
         model.addAttribute("pageTitle", "Completed Goals");
 
-        UUID userId = (UUID) session.getAttribute("user_id");
-
-        User user = userService.getById(userId);
+        User user = userService.getById(authenticationMetadata.getUserId());
 
         List<Goal> userGoals = goalService.getGoalsByUser(user);
 
@@ -79,12 +74,11 @@ public class GoalsController {
     }
 
     @GetMapping("/new")
-    public ModelAndView showAddGoalRequest(HttpSession session, Model model) {
+    public ModelAndView showAddGoalRequest(Model model, @AuthenticationPrincipal AuthenticationMetadata authenticationMetadata) {
 
         model.addAttribute("pageTitle", "Add Goal");
 
-        UUID userId = (UUID) session.getAttribute("user_id");
-        User user = userService.getById(userId);
+        User user = userService.getById(authenticationMetadata.getUserId());
 
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("add-goal");
@@ -97,8 +91,8 @@ public class GoalsController {
     @PostMapping
     public String addGoal(@Valid AddGoalRequest addGoalRequest,
                           BindingResult bindingResult,
-                          HttpSession session,
-                          Model model) {
+                          Model model,
+                          @AuthenticationPrincipal AuthenticationMetadata authenticationMetadata) {
 
         model.addAttribute("pageTitle", "Add Goal");
 
@@ -106,8 +100,7 @@ public class GoalsController {
             return "add-goal";
         }
 
-        UUID userId = (UUID) session.getAttribute("user_id");
-        User user = userService.getById(userId);
+        User user = userService.getById(authenticationMetadata.getUserId());
 
         goalService.addGoal(addGoalRequest, user);
 

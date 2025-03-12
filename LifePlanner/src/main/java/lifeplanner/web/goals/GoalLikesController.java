@@ -1,8 +1,10 @@
 package lifeplanner.web.goals;
 
-import jakarta.servlet.http.HttpSession;
+
 import lifeplanner.goals.service.GoalLikesService;
+import lifeplanner.security.AuthenticationMetadata;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,8 +26,10 @@ public class GoalLikesController {
 
     @PostMapping("/{goalId}/like")
     public Map<String, Object> toggleGoalLike(@PathVariable UUID goalId,
-                                              HttpSession session) {
-        UUID userId = (UUID) session.getAttribute("user_id");
+                                              @AuthenticationPrincipal AuthenticationMetadata authenticationMetadata) {
+
+        UUID userId = authenticationMetadata.getUserId();
+
         boolean isLiked = goalLikesService.toggleLike(goalId, userId);
         long newCount = goalLikesService.getLikeCount(goalId);
 
@@ -35,6 +39,4 @@ public class GoalLikesController {
                 "likeCount", newCount
         );
     }
-
-
 }

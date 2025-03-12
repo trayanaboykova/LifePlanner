@@ -1,10 +1,9 @@
 package lifeplanner.web.media;
 
-import jakarta.servlet.http.HttpSession;
 import lifeplanner.media.service.MediaFavoriteService;
-import lifeplanner.user.model.User;
-import lifeplanner.user.service.UserService;
+import lifeplanner.security.AuthenticationMetadata;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,8 +24,11 @@ public class MediaFavoriteController {
     }
 
     @PostMapping("/{mediaId}/favorite")
-    public Map<String, Object> toggleMediaFavorite(@PathVariable UUID mediaId, HttpSession session) {
-        UUID userId = (UUID) session.getAttribute("user_id");
+    public Map<String, Object> toggleMediaFavorite(@PathVariable UUID mediaId,
+                                                   @AuthenticationPrincipal AuthenticationMetadata authenticationMetadata) {
+
+        UUID userId = authenticationMetadata.getUserId();
+
         boolean isFavorited = mediaFavoriteService.toggleFavoriteMedia(mediaId, userId);
         long newCount = mediaFavoriteService.getFavoriteCount(mediaId);
 

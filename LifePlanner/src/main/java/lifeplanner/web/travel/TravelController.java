@@ -1,7 +1,7 @@
 package lifeplanner.web.travel;
 
-import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
+import lifeplanner.security.AuthenticationMetadata;
 import lifeplanner.travel.model.Travel;
 import lifeplanner.travel.service.TravelService;
 import lifeplanner.user.model.User;
@@ -10,6 +10,7 @@ import lifeplanner.web.dto.AddTripRequest;
 import lifeplanner.web.dto.EditTripRequest;
 import lifeplanner.web.mapper.DTOMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -33,12 +34,10 @@ public class TravelController {
     }
 
     @GetMapping("/travel")
-    public String getTravelPage(Model model, HttpSession session) {
+    public String getTravelPage(Model model, @AuthenticationPrincipal AuthenticationMetadata authenticationMetadata) {
         model.addAttribute("pageTitle", "Travel Plans");
 
-        UUID userId = (UUID) session.getAttribute("user_id");
-
-        User user = userService.getById(userId);
+        User user = userService.getById(authenticationMetadata.getUserId());
 
         List<Travel> userTrips = travelService.getTripsByUser(user);
 
@@ -49,12 +48,10 @@ public class TravelController {
     }
 
     @GetMapping("/all-trips")
-    public String getAllTripsPage(Model model, HttpSession session) {
+    public String getAllTripsPage(Model model, @AuthenticationPrincipal AuthenticationMetadata authenticationMetadata) {
         model.addAttribute("pageTitle", "All Trips");
 
-        UUID userId = (UUID) session.getAttribute("user_id");
-
-        User user = userService.getById(userId);
+        User user = userService.getById(authenticationMetadata.getUserId());
 
         List<Travel> userTrips = travelService.getTripsByUser(user);
 
@@ -64,12 +61,10 @@ public class TravelController {
     }
 
     @GetMapping("/past-trips")
-    public String getPastTripsPage(Model model, HttpSession session) {
+    public String getPastTripsPage(Model model, @AuthenticationPrincipal AuthenticationMetadata authenticationMetadata) {
         model.addAttribute("pageTitle", "Past Trips");
 
-        UUID userId = (UUID) session.getAttribute("user_id");
-
-        User user = userService.getById(userId);
+        User user = userService.getById(authenticationMetadata.getUserId());
 
         List<Travel> userTrips = travelService.getTripsByUser(user);
 
@@ -79,12 +74,11 @@ public class TravelController {
     }
 
     @GetMapping("/new")
-    public ModelAndView showAddTravelRequest(HttpSession session, Model model) {
+    public ModelAndView showAddTravelRequest(Model model, @AuthenticationPrincipal AuthenticationMetadata authenticationMetadata) {
 
         model.addAttribute("pageTitle", "Add Trip");
 
-        UUID userId = (UUID) session.getAttribute("user_id");
-        User user = userService.getById(userId);
+        User user = userService.getById(authenticationMetadata.getUserId());
 
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("add-trip");
@@ -97,8 +91,8 @@ public class TravelController {
     @PostMapping
     public String addTrip(@Valid AddTripRequest addTripRequest,
                           BindingResult bindingResult,
-                          HttpSession session,
-                          Model model) {
+                          Model model,
+                          @AuthenticationPrincipal AuthenticationMetadata authenticationMetadata) {
 
         model.addAttribute("pageTitle", "Add Trip");
 
@@ -106,8 +100,7 @@ public class TravelController {
             return "add-trip";
         }
 
-        UUID userId = (UUID) session.getAttribute("user_id");
-        User user = userService.getById(userId);
+        User user = userService.getById(authenticationMetadata.getUserId());
 
         travelService.addTrip(addTripRequest, user);
 

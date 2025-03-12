@@ -2,7 +2,9 @@ package lifeplanner.web.recipes;
 
 import jakarta.servlet.http.HttpSession;
 import lifeplanner.recipes.service.RecipeLikesService;
+import lifeplanner.security.AuthenticationMetadata;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,8 +26,9 @@ public class RecipeLikesController {
 
     @PostMapping("/{recipeId}/like")
     public Map<String, Object> toggleRecipeLike(@PathVariable UUID recipeId,
-                                              HttpSession session) {
-        UUID userId = (UUID) session.getAttribute("user_id");
+                                                @AuthenticationPrincipal AuthenticationMetadata authenticationMetadata) {
+
+        UUID userId = authenticationMetadata.getUserId();
 
         boolean isLiked = recipeLikesService.toggleLike(recipeId, userId);
         long newCount = recipeLikesService.getLikeCount(recipeId);
