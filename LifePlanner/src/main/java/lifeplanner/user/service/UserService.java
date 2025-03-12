@@ -6,7 +6,6 @@ import lifeplanner.security.AuthenticationMetadata;
 import lifeplanner.user.model.User;
 import lifeplanner.user.model.UserRole;
 import lifeplanner.user.repository.UserRepository;
-import lifeplanner.web.dto.LoginRequest;
 import lifeplanner.web.dto.RegisterRequest;
 import lifeplanner.web.dto.UserEditRequest;
 import org.springframework.beans.factory.annotation.Autowired;
