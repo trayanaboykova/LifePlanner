@@ -2,7 +2,6 @@ package lifeplanner.user.model;
 
 import jakarta.persistence.*;
 import lombok.*;
-import java.util.Date;
 import java.util.UUID;
 
 @Entity
@@ -35,4 +34,5 @@ public class SharedPosts {
     // Favorites counter field to hold the total number of favorites
     @Builder.Default
     private int favoriteCount = 0;
+
 }

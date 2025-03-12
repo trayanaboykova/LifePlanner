@@ -11,6 +11,7 @@ import lombok.*;
 @Getter
 @Setter
 public class RecipeLikes {
+
     @EmbeddedId
     private RecipeLikesId id;
 
@@ -23,4 +24,5 @@ public class RecipeLikes {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
+
 }

@@ -12,8 +12,13 @@ import java.util.UUID;
 
 @Repository
 public interface MediaFavoriteRepository extends JpaRepository<MediaFavorite, MediaFavoriteId> {
+
     long countByMediaId(UUID mediaId);
+
     boolean existsById(MediaFavoriteId id);
+
     List<MediaFavorite> findAllByUser(User user);
+
     Optional<MediaFavorite> findByUserAndMediaId(User user, UUID mediaId);
+
 }

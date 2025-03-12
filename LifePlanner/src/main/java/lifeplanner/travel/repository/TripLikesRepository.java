@@ -9,9 +9,11 @@ import java.util.UUID;
 
 @Repository
 public interface TripLikesRepository extends JpaRepository<TripLikes, TripLikesId> {
+
     // Count how many likes a trip has
     long countByTripId(UUID tripId);
 
     // Check if a user has already liked a trip
     boolean existsById(TripLikesId id);
+
 }

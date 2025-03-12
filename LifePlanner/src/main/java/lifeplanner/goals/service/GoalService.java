@@ -1,7 +1,5 @@
 package lifeplanner.goals.service;
 
-import jakarta.validation.Valid;
-import lifeplanner.books.model.Book;
 import lifeplanner.goals.model.Goal;
 import lifeplanner.goals.repository.GoalRepository;
 import lifeplanner.user.model.ApprovalStatus;

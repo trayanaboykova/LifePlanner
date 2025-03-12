@@ -20,4 +20,5 @@ public interface TripFavoriteRepository extends JpaRepository<TripFavorite, Trip
     List<TripFavorite> findAllByUser(User user);
 
     Optional<TripFavorite> findByUserAndTripId(User user, UUID tripId);
+
 }

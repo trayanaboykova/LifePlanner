@@ -6,7 +6,6 @@ import lifeplanner.user.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
@@ -18,4 +17,5 @@ public interface TravelRepository extends JpaRepository<Travel, UUID> {
     List<Travel> findAllByVisibleTrue();
 
     List<Travel> findAllByApprovalStatus(ApprovalStatus pending);
+
 }

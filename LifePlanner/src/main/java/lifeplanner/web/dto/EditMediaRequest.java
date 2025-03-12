@@ -31,4 +31,5 @@ public class EditMediaRequest {
 
     @Size(max = 40)
     private String genre;
+
 }

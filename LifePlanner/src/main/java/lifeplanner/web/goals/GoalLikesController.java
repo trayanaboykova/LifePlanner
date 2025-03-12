@@ -1,6 +1,5 @@
 package lifeplanner.web.goals;
 
-
 import lifeplanner.goals.service.GoalLikesService;
 import lifeplanner.security.AuthenticationMetadata;
 import org.springframework.beans.factory.annotation.Autowired;

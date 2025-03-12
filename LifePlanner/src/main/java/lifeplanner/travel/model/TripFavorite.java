@@ -11,6 +11,7 @@ import lombok.*;
 @Getter
 @Setter
 public class TripFavorite {
+
     @EmbeddedId
     private TripFavoriteId id;
 
@@ -23,4 +24,5 @@ public class TripFavorite {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
+
 }

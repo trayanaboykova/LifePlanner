@@ -16,6 +16,7 @@ import java.util.stream.Collectors;
 
 @UtilityClass
 public class DTOMapper {
+
     public static UserEditRequest mapUserToUserEditRequest(User user) {
 
         return UserEditRequest.builder()

@@ -14,4 +14,3 @@ public enum BookRating {
 
     private final String label;
 }
-

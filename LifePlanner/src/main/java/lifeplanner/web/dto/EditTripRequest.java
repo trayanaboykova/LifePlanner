@@ -41,4 +41,5 @@ public class EditTripRequest {
 
     @Lob
     private String notes;
+
 }

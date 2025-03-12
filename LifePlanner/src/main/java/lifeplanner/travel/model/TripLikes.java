@@ -11,6 +11,7 @@ import lombok.*;
 @Getter
 @Setter
 public class TripLikes {
+
     @EmbeddedId
     private TripLikesId id;
 
@@ -23,4 +24,5 @@ public class TripLikes {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
+
 }

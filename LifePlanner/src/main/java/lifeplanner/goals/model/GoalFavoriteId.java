@@ -8,6 +8,7 @@ import java.util.UUID;
 
 @Embeddable
 public class GoalFavoriteId implements Serializable {
+
     private UUID goalId;
     private UUID userId;
 

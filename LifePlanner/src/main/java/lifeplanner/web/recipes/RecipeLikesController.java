@@ -1,6 +1,5 @@
 package lifeplanner.web.recipes;
 
-import jakarta.servlet.http.HttpSession;
 import lifeplanner.recipes.service.RecipeLikesService;
 import lifeplanner.security.AuthenticationMetadata;
 import org.springframework.beans.factory.annotation.Autowired;

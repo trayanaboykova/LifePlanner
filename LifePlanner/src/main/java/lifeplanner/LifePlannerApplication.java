@@ -13,5 +13,4 @@ public class LifePlannerApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(LifePlannerApplication.class, args);
 	}
-
 }

@@ -14,7 +14,11 @@ import java.util.UUID;
 public interface RecipeFavoriteRepository extends JpaRepository<RecipeFavorite, RecipeFavoriteId> {
 
     long countByRecipeId(UUID recipeId);
+
     boolean existsById(RecipeFavoriteId id);
+
     List<RecipeFavorite> findAllByUser(User user);
+
     Optional<RecipeFavorite> findByUserAndRecipeId(User user, UUID recipeId);
+
 }

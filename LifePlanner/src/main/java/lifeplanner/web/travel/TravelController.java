@@ -158,5 +158,4 @@ public class TravelController {
 
         return "redirect:/trips/travel";
     }
-
 }

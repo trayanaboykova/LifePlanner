@@ -6,7 +6,6 @@ import lifeplanner.media.service.MediaFavoriteService;
 import lifeplanner.recipes.service.RecipeFavoriteService;
 import lifeplanner.security.AuthenticationMetadata;
 import lifeplanner.travel.service.TripFavoriteService;
-import lifeplanner.user.model.User;
 import lifeplanner.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;

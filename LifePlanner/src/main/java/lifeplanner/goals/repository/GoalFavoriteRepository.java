@@ -12,8 +12,13 @@ import java.util.UUID;
 
 @Repository
 public interface GoalFavoriteRepository extends JpaRepository<GoalFavorite, GoalFavoriteId> {
+
     long countByGoalId(UUID goalId);
+
     boolean existsById(GoalFavoriteId id);
+
     List<GoalFavorite> findAllByUser(User user);
+
     Optional<GoalFavorite> findByUserAndGoalId(User user, UUID goalId);
+
 }

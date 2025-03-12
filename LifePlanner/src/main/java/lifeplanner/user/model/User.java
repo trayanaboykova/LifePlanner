@@ -65,4 +65,5 @@ public class User {
 
     @OneToMany(mappedBy = "owner", fetch = FetchType.EAGER)
     private List<SharedPosts> sharedPosts = new ArrayList<>();
+
 }

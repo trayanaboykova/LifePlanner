@@ -36,4 +36,5 @@ public class EditGoalRequest {
 
     @Lob
     private String notes;
+
 }

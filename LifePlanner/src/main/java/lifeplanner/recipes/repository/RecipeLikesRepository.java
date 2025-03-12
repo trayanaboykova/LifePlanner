@@ -1,6 +1,5 @@
 package lifeplanner.recipes.repository;
 
-import lifeplanner.books.model.BookLikesId;
 import lifeplanner.recipes.model.RecipeLikes;
 import lifeplanner.recipes.model.RecipeLikesId;
 import org.springframework.data.jpa.repository.JpaRepository;

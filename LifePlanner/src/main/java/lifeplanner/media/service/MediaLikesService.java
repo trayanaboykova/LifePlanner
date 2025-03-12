@@ -1,8 +1,5 @@
 package lifeplanner.media.service;
 
-import lifeplanner.books.model.Book;
-import lifeplanner.books.model.BookLikes;
-import lifeplanner.books.model.BookLikesId;
 import lifeplanner.media.model.Media;
 import lifeplanner.media.model.MediaLikes;
 import lifeplanner.media.model.MediaLikesId;

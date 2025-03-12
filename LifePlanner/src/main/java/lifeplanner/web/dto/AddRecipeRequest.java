@@ -1,6 +1,5 @@
 package lifeplanner.web.dto;
 
-import jakarta.persistence.Column;
 import jakarta.persistence.Lob;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;

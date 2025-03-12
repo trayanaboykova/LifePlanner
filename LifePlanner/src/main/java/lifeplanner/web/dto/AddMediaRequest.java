@@ -27,4 +27,5 @@ public class AddMediaRequest {
 
     @Size(max = 40)
     private String genre;
+
 }

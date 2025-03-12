@@ -37,4 +37,5 @@ public class AddTripRequest {
 
     @Lob
     private String notes;
+
 }

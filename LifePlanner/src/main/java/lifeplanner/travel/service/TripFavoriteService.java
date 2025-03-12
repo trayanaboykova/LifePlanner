@@ -1,7 +1,5 @@
 package lifeplanner.travel.service;
 
-import lifeplanner.media.model.Media;
-import lifeplanner.media.model.MediaFavorite;
 import lifeplanner.travel.model.Travel;
 import lifeplanner.travel.model.TripFavorite;
 import lifeplanner.travel.model.TripFavoriteId;
