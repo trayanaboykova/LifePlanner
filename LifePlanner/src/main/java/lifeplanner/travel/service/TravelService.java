@@ -47,7 +47,7 @@ public class TravelService {
 
     public Travel getTripById(UUID tripId) {
         return travelRepository.findById(tripId)
-                .orElseThrow(() -> new RuntimeException("tRIP with id [" + tripId + "] does not exist."));
+                .orElseThrow(() -> new RuntimeException("Trip with id [" + tripId + "] does not exist."));
     }
 
     public void editTrip(UUID id, EditTripRequest editTripRequest) {
