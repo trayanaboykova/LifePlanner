@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/commons :: head}">
+    <title th:text="${pageTitle}"></title>
+</head>
+<body>
+<header>
+    <nav class="books-nav">
+        <div class="books-header-left">
+            <h1>
+                 user's quotes
+            </h1>
+        </div>
+        <div class="books-header-right">
+            <a href="/home" class="back-home">
+                <img src="https://img.icons8.com/?size=100&id=42814&format=png&color=000000"
+                     alt="Home Icon" width="45" height="45"/>
+                Back to Home
+            </a>
+        </div>
+    </nav>
+</header>
+<!-- Main Dashboard Layout -->
+<div class="all-books-dashboard">
+    <main class="books-main">
+        <h2 class="all-books">
+            <img src="https://img.icons8.com/?size=100&id=46766&format=png&color=000000"
+                 alt="Quotes Icon" class="all-books" width="45" height="45"/>
+            My Daily Quotes
+        </h2>
+        <div class="books-table">
+            <table>
+                <thead>
+                <tr>
+                    <th>Image</th>
+                    <th>Share</th>
+                    <th>Edit</th>
+                    <th>Delete</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>Image Url</td>
+                    <td>
+                        <a href="#">
+                            <img src="https://img.icons8.com/?size=100&id=46812&format=png&color=000000"
+                                 alt="Share Icon" width="45" height="45"/></a>
+                    </td>
+                    <td>
+                        <a href="/edit-book">
+                            <img src="https://img.icons8.com/?size=100&id=0Ka1o_-mwyre&format=png&color=000000"
+                                 alt="Edit Icon" width="45" height="45"/></a>
+                    </td>
+                    <td>
+                        <a href="#">
+                            <img src="https://img.icons8.com/?size=100&id=104338&format=png&color=000000"
+                                 alt="Delete Icon" width="45" height="45"/></a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </main>
+</div>
+
+<footer th:replace="~{fragments/commons :: footer}"></footer>
+</body>
+</html>
