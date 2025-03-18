@@ -8,9 +8,12 @@
 <header>
     <nav class="books-nav">
         <div class="books-header-left">
-            <h1>
-                 user's quotes
-            </h1>
+            <p class="back-to-books">
+                <a href="/daily-quotes/new">
+                    <img src="https://img.icons8.com/?size=100&id=8tvPJ8IvOKQa&format=png&color=000000"
+                         alt="Add Quote Icon" width="45" height="45"/>
+                    Add New Quote</a>
+            </p>
         </div>
         <div class="books-header-right">
             <a href="/home" class="back-home">
@@ -22,48 +25,60 @@
     </nav>
 </header>
 <!-- Main Dashboard Layout -->
-<div class="all-books-dashboard">
+<div class="all-quotes-dashboard">
     <main class="books-main">
         <h2 class="all-books">
             <img src="https://img.icons8.com/?size=100&id=46766&format=png&color=000000"
                  alt="Quotes Icon" class="all-books" width="45" height="45"/>
             My Daily Quotes
         </h2>
-        <div class="books-table">
+        <div class="quotes-table">
             <table>
                 <thead>
                 <tr>
                     <th>Image</th>
-                    <th>Share</th>
                     <th>Edit</th>
                     <th>Delete</th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr>
-                    <td>Image Url</td>
+                <tr th:each="quote : ${quotes}">
                     <td>
-                        <a href="#">
-                            <img src="https://img.icons8.com/?size=100&id=46812&format=png&color=000000"
-                                 alt="Share Icon" width="45" height="45"/></a>
+                        <img class="quote" th:src="${quote.quoteImage}" alt="Quote"
+                             style="max-width: 100%; height: auto;" />
+
                     </td>
                     <td>
-                        <a href="/edit-book">
-                            <img src="https://img.icons8.com/?size=100&id=0Ka1o_-mwyre&format=png&color=000000"
-                                 alt="Edit Icon" width="45" height="45"/></a>
+                        <a th:href="@{/daily-quotes/{id}/edit(id=${quote.id})}">
+                        <img src="https://img.icons8.com/?size=100&id=0Ka1o_-mwyre&format=png&color=000000"
+                                 alt="Edit Icon" width="45" height="45"/>
+                        </a>
                     </td>
                     <td>
-                        <a href="#">
-                            <img src="https://img.icons8.com/?size=100&id=104338&format=png&color=000000"
-                                 alt="Delete Icon" width="45" height="45"/></a>
+                        <form th:action="@{/daily-quotes/delete/{id}(id=${quote.id})}" method="post" onsubmit="return confirm('Are you sure you want to delete this quote?');">
+                            <input type="hidden" name="_method" value="delete" />
+                            <button type="submit" style="border: none; background: none;">
+                                <img src="https://img.icons8.com/?size=100&id=104338&format=png&color=000000"
+                                     alt="Delete Icon" width="45" height="45"/>
+                            </button>
+                        </form>
                     </td>
                 </tr>
                 </tbody>
             </table>
         </div>
+
+        <!-- Pagination Controls -->
+        <div class="pagination">
+            <button id="prevPage" onclick="changePage(-1)">← Previous</button>
+            <span id="pageInfo">Page 1</span>
+            <button id="nextPage" onclick="changePage(1)">Next →</button>
+        </div>
+
     </main>
 </div>
 
+<script src="/js/pagination-books.js"></script>
 <footer th:replace="~{fragments/commons :: footer}"></footer>
 </body>
 </html>

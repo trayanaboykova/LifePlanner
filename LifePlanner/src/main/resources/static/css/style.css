@@ -112,3 +112,46 @@ p {
 .auth-text a:hover {
     text-decoration: underline;
 }
+
+img.quote {
+    display: block;
+}
+
+.all-quotes-dashboard {
+    display: flex;
+    align-items: stretch;
+    margin: 5em auto;
+    padding: 50px;
+    gap: 35px;
+    background: rgba(0, 0, 0, 0.1);
+    border-radius: 3em;
+    width: auto;
+}
+
+/* Table Styling */
+.quotes-table {
+    width: 100%;
+    overflow: hidden;
+    border-radius: 1em;
+}
+
+.quotes-table table {
+    width: 100%;
+    border-collapse: collapse;
+    background: rgba(0, 0, 0, 0.1);
+    border-radius: 1em;
+}
+
+.quotes-table th,
+.quotes-table td {
+    padding: 12px;
+    color: white;
+}
+
+.quotes-table th {
+    font-weight: bold;
+}
+
+.quotes-table tbody tr:hover{
+    background: rgba(255, 255, 255, 0.2);
+}

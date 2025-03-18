@@ -60,4 +60,5 @@ public class AuthenticationMetadata implements UserDetails {
     public boolean isEnabled() {
         return isActive;
     }
+
 }

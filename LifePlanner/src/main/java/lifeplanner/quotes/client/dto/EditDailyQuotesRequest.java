@@ -12,8 +12,9 @@ import java.util.UUID;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class DailyQuote {
+public class EditDailyQuotesRequest {
     private UUID id;
+    @NotBlank(message = "Image URL cannot be blank")
     private String quoteImage;
     private UUID userId;
 }

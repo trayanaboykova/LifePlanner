@@ -38,7 +38,7 @@ public class DailyQuotesScheduler {
     // This field will hold the current daily quote image URL
     private String currentQuoteUrl;
 
-    @Scheduled(cron = "0 0 * * * ?")
+    @Scheduled(cron = "* 30 * * * *")
     public void updateDailyQuote() {
         Random random = new Random();
         currentQuoteUrl = quoteImageUrls.get(random.nextInt(quoteImageUrls.size()));
