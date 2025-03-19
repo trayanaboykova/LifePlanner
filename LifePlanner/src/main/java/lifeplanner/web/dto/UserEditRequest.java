@@ -5,6 +5,7 @@ import jakarta.validation.constraints.Size;
 import lombok.Builder;
 import lombok.Data;
 import org.hibernate.validator.constraints.URL;
+import org.springframework.web.multipart.MultipartFile;
 
 @Data
 @Builder
@@ -22,4 +23,5 @@ public class UserEditRequest {
     @URL(message = "Enter valid URL link")
     private String profilePicture;
 
+    private transient MultipartFile profilePictureFile;
 }

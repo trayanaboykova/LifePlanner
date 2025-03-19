@@ -2,6 +2,7 @@ package lifeplanner.web;
 
 import jakarta.validation.Valid;
 import lifeplanner.security.AuthenticationMetadata;
+import lifeplanner.service.CloudinaryService;
 import lifeplanner.user.model.User;
 import lifeplanner.user.service.UserService;
 import lifeplanner.web.dto.UserEditRequest;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
@@ -22,10 +24,12 @@ import java.util.UUID;
 @RequestMapping("/users")
 public class UserController {
     private final UserService userService;
+    private final CloudinaryService cloudinaryService;
 
     @Autowired
-    public UserController(UserService userService) {
+    public UserController(UserService userService, CloudinaryService cloudinaryService) {
         this.userService = userService;
+        this.cloudinaryService = cloudinaryService;
     }
 
     @GetMapping("/{id}/profile")
@@ -55,6 +59,18 @@ public class UserController {
             modelAndView.addObject("user", user);
             modelAndView.addObject("userEditRequest", userEditRequest);
             return modelAndView;
+        }
+
+        MultipartFile file = userEditRequest.getProfilePictureFile();
+        if (file != null && !file.isEmpty()) {
+            try {
+                String uploadedUrl = cloudinaryService.uploadFile(file);
+                // Set the profilePicture URL to the Cloudinary secure URL
+                userEditRequest.setProfilePicture(uploadedUrl);
+            } catch (Exception e) {
+                bindingResult.rejectValue("profilePicture", "uploadError", "Could not upload image. Please try again.");
+                return new ModelAndView("edit-profile");
+            }
         }
 
         userService.editUserDetails(id, userEditRequest);
