@@ -78,8 +78,16 @@ public class TravelService {
         return travelRepository.findAll();
     }
 
-    public List<Travel> getSharedTrips(User currentUser) {
-        return travelRepository.findAllByVisibleTrue()
+//    public List<Travel> getSharedTrips(User currentUser) {
+//        return travelRepository.findAllByVisibleTrue()
+//                .stream()
+//                .filter(trip -> !trip.getOwner().getId().equals(currentUser.getId()))
+//                .toList();
+//    }
+
+    public List<Travel> getApprovedSharedTrips(User currentUser) {
+        List<Travel> approvedTrips = travelRepository.findAllByVisibleTrueAndApprovalStatus(ApprovalStatus.APPROVED);
+        return approvedTrips
                 .stream()
                 .filter(trip -> !trip.getOwner().getId().equals(currentUser.getId()))
                 .toList();

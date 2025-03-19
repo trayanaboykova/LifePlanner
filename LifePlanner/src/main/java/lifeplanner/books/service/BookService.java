@@ -72,17 +72,27 @@ public class BookService {
         bookRepository.save(book);
     }
 
-    public List<Book> getSharedBooks(User currentUser) {
-        return bookRepository.findAllByVisibleTrue()
-                .stream()
-                .filter(book -> !book.getOwner().getId().equals(currentUser.getId()))
-                .toList();
-    }
+//    public List<Book> getSharedBooks(User currentUser) {
+//        return bookRepository.findAllByVisibleTrue()
+//                .stream()
+//                .filter(book -> !book.getOwner().getId().equals(currentUser.getId()))
+//                .toList();
+//    }
 
     public List<Book> getMySharedBooks(User currentUser) {
         return bookRepository.findAllByVisibleTrue()
                 .stream()
                 .filter(book -> book.getOwner().getId().equals(currentUser.getId()))
+                .toList();
+    }
+
+    public List<Book> getApprovedSharedBooks(User currentUser) {
+        // Retrieve only books that are marked as visible and that have been approved.
+        List<Book> approvedBooks = bookRepository.findAllByVisibleTrueAndApprovalStatus(ApprovalStatus.APPROVED);
+
+        // Optionally, if you want to exclude the current user's own books:
+        return approvedBooks.stream()
+                .filter(book -> !book.getOwner().getId().equals(currentUser.getId()))
                 .toList();
     }
 

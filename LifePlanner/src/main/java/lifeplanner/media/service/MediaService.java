@@ -73,8 +73,16 @@ public class MediaService {
         return mediaRepository.findAll();
     }
 
-    public List<Media> getSharedMedia(User currentUser) {
-        return mediaRepository.findAllByVisibleTrue()
+//    public List<Media> getSharedMedia(User currentUser) {
+//        return mediaRepository.findAllByVisibleTrue()
+//                .stream()
+//                .filter(media -> !media.getOwner().getId().equals(currentUser.getId()))
+//                .toList();
+//    }
+
+    public List<Media> getApprovedSharedMedia(User currentUser) {
+        List<Media> approvedMedia = mediaRepository.findAllByVisibleTrueAndApprovalStatus(ApprovalStatus.APPROVED);
+        return approvedMedia
                 .stream()
                 .filter(media -> !media.getOwner().getId().equals(currentUser.getId()))
                 .toList();

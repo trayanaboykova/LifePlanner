@@ -17,7 +17,6 @@ import lifeplanner.recipes.model.Recipe;
 import lifeplanner.recipes.service.RecipeFavoriteService;
 import lifeplanner.recipes.service.RecipeLikesService;
 import lifeplanner.recipes.service.RecipeService;
-import lifeplanner.scheduler.DailyQuotesScheduler;
 import lifeplanner.scheduler.DateAndTimeScheduler;
 import lifeplanner.security.AuthenticationMetadata;
 import lifeplanner.travel.model.Travel;
@@ -156,7 +155,7 @@ public class IndexController {
 
         // BOOKS
         List<Book> allBooks = bookService.getAllBooks();
-        List<Book> sharedBooks = bookService.getSharedBooks(user);
+        List<Book> sharedBooks = bookService.getApprovedSharedBooks(user);
 
         // For each book, retrieve its like count
         Map<UUID, Long> bookLikeCounts = new HashMap<>();
@@ -173,7 +172,7 @@ public class IndexController {
 
         // MEDIA
         List<Media> allMedia = mediaService.getAllMedia();
-        List<Media> sharedMedia = mediaService.getSharedMedia(user);
+        List<Media> sharedMedia = mediaService.getApprovedSharedMedia(user);
 
         // For each book, retrieve its like count
         Map<UUID, Long> mediaLikeCounts = new HashMap<>();
@@ -191,7 +190,7 @@ public class IndexController {
 
         // RECIPES
         List<Recipe> allRecipes = recipeService.getAllRecipes();
-        List<Recipe> sharedRecipes = recipeService.getSharedRecipes(user);
+        List<Recipe> sharedRecipes = recipeService.getApprovedSharedRecipes(user);
 
         // For each recipe, retrieve its like count
         Map<UUID, Long> recipeLikeCounts = new HashMap<>();
@@ -209,7 +208,7 @@ public class IndexController {
 
         // TRIPS
         List<Travel> allTrips = travelService.getAllTrips();
-        List<Travel> sharedTrips = travelService.getSharedTrips(user);
+        List<Travel> sharedTrips = travelService.getApprovedSharedTrips(user);
 
         // For each trip, retrieve its like count
         Map<UUID, Long> tripLikeCounts = new HashMap<>();
@@ -227,7 +226,7 @@ public class IndexController {
 
         // GOALS
         List<Goal> allGoals = goalService.getAllGoals();
-        List<Goal> sharedGoals = goalService.getSharedGoals(user);
+        List<Goal> sharedGoals = goalService.getApprovedSharedGoals(user);
 
         // For each goal, retrieve its like count
         Map<UUID, Long> goalLikeCounts = new HashMap<>();

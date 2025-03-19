@@ -115,8 +115,16 @@ public class RecipeService {
         return recipeRepository.findAll();
     }
 
-    public List<Recipe> getSharedRecipes(User currentUser) {
-        return recipeRepository.findAllByVisibleTrue()
+//    public List<Recipe> getSharedRecipes(User currentUser) {
+//        return recipeRepository.findAllByVisibleTrue()
+//                .stream()
+//                .filter(recipe -> !recipe.getOwner().getId().equals(currentUser.getId()))
+//                .toList();
+//    }
+
+    public List<Recipe> getApprovedSharedRecipes(User currentUser) {
+        List<Recipe> approvedRecipes= recipeRepository.findAllByVisibleTrueAndApprovalStatus(ApprovalStatus.APPROVED);
+        return approvedRecipes
                 .stream()
                 .filter(recipe -> !recipe.getOwner().getId().equals(currentUser.getId()))
                 .toList();

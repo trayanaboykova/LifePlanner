@@ -85,8 +85,16 @@ public class GoalService {
         return goalRepository.findAll();
     }
 
-    public List<Goal> getSharedGoals(User currentUser) {
-        return goalRepository.findAllByVisibleTrue()
+//    public List<Goal> getSharedGoals(User currentUser) {
+//        return goalRepository.findAllByVisibleTrue()
+//                .stream()
+//                .filter(goal -> !goal.getOwner().getId().equals(currentUser.getId()))
+//                .toList();
+//    }
+
+    public List<Goal> getApprovedSharedGoals(User currentUser) {
+        List<Goal> approvedGoals = goalRepository.findAllByVisibleTrueAndApprovalStatus(ApprovalStatus.APPROVED);
+        return approvedGoals
                 .stream()
                 .filter(goal -> !goal.getOwner().getId().equals(currentUser.getId()))
                 .toList();

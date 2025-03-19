@@ -17,4 +17,6 @@ public interface GoalRepository extends JpaRepository<Goal, UUID> {
     List<Goal> findAllByVisibleTrue();
 
     List<Goal> findAllByApprovalStatus(ApprovalStatus pending);
+
+    List<Goal> findAllByVisibleTrueAndApprovalStatus(ApprovalStatus approvalStatus);
 }

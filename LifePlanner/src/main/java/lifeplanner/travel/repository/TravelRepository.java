@@ -18,4 +18,6 @@ public interface TravelRepository extends JpaRepository<Travel, UUID> {
 
     List<Travel> findAllByApprovalStatus(ApprovalStatus pending);
 
+    List<Travel> findAllByVisibleTrueAndApprovalStatus(ApprovalStatus approvalStatus);
+
 }

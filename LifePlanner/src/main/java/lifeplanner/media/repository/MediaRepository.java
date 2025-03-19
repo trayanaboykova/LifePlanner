@@ -18,4 +18,6 @@ public interface MediaRepository extends JpaRepository<Media, UUID> {
 
     List<Media> findAllByApprovalStatus(ApprovalStatus pending);
 
+    List<Media> findAllByVisibleTrueAndApprovalStatus(ApprovalStatus approvalStatus);
+
 }

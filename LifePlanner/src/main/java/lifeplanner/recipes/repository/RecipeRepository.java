@@ -18,4 +18,5 @@ public interface RecipeRepository extends JpaRepository<Recipe, UUID> {
 
     List<Recipe> findAllByApprovalStatus(ApprovalStatus pending);
 
+    List<Recipe> findAllByVisibleTrueAndApprovalStatus(ApprovalStatus approvalStatus);
 }
