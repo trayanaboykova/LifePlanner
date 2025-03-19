@@ -1,5 +1,6 @@
 package lifeplanner.goals.service;
 
+import lifeplanner.exception.DomainException;
 import lifeplanner.goals.model.Goal;
 import lifeplanner.goals.model.GoalFavorite;
 import lifeplanner.goals.model.GoalFavoriteId;
@@ -39,9 +40,9 @@ public class GoalFavoriteService {
             return false; // now unfavorited
         } else {
             Goal goal = goalRepository.findById(goalId)
-                    .orElseThrow(() -> new RuntimeException("Goal not found"));
+                    .orElseThrow(() -> new DomainException("Goal not found"));
             User user = userRepository.findById(userId)
-                    .orElseThrow(() -> new RuntimeException("User not found"));
+                    .orElseThrow(() -> new DomainException("User not found"));
 
             GoalFavorite favorite = new GoalFavorite();
             favorite.setId(favoriteId);

@@ -1,6 +1,7 @@
 package lifeplanner.media.service;
 
 import jakarta.validation.Valid;
+import lifeplanner.exception.DomainException;
 import lifeplanner.media.model.Media;
 import lifeplanner.media.repository.MediaRepository;
 import lifeplanner.user.model.ApprovalStatus;
@@ -45,7 +46,7 @@ public class MediaService {
 
     public Media getMediaById(UUID mediaId) {
         return mediaRepository.findById(mediaId)
-                .orElseThrow(() -> new RuntimeException("Media with id [" + mediaId + "] does not exist."));
+                .orElseThrow(() -> new DomainException("Media with id [" + mediaId + "] does not exist."));
     }
 
     public void editMedia(UUID id, @Valid EditMediaRequest editMediaRequest) {
@@ -62,7 +63,7 @@ public class MediaService {
 
     public void shareMedia(UUID mediaId) {
         Media media = mediaRepository.findById(mediaId)
-                .orElseThrow(() -> new RuntimeException("Media not found"));
+                .orElseThrow(() -> new DomainException("Media not found"));
 
         media.setVisible(true);
         mediaRepository.save(media);
@@ -88,7 +89,7 @@ public class MediaService {
 
     public void removeSharing(UUID mediaId) {
         Media media = mediaRepository.findById(mediaId)
-                .orElseThrow(() -> new RuntimeException("Media not found"));
+                .orElseThrow(() -> new DomainException("Media not found"));
         media.setVisible(false);
         mediaRepository.save(media);
     }

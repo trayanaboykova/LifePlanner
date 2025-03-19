@@ -1,6 +1,7 @@
 package lifeplanner.web;
 
 import jakarta.validation.Valid;
+import lifeplanner.exception.DomainException;
 import lifeplanner.quotes.client.dto.AddDailyQuoteRequest;
 import lifeplanner.quotes.client.dto.DailyQuote;
 import lifeplanner.quotes.client.dto.EditDailyQuotesRequest;
@@ -71,7 +72,7 @@ public class DailyQuotesController {
     @GetMapping("/{id}/edit")
     public ModelAndView showEditQuoteForm(@PathVariable UUID id, Model model) {
         DailyQuote existingQuote = dailyQuoteService.getQuoteById(id)
-                .orElseThrow(() -> new RuntimeException("Quote not found"));
+                .orElseThrow(() -> new DomainException("Quote not found"));
         // Create an Edit DTO from the existing quote
         EditDailyQuotesRequest editRequest = EditDailyQuotesRequest.builder()
                 .id(existingQuote.getId())

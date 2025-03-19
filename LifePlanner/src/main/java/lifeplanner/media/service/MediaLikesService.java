@@ -1,5 +1,6 @@
 package lifeplanner.media.service;
 
+import lifeplanner.exception.DomainException;
 import lifeplanner.media.model.Media;
 import lifeplanner.media.model.MediaLikes;
 import lifeplanner.media.model.MediaLikesId;
@@ -41,9 +42,9 @@ public class MediaLikesService {
         } else {
             // Otherwise, create a new like
             Media media = mediaRepository.findById(mediaId)
-                    .orElseThrow(() -> new RuntimeException("Media type not found"));
+                    .orElseThrow(() -> new DomainException("Media type not found"));
             User user = userRepository.findById(userId)
-                    .orElseThrow(() -> new RuntimeException("User not found"));
+                    .orElseThrow(() -> new DomainException("User not found"));
 
             MediaLikes newLike = new MediaLikes();
             newLike.setId(likeId);

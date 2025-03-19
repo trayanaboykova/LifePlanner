@@ -1,5 +1,6 @@
 package lifeplanner.media.service;
 
+import lifeplanner.exception.DomainException;
 import lifeplanner.media.model.Media;
 import lifeplanner.media.model.MediaFavorite;
 import lifeplanner.media.model.MediaFavoriteId;
@@ -35,9 +36,9 @@ public class MediaFavoriteService {
             return false;
         } else {
             Media media = mediaRepository.findById(mediaId)
-                    .orElseThrow(() -> new RuntimeException("Media not found"));
+                    .orElseThrow(() -> new DomainException("Media not found"));
             User user = userRepository.findById(userId)
-                    .orElseThrow(() -> new RuntimeException("User not found"));
+                    .orElseThrow(() -> new DomainException("User not found"));
             MediaFavorite mediaFavorite = new MediaFavorite();
             mediaFavorite.setId(favoriteId);
             mediaFavorite.setMedia(media);

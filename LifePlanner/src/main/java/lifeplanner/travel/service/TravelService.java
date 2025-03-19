@@ -1,5 +1,6 @@
 package lifeplanner.travel.service;
 
+import lifeplanner.exception.DomainException;
 import lifeplanner.travel.model.Travel;
 import lifeplanner.travel.repository.TravelRepository;
 import lifeplanner.user.model.ApprovalStatus;
@@ -47,7 +48,7 @@ public class TravelService {
 
     public Travel getTripById(UUID tripId) {
         return travelRepository.findById(tripId)
-                .orElseThrow(() -> new RuntimeException("Trip with id [" + tripId + "] does not exist."));
+                .orElseThrow(() -> new DomainException("Trip with id [" + tripId + "] does not exist."));
     }
 
     public void editTrip(UUID id, EditTripRequest editTripRequest) {
@@ -67,7 +68,7 @@ public class TravelService {
 
     public void shareTrip(UUID tripId) {
         Travel trip = travelRepository.findById(tripId)
-                .orElseThrow(() -> new RuntimeException("Trip not found"));
+                .orElseThrow(() -> new DomainException("Trip not found"));
 
         trip.setVisible(true);
         travelRepository.save(trip);
@@ -93,7 +94,7 @@ public class TravelService {
 
     public void removeSharing(UUID tripId) {
         Travel trip = travelRepository.findById(tripId)
-                .orElseThrow(() -> new RuntimeException("Trip not found"));
+                .orElseThrow(() -> new DomainException("Trip not found"));
         trip.setVisible(false);
         travelRepository.save(trip);
     }

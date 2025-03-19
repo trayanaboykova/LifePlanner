@@ -5,6 +5,7 @@ import lifeplanner.books.model.BookLikes;
 import lifeplanner.books.model.BookLikesId;
 import lifeplanner.books.repository.BookLikesRepository;
 import lifeplanner.books.repository.BookRepository;
+import lifeplanner.exception.DomainException;
 import lifeplanner.user.model.User;
 import lifeplanner.user.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,9 +41,9 @@ public class BookLikesService {
         } else {
             // Otherwise, create a new like
             Book book = bookRepository.findById(bookId)
-                    .orElseThrow(() -> new RuntimeException("Book not found"));
+                    .orElseThrow(() -> new DomainException("Book not found"));
             User user = userRepository.findById(userId)
-                    .orElseThrow(() -> new RuntimeException("User not found"));
+                    .orElseThrow(() -> new DomainException("User not found"));
 
             BookLikes newLike = new BookLikes();
             newLike.setId(likeId);

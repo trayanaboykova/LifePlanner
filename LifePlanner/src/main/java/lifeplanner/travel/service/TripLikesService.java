@@ -1,5 +1,6 @@
 package lifeplanner.travel.service;
 
+import lifeplanner.exception.DomainException;
 import lifeplanner.travel.model.Travel;
 import lifeplanner.travel.model.TripLikes;
 import lifeplanner.travel.model.TripLikesId;
@@ -41,9 +42,9 @@ public class TripLikesService {
         } else {
             // Otherwise, create a new like
             Travel trip = travelRepository.findById(tripId)
-                    .orElseThrow(() -> new RuntimeException("Trip not found"));
+                    .orElseThrow(() -> new DomainException("Trip not found"));
             User user = userRepository.findById(userId)
-                    .orElseThrow(() -> new RuntimeException("User not found"));
+                    .orElseThrow(() -> new DomainException("User not found"));
 
             TripLikes newLike = new TripLikes();
             newLike.setId(likeId);

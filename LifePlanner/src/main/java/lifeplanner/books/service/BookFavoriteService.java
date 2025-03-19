@@ -5,6 +5,7 @@ import lifeplanner.books.model.BookFavorite;
 import lifeplanner.books.model.BookFavoriteId;
 import lifeplanner.books.repository.BookFavoriteRepository;
 import lifeplanner.books.repository.BookRepository;
+import lifeplanner.exception.DomainException;
 import lifeplanner.user.model.User;
 import lifeplanner.user.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,9 +40,9 @@ public class BookFavoriteService {
             return false; // now unfavorited
         } else {
             Book book = bookRepository.findById(bookId)
-                    .orElseThrow(() -> new RuntimeException("Book not found"));
+                    .orElseThrow(() -> new DomainException("Book not found"));
             User user = userRepository.findById(userId)
-                    .orElseThrow(() -> new RuntimeException("User not found"));
+                    .orElseThrow(() -> new DomainException("User not found"));
 
             BookFavorite favorite = new BookFavorite();
             favorite.setId(favoriteId);

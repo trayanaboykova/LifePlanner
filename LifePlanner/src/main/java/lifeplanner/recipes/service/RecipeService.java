@@ -1,6 +1,7 @@
 package lifeplanner.recipes.service;
 
 import jakarta.validation.Valid;
+import lifeplanner.exception.DomainException;
 import lifeplanner.recipes.model.Recipe;
 import lifeplanner.recipes.model.RecipeIngredient;
 import lifeplanner.recipes.repository.RecipeRepository;
@@ -66,7 +67,7 @@ public class RecipeService {
 
     public Recipe getRecipeById(UUID recipeId) {
         return recipeRepository.findById(recipeId)
-                .orElseThrow(() -> new RuntimeException("Recipe with id [" + recipeId + "] does not exist."));
+                .orElseThrow(() -> new DomainException("Recipe with id [" + recipeId + "] does not exist."));
     }
 
     public void editRecipe(UUID recipeId, EditRecipeRequest editRecipeRequest) {
@@ -104,7 +105,7 @@ public class RecipeService {
 
     public void shareRecipe(UUID recipeId) {
         Recipe recipe = recipeRepository.findById(recipeId)
-                .orElseThrow(() -> new RuntimeException("Recipe not found"));
+                .orElseThrow(() -> new DomainException("Recipe not found"));
 
         recipe.setVisible(true);
         recipeRepository.save(recipe);
@@ -130,7 +131,7 @@ public class RecipeService {
 
     public void removeSharing(UUID recipeId) {
         Recipe recipe = recipeRepository.findById(recipeId)
-                .orElseThrow(() -> new RuntimeException("Recipe not found"));
+                .orElseThrow(() -> new DomainException("Recipe not found"));
         recipe.setVisible(false);
         recipeRepository.save(recipe);
     }

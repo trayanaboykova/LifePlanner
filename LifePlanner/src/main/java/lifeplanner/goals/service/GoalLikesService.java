@@ -1,5 +1,6 @@
 package lifeplanner.goals.service;
 
+import lifeplanner.exception.DomainException;
 import lifeplanner.goals.model.Goal;
 import lifeplanner.goals.model.GoalLikes;
 import lifeplanner.goals.model.GoalLikesId;
@@ -40,9 +41,9 @@ public class GoalLikesService {
         } else {
             // Otherwise, create a new like
             Goal goal = goalRepository.findById(goalId)
-                    .orElseThrow(() -> new RuntimeException("Goal not found"));
+                    .orElseThrow(() -> new DomainException("Goal not found"));
             User user = userRepository.findById(userId)
-                    .orElseThrow(() -> new RuntimeException("User not found"));
+                    .orElseThrow(() -> new DomainException("User not found"));
 
             GoalLikes newLike = new GoalLikes();
             newLike.setId(likeId);

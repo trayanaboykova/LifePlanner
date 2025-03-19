@@ -1,5 +1,6 @@
 package lifeplanner.recipes.service;
 
+import lifeplanner.exception.DomainException;
 import lifeplanner.recipes.model.Recipe;
 import lifeplanner.recipes.model.RecipeLikes;
 import lifeplanner.recipes.model.RecipeLikesId;
@@ -38,9 +39,9 @@ public class RecipeLikesService {
             return false;
         } else {
             Recipe recipe = recipeRepository.findById(recipeId)
-                    .orElseThrow(() -> new RuntimeException("Recipe not found"));
+                    .orElseThrow(() -> new DomainException("Recipe not found"));
             User user = userRepository.findById(userId)
-                    .orElseThrow(() -> new RuntimeException("User not found"));
+                    .orElseThrow(() -> new DomainException("User not found"));
 
             RecipeLikes newlike = new RecipeLikes();
             newlike.setId(likeId);

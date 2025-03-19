@@ -1,5 +1,6 @@
 package lifeplanner.travel.service;
 
+import lifeplanner.exception.DomainException;
 import lifeplanner.travel.model.Travel;
 import lifeplanner.travel.model.TripFavorite;
 import lifeplanner.travel.model.TripFavoriteId;
@@ -37,9 +38,9 @@ public class TripFavoriteService {
             return false;
         } else {
             Travel travel = travelRepository.findById(tripId)
-                    .orElseThrow(() -> new RuntimeException("Trip not found"));
+                    .orElseThrow(() -> new DomainException("Trip not found"));
             User user = userRepository.findById(userId)
-                    .orElseThrow(() -> new RuntimeException("User not found"));
+                    .orElseThrow(() -> new DomainException("User not found"));
             TripFavorite tripFavorite = new TripFavorite();
             tripFavorite.setId(favoriteId);
             tripFavorite.setTrip(travel);

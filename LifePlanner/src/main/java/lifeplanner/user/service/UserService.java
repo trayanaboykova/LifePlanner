@@ -57,7 +57,7 @@ public class UserService implements UserDetailsService {
     }
 
     public User getById(UUID userId) {
-        return userRepository.findById(userId).orElseThrow(() -> new RuntimeException("User with id [" + userId + "] does not exist."));
+        return userRepository.findById(userId).orElseThrow(() -> new DomainException("User with id [" + userId + "] does not exist."));
     }
 
     @CacheEvict(value = "users", allEntries = true)

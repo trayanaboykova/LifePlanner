@@ -1,5 +1,6 @@
 package lifeplanner.recipes.service;
 
+import lifeplanner.exception.DomainException;
 import lifeplanner.recipes.model.Recipe;
 import lifeplanner.recipes.model.RecipeFavorite;
 import lifeplanner.recipes.model.RecipeFavoriteId;
@@ -39,9 +40,9 @@ public class RecipeFavoriteService {
             return false; // now unfavorited
         } else {
             Recipe recipe = recipeRepository.findById(recipeId)
-                    .orElseThrow(() -> new RuntimeException("Recipe not found"));
+                    .orElseThrow(() -> new DomainException("Recipe not found"));
             User user = userRepository.findById(userId)
-                    .orElseThrow(() -> new RuntimeException("User not found"));
+                    .orElseThrow(() -> new DomainException("User not found"));
 
             RecipeFavorite favorite = new RecipeFavorite();
             favorite.setId(favoriteId);

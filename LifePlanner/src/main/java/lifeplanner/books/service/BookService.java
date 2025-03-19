@@ -2,6 +2,7 @@ package lifeplanner.books.service;
 
 import lifeplanner.books.model.Book;
 import lifeplanner.books.repository.BookRepository;
+import lifeplanner.exception.DomainException;
 import lifeplanner.user.model.ApprovalStatus;
 import lifeplanner.user.model.User;
 import lifeplanner.web.dto.AddBookRequest;
@@ -60,12 +61,12 @@ public class BookService {
 
     public Book getBookById(UUID bookId) {
         return bookRepository.findById(bookId)
-                .orElseThrow(() -> new RuntimeException("Book with id [" + bookId + "] does not exist."));
+                .orElseThrow(() -> new DomainException("Book with id [" + bookId + "] does not exist."));
     }
 
     public void shareBook(UUID bookId) {
         Book book = bookRepository.findById(bookId)
-                .orElseThrow(() -> new RuntimeException("Book not found"));
+                .orElseThrow(() -> new DomainException("Book not found"));
 
         book.setVisible(true);
         bookRepository.save(book);
@@ -87,7 +88,7 @@ public class BookService {
 
     public void removeSharing(UUID bookId) {
         Book book = bookRepository.findById(bookId)
-                .orElseThrow(() -> new RuntimeException("Book not found"));
+                .orElseThrow(() -> new DomainException("Book not found"));
         book.setVisible(false);
         bookRepository.save(book);
     }

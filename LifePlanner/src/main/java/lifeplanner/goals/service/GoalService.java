@@ -1,5 +1,6 @@
 package lifeplanner.goals.service;
 
+import lifeplanner.exception.DomainException;
 import lifeplanner.goals.model.Goal;
 import lifeplanner.goals.repository.GoalRepository;
 import lifeplanner.user.model.ApprovalStatus;
@@ -55,7 +56,7 @@ public class GoalService {
 
     public Goal getGoalById(UUID goalId) {
         return goalRepository.findById(goalId)
-                .orElseThrow(() -> new RuntimeException("Goal with id [" + goalId + "] does not exist."));
+                .orElseThrow(() -> new DomainException("Goal with id [" + goalId + "] does not exist."));
     }
 
     public void editGoal(UUID goalId, EditGoalRequest editGoalRequest) {
@@ -74,7 +75,7 @@ public class GoalService {
 
     public void shareGoal(UUID goalId) {
         Goal goal = goalRepository.findById(goalId)
-                .orElseThrow(() -> new RuntimeException("Goal not found"));
+                .orElseThrow(() -> new DomainException("Goal not found"));
 
         goal.setVisible(true);
         goalRepository.save(goal);
@@ -100,7 +101,7 @@ public class GoalService {
 
     public void removeSharing(UUID goalId) {
         Goal goal = goalRepository.findById(goalId)
-                .orElseThrow(() -> new RuntimeException("Goal not found"));
+                .orElseThrow(() -> new DomainException("Goal not found"));
         goal.setVisible(false);
         goalRepository.save(goal);
     }
