@@ -329,12 +329,14 @@
       </details>
     </div>
   </div>
+
   <div class="daily-quote">
     <h2>Daily Quote</h2>
     <div class="quote-card">
-      <img th:src="${dailyQuoteImageUrl}" alt="Daily Quote Image">
+      <img th:src="${#strings.isEmpty(user.currentQuoteImageUrl) ? 'https://i.pinimg.com/736x/da/5f/c3/da5fc36be3278a2db887c06dcab31897.jpg' : user.currentQuoteImageUrl}" alt="Daily Quote Image">
     </div>
   </div>
+
 </div>
 
 <script src="/js/likes.js"></script>

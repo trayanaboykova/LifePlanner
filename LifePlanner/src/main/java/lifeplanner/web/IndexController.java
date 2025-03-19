@@ -259,7 +259,6 @@ public class IndexController {
         model.addAttribute("goalFavoriteCounts", goalFavoriteCounts);
 
         // Schedulers
-        model.addAttribute("dailyQuoteImageUrl", dailyQuoteScheduler.getCurrentQuoteUrl());
         model.addAttribute("currentDateTime", dateAndTimeScheduler.getCurrentDateTime());
 
         return modelAndView;

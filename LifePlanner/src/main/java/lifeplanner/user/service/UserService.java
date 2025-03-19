@@ -104,4 +104,8 @@ public class UserService implements UserDetailsService {
 
         return new AuthenticationMetadata(user.getId(), username, user.getPassword(), user.getRole(), user.isActive());
     }
+
+    public void updateUser(User user) {
+        userRepository.save(user);
+    }
 }
