@@ -62,12 +62,27 @@ public class IndexController {
     private final GoalService goalService;
     private final GoalLikesService goalLikesService;
     private final GoalFavoriteService goalFavoriteService;
-    private final DailyQuotesScheduler dailyQuoteScheduler;
     private final DateAndTimeScheduler dateAndTimeScheduler;
 
 
     @Autowired
-    public IndexController(UserService userService, BookService bookService, BookLikesService bookLikesService, BookFavoriteService bookFavoriteService, MediaService mediaService, MediaLikesService mediaLikesService, MediaFavoriteService mediaFavoriteService, RecipeService recipeService, RecipeLikesService recipeLikesService, RecipeFavoriteService recipeFavoriteService, TravelService travelService, TripLikesService tripLikesService, TripFavoriteService tripFavoriteService, GoalService goalService, GoalLikesService goalLikesService, GoalFavoriteService goalFavoriteService, DailyQuotesScheduler dailyQuoteScheduler, DateAndTimeScheduler dateAndTimeScheduler) {
+    public IndexController(UserService userService,
+                           BookService bookService,
+                           BookLikesService bookLikesService,
+                           BookFavoriteService bookFavoriteService,
+                           MediaService mediaService,
+                           MediaLikesService mediaLikesService,
+                           MediaFavoriteService mediaFavoriteService,
+                           RecipeService recipeService,
+                           RecipeLikesService recipeLikesService,
+                           RecipeFavoriteService recipeFavoriteService,
+                           TravelService travelService,
+                           TripLikesService tripLikesService,
+                           TripFavoriteService tripFavoriteService,
+                           GoalService goalService,
+                           GoalLikesService goalLikesService,
+                           GoalFavoriteService goalFavoriteService,
+                           DateAndTimeScheduler dateAndTimeScheduler) {
         this.userService = userService;
         this.bookService = bookService;
         this.bookLikesService = bookLikesService;
@@ -84,7 +99,6 @@ public class IndexController {
         this.goalService = goalService;
         this.goalLikesService = goalLikesService;
         this.goalFavoriteService = goalFavoriteService;
-        this.dailyQuoteScheduler = dailyQuoteScheduler;
         this.dateAndTimeScheduler = dateAndTimeScheduler;
     }
 
