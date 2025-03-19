@@ -67,10 +67,12 @@ public class UserService implements UserDetailsService {
         user.setFirstName(userEditRequest.getFirstName());
         user.setLastName(userEditRequest.getLastName());
         user.setEmail(userEditRequest.getEmail());
-        
-        if (userEditRequest.getProfilePicture() != null
-                && !userEditRequest.getProfilePicture().isBlank()) {
-            user.setProfilePicture(userEditRequest.getProfilePicture());
+
+        // Handle profile picture update
+        if (userEditRequest.isRemoveProfilePic()) {
+            user.setProfilePicture(null); // Remove profile picture if checkbox is checked
+        } else if (userEditRequest.getProfilePicture() != null && !userEditRequest.getProfilePicture().isBlank()) {
+            user.setProfilePicture(userEditRequest.getProfilePicture()); // Update profile picture
         }
 
         userRepository.save(user);

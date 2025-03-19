@@ -23,5 +23,8 @@ public class UserEditRequest {
     @URL(message = "Enter valid URL link")
     private String profilePicture;
 
+    private boolean removeProfilePic;
+
     private transient MultipartFile profilePictureFile;
+
 }

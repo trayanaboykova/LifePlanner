@@ -43,12 +43,18 @@
                 <p class="error-message-edit-user" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></p>
             </div>
 
-            <!-- Profile Picture URL -->
+            <!-- Profile Picture Upload -->
             <div class="form-group">
-                <label for="profile-picture">Profile Picture</label>
-                <input type="url" id="profile-picture" name="profilePicture" placeholder="Profile Picture URL" th:field="*{profilePicture}">
+                <label for="profilePictureFile">Profile Picture</label>
                 <input type="file" id="profilePictureFile" name="profilePictureFile" accept="image/*" />
                 <p class="error-message-edit-user" th:if="${#fields.hasErrors('profilePicture')}" th:errors="*{profilePicture}"></p>
+            </div>
+
+
+            <!-- Remove profile picture -->
+            <div class="form-group">
+                <input type="checkbox" id="removeProfilePic" name="removeProfilePic" th:field="*{removeProfilePic}" />
+                <label for="removeProfilePic">Remove current profile picture</label>
             </div>
 
             <!-- Submit Button -->

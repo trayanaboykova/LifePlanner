@@ -50,7 +50,8 @@ public class UserController {
     @PutMapping("/{id}/profile")
     public ModelAndView updateUserProfile(@PathVariable UUID id,
                                           @Valid UserEditRequest userEditRequest,
-                                          BindingResult bindingResult) {
+                                          BindingResult bindingResult,
+                                          @RequestParam(name="profilePictureFile", required=false) MultipartFile profilePictureFile) {
 
         if (bindingResult.hasErrors()) {
             User user = userService.getById(id);
@@ -61,16 +62,20 @@ public class UserController {
             return modelAndView;
         }
 
-        MultipartFile file = userEditRequest.getProfilePictureFile();
-        if (file != null && !file.isEmpty()) {
+        // Handle profile picture upload
+        if (profilePictureFile != null && !profilePictureFile.isEmpty()) {
             try {
-                String uploadedUrl = cloudinaryService.uploadFile(file);
-                // Set the profilePicture URL to the Cloudinary secure URL
-                userEditRequest.setProfilePicture(uploadedUrl);
+                String uploadedUrl = cloudinaryService.uploadFile(profilePictureFile);
+                userEditRequest.setProfilePicture(uploadedUrl); // Set the profilePicture URL
             } catch (Exception e) {
                 bindingResult.rejectValue("profilePicture", "uploadError", "Could not upload image. Please try again.");
                 return new ModelAndView("edit-profile");
             }
+        }
+
+        // Handle remove profile picture checkbox
+        if (userEditRequest.isRemoveProfilePic()) {
+            userEditRequest.setProfilePicture(null); // Set profilePicture to null if checkbox is checked
         }
 
         userService.editUserDetails(id, userEditRequest);

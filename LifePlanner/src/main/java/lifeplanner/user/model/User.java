@@ -40,6 +40,8 @@ public class User {
 
     private String profilePicture;
 
+    private boolean removeProfilePic;
+
     @Enumerated(EnumType.STRING)
     private UserRole role;
 
