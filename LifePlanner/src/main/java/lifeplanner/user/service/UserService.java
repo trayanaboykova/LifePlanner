@@ -38,17 +38,25 @@ public class UserService implements UserDetailsService {
     @CacheEvict(value = "users", allEntries = true)
     @Transactional
     public void registerUser(RegisterRequest registerRequest) {
-        Optional<User> optionalUser = userRepository.findByUsername((registerRequest.getUsername()));
+        Optional<User> optionalUser = userRepository.findByUsername(registerRequest.getUsername());
 
         if (optionalUser.isPresent()) {
-            throw new DomainException("Username [%s] already exist.".formatted(registerRequest.getUsername()));
+            throw new DomainException("Username [%s] already exists.".formatted(registerRequest.getUsername()));
         }
+
+        // Validate password and confirmPassword
+        if (!registerRequest.getPassword().equals(registerRequest.getConfirmPassword())) {
+            throw new DomainException("Password and confirm password do not match.");
+        }
+
+        // Use the role from the RegisterRequest, default to USER if not provided
+        UserRole role = registerRequest.getRole() != null ? registerRequest.getRole() : UserRole.USER;
 
         User user = User.builder()
                 .username(registerRequest.getUsername())
                 .password(passwordEncoder.encode(registerRequest.getPassword()))
                 .email(registerRequest.getEmail())
-                .role(UserRole.USER)
+                .role(role)
                 .isActive(true)
                 .registrationDate(LocalDateTime.now())
                 .build();
