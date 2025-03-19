@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 @Controller
@@ -77,7 +76,7 @@ public class DailyQuotesController {
         EditDailyQuotesRequest editRequest = EditDailyQuotesRequest.builder()
                 .id(existingQuote.getId())
                 .quoteImage(existingQuote.getQuoteImage())
-                .userId(existingQuote.getUserId()) // carry the userId
+                .userId(existingQuote.getUserId())
                 .build();
         model.addAttribute("pageTitle", "Edit Daily Quote");
         model.addAttribute("editDailyQuoteRequest", editRequest);
@@ -94,7 +93,7 @@ public class DailyQuotesController {
         if (bindingResult.hasErrors()) {
             return "edit-daily-quote";
         }
-        dailyQuoteService.updateDailyQuote(id, editRequest); // You may need to add this overloaded method in your LifePlanner service that calls the Feign client
+        dailyQuoteService.updateDailyQuote(id, editRequest);
         return "redirect:/daily-quotes";
     }
 
