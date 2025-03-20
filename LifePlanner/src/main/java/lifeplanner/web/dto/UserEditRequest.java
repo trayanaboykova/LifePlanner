@@ -2,6 +2,7 @@ package lifeplanner.web.dto;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Size;
+import lifeplanner.validation.ValidPasswordChange;
 import lombok.Builder;
 import lombok.Data;
 import org.hibernate.validator.constraints.URL;
@@ -9,6 +10,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 @Data
 @Builder
+@ValidPasswordChange
 public class UserEditRequest {
 
     @Size(max = 20, message = "First name length must be 20 characters max!")
@@ -27,4 +29,9 @@ public class UserEditRequest {
 
     private transient MultipartFile profilePictureFile;
 
+    private String currentPassword;
+
+    private String newPassword;
+
+    private String confirmNewPassword;
 }

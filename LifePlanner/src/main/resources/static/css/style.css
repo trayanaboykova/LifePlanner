@@ -155,3 +155,10 @@ img.quote {
 .quotes-table tbody tr:hover{
     background: rgba(255, 255, 255, 0.2);
 }
+
+.error-message-edit-user {
+    font-size: 15px;
+    color: #9f4825;
+    margin-top: 0.5em;
+    font-weight: bold;
+}

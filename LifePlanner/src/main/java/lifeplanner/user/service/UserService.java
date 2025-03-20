@@ -72,6 +72,7 @@ public class UserService implements UserDetailsService {
     public void editUserDetails(UUID id, @Valid UserEditRequest userEditRequest) {
         User user = getById(id);
 
+        // Update basic profile details
         user.setFirstName(userEditRequest.getFirstName());
         user.setLastName(userEditRequest.getLastName());
         user.setEmail(userEditRequest.getEmail());
@@ -81,6 +82,25 @@ public class UserService implements UserDetailsService {
             user.setProfilePicture(null); // Remove profile picture if checkbox is checked
         } else if (userEditRequest.getProfilePicture() != null && !userEditRequest.getProfilePicture().isBlank()) {
             user.setProfilePicture(userEditRequest.getProfilePicture()); // Update profile picture
+        }
+
+        // Handle password change only if newPassword is provided
+        if (userEditRequest.getNewPassword() != null && !userEditRequest.getNewPassword().isBlank()) {
+            // Ensure that the user has entered the current password
+            if (userEditRequest.getCurrentPassword() == null || userEditRequest.getCurrentPassword().isBlank()) {
+                throw new DomainException("Current password is required to change your password.");
+            }
+            // Validate current password
+            if (!passwordEncoder.matches(userEditRequest.getCurrentPassword(), user.getPassword())) {
+                throw new DomainException("Current password is incorrect.");
+            }
+            // Validate that the new password and confirmation match
+            if (userEditRequest.getConfirmNewPassword() == null ||
+                    !userEditRequest.getNewPassword().equals(userEditRequest.getConfirmNewPassword())) {
+                throw new DomainException("New password and confirm new password do not match.");
+            }
+            // Update the password
+            user.setPassword(passwordEncoder.encode(userEditRequest.getNewPassword()));
         }
 
         userRepository.save(user);

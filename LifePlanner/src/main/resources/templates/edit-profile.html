@@ -43,13 +43,33 @@
                 <p class="error-message-edit-user" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></p>
             </div>
 
+            <!-- Current Password -->
+            <div class="form-group">
+                <label for="currentPassword">Current Password</label>
+                <input type="password" id="currentPassword" name="currentPassword" placeholder="Current Password" th:field="*{currentPassword}">
+                <p class="error-message-edit-user" th:if="${#fields.hasErrors('currentPassword')}" th:errors="*{currentPassword}"></p>
+            </div>
+
+            <!-- New Password -->
+            <div class="form-group">
+                <label for="newPassword">New Password</label>
+                <input type="password" id="newPassword" name="newPassword" placeholder="New Password" th:field="*{newPassword}">
+                <p class="error-message-edit-user" th:if="${#fields.hasErrors('newPassword')}" th:errors="*{newPassword}"></p>
+            </div>
+
+            <!-- Confirm New Password -->
+            <div class="form-group">
+                <label for="confirmNewPassword">Confirm New Password</label>
+                <input type="password" id="confirmNewPassword" name="confirmNewPassword" placeholder="Confirm New Password" th:field="*{confirmNewPassword}">
+                <p class="error-message-edit-user" th:if="${#fields.hasErrors('confirmNewPassword')}" th:errors="*{confirmNewPassword}"></p>
+            </div>
+
             <!-- Profile Picture Upload -->
             <div class="form-group">
                 <label for="profilePictureFile">Profile Picture</label>
                 <input type="file" id="profilePictureFile" name="profilePictureFile" accept="image/*" />
                 <p class="error-message-edit-user" th:if="${#fields.hasErrors('profilePicture')}" th:errors="*{profilePicture}"></p>
             </div>
-
 
             <!-- Remove profile picture -->
             <div class="form-group">
@@ -63,7 +83,6 @@
         </form>
     </section>
 </main>
-
 
 <footer th:replace="~{fragments/commons::footer}"></footer>
 
