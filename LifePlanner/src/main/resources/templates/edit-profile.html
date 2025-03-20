@@ -79,7 +79,15 @@
 
             <!-- Submit Button -->
             <button type="submit" class="add-book-btn">Save Changes</button>
+        </form>
 
+        <!-- Deactivate Profile Button -->
+        <form class="deactivate-profile-form"
+              th:action="@{'/users/' + ${user.id} + '/deactivate'}"
+              th:method="delete"
+              onsubmit="return confirm('Are you sure you want to deactivate your profile?');">
+            <input type="hidden" name="_method" value="DELETE" />
+            <button type="submit" class="deactivate-profile-btn">Deactivate Profile</button>
         </form>
     </section>
 </main>

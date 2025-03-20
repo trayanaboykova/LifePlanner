@@ -7,3 +7,32 @@
     text-align: center;
 }
 
+.add-book-container,
+.deactivate-profile-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.deactivate-profile-form {
+    margin-top: 2em;
+}
+
+/* Button Styling */
+.deactivate-profile-btn {
+    margin-top: 10px;
+    width: 150px;
+    padding: 10px;
+    background: #006891;
+    color: white;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: 0.3s ease-in-out;
+    margin-bottom: 1em;
+}
+
+.deactivate-profile-btn:hover {
+    background: #004f68;
+}

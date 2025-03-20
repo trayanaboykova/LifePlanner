@@ -144,6 +144,13 @@ public class UserService implements UserDetailsService {
     }
 
     @CacheEvict(value = "users", allEntries = true)
+    public void deactivateUserProfile(UUID id) {
+        User user = getById(id);
+        user.setActive(false);
+        userRepository.save(user);
+    }
+
+    @CacheEvict(value = "users", allEntries = true)
     public void deleteUserById(UUID id) {
         User user = getById(id);
         if(user.getRole() == UserRole.ADMIN) {

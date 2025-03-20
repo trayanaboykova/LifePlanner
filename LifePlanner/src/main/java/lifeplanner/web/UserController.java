@@ -1,6 +1,7 @@
 package lifeplanner.web;
 
 import jakarta.validation.Valid;
+import lifeplanner.exception.DomainException;
 import lifeplanner.security.AuthenticationMetadata;
 import lifeplanner.service.CloudinaryService;
 import lifeplanner.user.model.User;
@@ -93,6 +94,17 @@ public class UserController {
 
         return modelAndView;
     }
+
+    @DeleteMapping("/{id}/deactivate")
+    public ModelAndView deactivateUserProfile(@PathVariable UUID id,
+                                              @AuthenticationPrincipal AuthenticationMetadata currentUser) {
+        if (!currentUser.getUserId().equals(id)) {
+            throw new DomainException("You are not authorized to delete this profile.");
+        }
+        userService.deactivateUserProfile(id);
+        return new ModelAndView("redirect:/logout");
+    }
+
 
     @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/{id}/role")
