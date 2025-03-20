@@ -95,19 +95,24 @@ public class UserController {
         return modelAndView;
     }
 
-    @PutMapping("/{id}/role") // PUT /users/{id}/role
+    @PreAuthorize("hasRole('ADMIN')")
+    @PutMapping("/{id}/role")
     public String switchUserRole(@PathVariable UUID id) {
-
         userService.switchRole(id);
-
         return "redirect:/users/all-users";
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/{id}/status")
     public String switchUserStatus(@PathVariable UUID id) {
-
         userService.switchStatus(id);
+        return "redirect:/users/all-users";
+    }
 
+    @PreAuthorize("hasRole('ADMIN')")
+    @DeleteMapping("/{id}")
+    public String deleteUser(@PathVariable UUID id) {
+        userService.deleteUserById(id);
         return "redirect:/users/all-users";
     }
 }

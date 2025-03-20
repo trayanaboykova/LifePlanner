@@ -27,3 +27,12 @@ button {
 .switch-status-btn:hover {
     background: #004f68;
 }
+/* Delete User Button */
+.delete-user-btn {
+    background: #006891;
+    color: white;
+}
+
+.delete-user-btn:hover {
+    background: #004f68;
+}

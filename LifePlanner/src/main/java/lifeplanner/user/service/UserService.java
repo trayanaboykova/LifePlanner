@@ -122,4 +122,13 @@ public class UserService implements UserDetailsService {
     public void updateUser(User user) {
         userRepository.save(user);
     }
+
+    @CacheEvict(value = "users", allEntries = true)
+    public void deleteUserById(UUID id) {
+        User user = getById(id);
+        if(user.getRole() == UserRole.ADMIN) {
+            throw new DomainException("Cannot delete admin user.");
+        }
+        userRepository.deleteById(id);
+    }
 }

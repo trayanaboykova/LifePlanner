@@ -45,6 +45,7 @@
                     <th>Change Role</th>
                     <th>Status</th>
                     <th>Switch Status</th>
+                    <th>Delete User</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -68,10 +69,21 @@
                             <button class="switch-status-btn">Switch Status</button>
                         </form>
                     </td>
+                    <td>
+                        <div th:if="${user.role.name() != 'ADMIN'}">
+                            <form th:action="@{'/users/' + ${user.id}}" method="post"
+                                  onsubmit="return confirm('Are you sure you want to delete this user?');">
+                                <input type="hidden" name="_method" value="DELETE" />
+                                <button type="submit" class="delete-user-btn">Delete</button>
+                            </form>
+                        </div>
+                        <div th:if="${user.role.name() == 'ADMIN'}">
+                            <span title="Admin accounts cannot be deleted">Protected</span>
+                        </div>
+                    </td>
                 </tr>
                 </tbody>
             </table>
-
 
         </div>
 
@@ -81,7 +93,6 @@
             <span id="pageInfo">Page 1</span>
             <button id="nextPage" onclick="changePage(1)">Next →</button>
         </div>
-
 
     </main>
 </div>
