@@ -3,14 +3,12 @@ package lifeplanner.web;
 import jakarta.servlet.http.HttpServletRequest;
 import lifeplanner.exception.*;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.web.authentication.session.SessionAuthenticationException;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.MissingRequestValueException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 import org.springframework.web.multipart.MaxUploadSizeExceededException;
@@ -18,8 +16,6 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.resource.NoResourceFoundException;
 
-import java.util.HashMap;
-import java.util.Map;
 
 @ControllerAdvice
 public class GlobalExceptionHandler {
@@ -89,14 +85,5 @@ public class GlobalExceptionHandler {
         modelAndView.setViewName("server-error");
         modelAndView.addObject("errorMessage", "An unexpected error occurred. Please try again later.");
         return modelAndView;
-    }
-
-    @ExceptionHandler(Exception.class)
-    @ResponseBody
-    public ResponseEntity<Map<String, String>> handleAjaxError(Exception ex) {
-        Map<String, String> response = new HashMap<>();
-        response.put("status", "error");
-        response.put("message", "Operation failed");
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
     }
 }

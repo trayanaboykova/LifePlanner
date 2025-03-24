@@ -14,16 +14,22 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 public class RecipeService {
 
     private final RecipeRepository recipeRepository;
+    private final RecipeLikesService recipeLikesService;
+    private final RecipeFavoriteService recipeFavoriteService;
 
     @Autowired
-    public RecipeService(RecipeRepository recipeRepository) {
+    public RecipeService(RecipeRepository recipeRepository, RecipeLikesService recipeLikesService, RecipeFavoriteService recipeFavoriteService) {
         this.recipeRepository = recipeRepository;
+        this.recipeLikesService = recipeLikesService;
+        this.recipeFavoriteService = recipeFavoriteService;
     }
 
     public List<Recipe> getRecipeByUser(User user) {
@@ -115,12 +121,21 @@ public class RecipeService {
         return recipeRepository.findAll();
     }
 
-//    public List<Recipe> getSharedRecipes(User currentUser) {
-//        return recipeRepository.findAllByVisibleTrue()
-//                .stream()
-//                .filter(recipe -> !recipe.getOwner().getId().equals(currentUser.getId()))
-//                .toList();
-//    }
+    public Map<UUID, Long> getLikeCountsForRecipes(List<Recipe> recipes) {
+        return recipes.stream()
+                .collect(Collectors.toMap(
+                        Recipe::getId,
+                        recipe -> recipeLikesService.getLikeCount(recipe.getId())
+                ));
+    }
+
+    public Map<UUID, Long> getFavoriteCountsForRecipes(List<Recipe> recipes) {
+        return recipes.stream()
+                .collect(Collectors.toMap(
+                        Recipe::getId,
+                        recipe -> recipeFavoriteService.getFavoriteCount(recipe.getId())
+                ));
+    }
 
     public List<Recipe> getApprovedSharedRecipes(User currentUser) {
         List<Recipe> approvedRecipes= recipeRepository.findAllByVisibleTrueAndApprovalStatus(ApprovalStatus.APPROVED);

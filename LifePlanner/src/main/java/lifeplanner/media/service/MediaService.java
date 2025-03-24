@@ -12,16 +12,22 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 public class MediaService {
 
     private final MediaRepository mediaRepository;
+    private final MediaLikesService mediaLikesService;
+    private final MediaFavoriteService mediaFavoriteService;
 
     @Autowired
-    public MediaService(MediaRepository mediaRepository) {
+    public MediaService(MediaRepository mediaRepository, MediaLikesService mediaLikesService, MediaFavoriteService mediaFavoriteService) {
         this.mediaRepository = mediaRepository;
+        this.mediaLikesService = mediaLikesService;
+        this.mediaFavoriteService = mediaFavoriteService;
     }
 
     public List<Media> getMediaByUser(User user) {
@@ -73,12 +79,21 @@ public class MediaService {
         return mediaRepository.findAll();
     }
 
-//    public List<Media> getSharedMedia(User currentUser) {
-//        return mediaRepository.findAllByVisibleTrue()
-//                .stream()
-//                .filter(media -> !media.getOwner().getId().equals(currentUser.getId()))
-//                .toList();
-//    }
+    public Map<UUID, Long> getLikeCountsForMedia(List<Media> mediaList) {
+        return mediaList.stream()
+                .collect(Collectors.toMap(
+                        Media::getId,
+                        media -> mediaLikesService.getLikeCount(media.getId())
+                ));
+    }
+
+    public Map<UUID, Long> getFavoriteCountsForMedia(List<Media> mediaList) {
+        return mediaList.stream()
+                .collect(Collectors.toMap(
+                        Media::getId,
+                        media -> mediaFavoriteService.getFavoriteCount(media.getId())
+                ));
+    }
 
     public List<Media> getApprovedSharedMedia(User currentUser) {
         List<Media> approvedMedia = mediaRepository.findAllByVisibleTrueAndApprovalStatus(ApprovalStatus.APPROVED);

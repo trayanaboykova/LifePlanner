@@ -12,16 +12,22 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 public class GoalService {
 
     private final GoalRepository goalRepository;
+    private final GoalLikesService goalLikesService;
+    private final GoalFavoriteService goalFavoriteService;
 
     @Autowired
-    public GoalService(GoalRepository goalRepository) {
+    public GoalService(GoalRepository goalRepository, GoalLikesService goalLikesService, GoalFavoriteService goalFavoriteService) {
         this.goalRepository = goalRepository;
+        this.goalLikesService = goalLikesService;
+        this.goalFavoriteService = goalFavoriteService;
     }
 
     public List<Goal> getGoalsByUser(User user) {
@@ -85,12 +91,21 @@ public class GoalService {
         return goalRepository.findAll();
     }
 
-//    public List<Goal> getSharedGoals(User currentUser) {
-//        return goalRepository.findAllByVisibleTrue()
-//                .stream()
-//                .filter(goal -> !goal.getOwner().getId().equals(currentUser.getId()))
-//                .toList();
-//    }
+    public Map<UUID, Long> getLikeCountsForGoals(List<Goal> goals) {
+        return goals.stream()
+                .collect(Collectors.toMap(
+                        Goal::getId,
+                        goal -> goalLikesService.getLikeCount(goal.getId())
+                ));
+    }
+
+    public Map<UUID, Long> getFavoriteCountsForGoals(List<Goal> goals) {
+        return goals.stream()
+                .collect(Collectors.toMap(
+                        Goal::getId,
+                        goal -> goalFavoriteService.getFavoriteCount(goal.getId())
+                ));
+    }
 
     public List<Goal> getApprovedSharedGoals(User currentUser) {
         List<Goal> approvedGoals = goalRepository.findAllByVisibleTrueAndApprovalStatus(ApprovalStatus.APPROVED);

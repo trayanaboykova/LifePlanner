@@ -11,16 +11,22 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 public class TravelService {
 
     private final TravelRepository travelRepository;
+    private final TripLikesService tripLikesService;
+    private final TripFavoriteService tripFavoriteService;
 
     @Autowired
-    public TravelService(TravelRepository travelRepository) {
+    public TravelService(TravelRepository travelRepository, TripLikesService tripLikesService, TripFavoriteService tripFavoriteService) {
         this.travelRepository = travelRepository;
+        this.tripLikesService = tripLikesService;
+        this.tripFavoriteService = tripFavoriteService;
     }
 
     public List<Travel> getTripsByUser(User user) {
@@ -78,12 +84,21 @@ public class TravelService {
         return travelRepository.findAll();
     }
 
-//    public List<Travel> getSharedTrips(User currentUser) {
-//        return travelRepository.findAllByVisibleTrue()
-//                .stream()
-//                .filter(trip -> !trip.getOwner().getId().equals(currentUser.getId()))
-//                .toList();
-//    }
+    public Map<UUID, Long> getLikeCountsForTrips(List<Travel> trips) {
+        return trips.stream()
+                .collect(Collectors.toMap(
+                        Travel::getId,
+                        trip -> tripLikesService.getLikeCount(trip.getId())
+                ));
+    }
+
+    public Map<UUID, Long> getFavoriteCountsForTrips(List<Travel> trips) {
+        return trips.stream()
+                .collect(Collectors.toMap(
+                        Travel::getId,
+                        trip -> tripFavoriteService.getFavoriteCount(trip.getId())
+                ));
+    }
 
     public List<Travel> getApprovedSharedTrips(User currentUser) {
         List<Travel> approvedTrips = travelRepository.findAllByVisibleTrueAndApprovalStatus(ApprovalStatus.APPROVED);

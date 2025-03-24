@@ -10,17 +10,24 @@ import lifeplanner.web.dto.EditBookRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 public class BookService {
 
     private final BookRepository bookRepository;
+    private final BookLikesService bookLikesService;
+    private final BookFavoriteService bookFavoriteService;
 
     @Autowired
-    public BookService(BookRepository bookRepository) {
+    public BookService(BookRepository bookRepository, BookLikesService bookLikesService, BookFavoriteService bookFavoriteService) {
         this.bookRepository = bookRepository;
+        this.bookLikesService = bookLikesService;
+        this.bookFavoriteService = bookFavoriteService;
     }
 
     public List<Book> getBooksByUser(User user) {
@@ -64,6 +71,22 @@ public class BookService {
                 .orElseThrow(() -> new DomainException("Book with id [" + bookId + "] does not exist."));
     }
 
+    public Map<UUID, Long> getLikeCountsForBooks(List<Book> books) {
+        return books.stream()
+                .collect(Collectors.toMap(
+                        Book::getId,
+                        book -> bookLikesService.getLikeCount(book.getId())
+                ));
+    }
+
+    public Map<UUID, Long> getFavoriteCountsForBooks(List<Book> books) {
+        return books.stream()
+                .collect(Collectors.toMap(
+                        Book::getId,
+                        book -> bookFavoriteService.getFavoriteCount(book.getId())
+                ));
+    }
+
     public void shareBook(UUID bookId) {
         Book book = bookRepository.findById(bookId)
                 .orElseThrow(() -> new DomainException("Book not found"));
@@ -71,13 +94,6 @@ public class BookService {
         book.setVisible(true);
         bookRepository.save(book);
     }
-
-//    public List<Book> getSharedBooks(User currentUser) {
-//        return bookRepository.findAllByVisibleTrue()
-//                .stream()
-//                .filter(book -> !book.getOwner().getId().equals(currentUser.getId()))
-//                .toList();
-//    }
 
     public List<Book> getMySharedBooks(User currentUser) {
         return bookRepository.findAllByVisibleTrue()
