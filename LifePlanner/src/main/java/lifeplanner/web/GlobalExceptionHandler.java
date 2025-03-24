@@ -3,11 +3,14 @@ package lifeplanner.web;
 import jakarta.servlet.http.HttpServletRequest;
 import lifeplanner.exception.*;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.web.authentication.session.SessionAuthenticationException;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.MissingRequestValueException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 import org.springframework.web.multipart.MaxUploadSizeExceededException;
@@ -15,18 +18,23 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.resource.NoResourceFoundException;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @ControllerAdvice
 public class GlobalExceptionHandler {
 
-    // Handle registration errors with redirect
-    @ExceptionHandler(UsernameAlreadyExistsException.class)
-    public String handleUsernameAlreadyExist(RedirectAttributes redirectAttributes,
-                                             UsernameAlreadyExistsException exception) {
-        redirectAttributes.addFlashAttribute("usernameError", exception.getMessage());
+    @ExceptionHandler({UsernameAlreadyExistsException.class, EmailAlreadyExistsException.class})
+    public String handleRegistrationErrors(RedirectAttributes redirectAttributes,
+                                           RuntimeException exception) {
+        String attributeName = exception instanceof UsernameAlreadyExistsException
+                ? "usernameAlreadyExistMessage"
+                : "emailAlreadyExistMessage";
+
+        redirectAttributes.addFlashAttribute(attributeName, exception.getMessage());
         return "redirect:/register";
     }
 
-    // Handle file upload errors
     @ExceptionHandler({CloudinaryUploadException.class, MaxUploadSizeExceededException.class})
     public String handleFileUploadErrors(RedirectAttributes redirectAttributes,
                                          HttpServletRequest request,
@@ -42,7 +50,12 @@ public class GlobalExceptionHandler {
         return "redirect:" + (referer != null ? referer : "/home");
     }
 
-    // Handle admin deletion attempts
+    @ExceptionHandler(SessionAuthenticationException.class)
+    public String handleSessionExpired(RedirectAttributes redirectAttributes) {
+        redirectAttributes.addFlashAttribute("sessionExpired", true);
+        return "redirect:/login";
+    }
+
     @ExceptionHandler(AdminDeletionException.class)
     public String handleAdminDeletion(RedirectAttributes redirectAttributes,
                                       AdminDeletionException exception) {
@@ -50,7 +63,6 @@ public class GlobalExceptionHandler {
         return "redirect:/users/all-users";
     }
 
-    // Handle common web errors
     @ResponseStatus(HttpStatus.NOT_FOUND)
     @ExceptionHandler({
             NoResourceFoundException.class,
@@ -62,7 +74,6 @@ public class GlobalExceptionHandler {
         return new ModelAndView("not-found");
     }
 
-    // Handle access denied errors
     @ResponseStatus(HttpStatus.FORBIDDEN)
     @ExceptionHandler(AccessDeniedException.class)
     public ModelAndView handleAccessDenied(Model model) {
@@ -70,7 +81,6 @@ public class GlobalExceptionHandler {
         return new ModelAndView("access-denied");
     }
 
-    // Global fallback exception handler
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ExceptionHandler(Exception.class)
     public ModelAndView handleAnyException(Exception exception, Model model) {
@@ -79,5 +89,14 @@ public class GlobalExceptionHandler {
         modelAndView.setViewName("server-error");
         modelAndView.addObject("errorMessage", "An unexpected error occurred. Please try again later.");
         return modelAndView;
+    }
+
+    @ExceptionHandler(Exception.class)
+    @ResponseBody
+    public ResponseEntity<Map<String, String>> handleAjaxError(Exception ex) {
+        Map<String, String> response = new HashMap<>();
+        response.put("status", "error");
+        response.put("message", "Operation failed");
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
     }
 }

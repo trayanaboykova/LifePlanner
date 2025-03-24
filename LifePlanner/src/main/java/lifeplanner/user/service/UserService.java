@@ -1,10 +1,7 @@
 package lifeplanner.user.service;
 
 import jakarta.validation.Valid;
-import lifeplanner.exception.AdminDeletionException;
-import lifeplanner.exception.DomainException;
-import lifeplanner.exception.PasswordChangeException;
-import lifeplanner.exception.UsernameAlreadyExistsException;
+import lifeplanner.exception.*;
 import lifeplanner.security.AuthenticationMetadata;
 import lifeplanner.user.model.User;
 import lifeplanner.user.model.UserRole;
@@ -45,6 +42,11 @@ public class UserService implements UserDetailsService {
 
         if (optionalUser.isPresent()) {
             throw new UsernameAlreadyExistsException("Username [%s] already exists.".formatted(registerRequest.getUsername()));
+        }
+
+        if (registerRequest.getEmail() != null && !registerRequest.getEmail().isBlank() &&
+                userRepository.existsByEmail(registerRequest.getEmail())) {
+            throw new EmailAlreadyExistsException("Email [%s] is already in use.".formatted(registerRequest.getEmail()));
         }
 
         // Validate password and confirmPassword

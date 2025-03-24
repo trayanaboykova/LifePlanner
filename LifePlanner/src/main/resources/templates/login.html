@@ -13,6 +13,10 @@
         <form class="login-form" th:action="@{/login}" th:method="POST" th:object="${loginRequest}">
             <h3>Login</h3>
 
+            <div th:if="${sessionExpired}" class="alert alert-warning">
+                Your session expired. Please log in again.
+            </div>
+
             <!-- Username -->
             <div class="form-group">
                 <input type="text" id="username" name="username" placeholder="Username" required th:field="*{username}">

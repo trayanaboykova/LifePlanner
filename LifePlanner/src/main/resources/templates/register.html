@@ -18,12 +18,14 @@
         <div class="form-group">
             <input type="text" id="username" name="username" placeholder="Username" required th:field="*{username}">
             <p class="error-message-register" th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></p>
+            <p class="error-message-register" th:text="${usernameAlreadyExistMessage}"></p>
         </div>
 
         <!-- Email -->
         <div class="form-group">
             <input type="email" id="email" name="email" placeholder="Email" required th:field="*{email}">
             <p class="error-message-register" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></p>
+            <p class="error-message-register" th:text="${emailAlreadyExistMessage}"></p>
         </div>
 
         <!-- Password -->
