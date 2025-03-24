@@ -1,4 +1,4 @@
-package lifeplanner.exception;
+package lifeplanner.validation;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;

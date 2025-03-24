@@ -2,6 +2,10 @@ package lifeplanner.user.service;
 
 import jakarta.validation.Valid;
 import lifeplanner.exception.*;
+import lifeplanner.exception.user.AdminDeletionException;
+import lifeplanner.exception.user.EmailAlreadyExistsException;
+import lifeplanner.exception.user.PasswordChangeException;
+import lifeplanner.exception.user.UsernameAlreadyExistsException;
 import lifeplanner.security.AuthenticationMetadata;
 import lifeplanner.user.model.User;
 import lifeplanner.user.model.UserRole;

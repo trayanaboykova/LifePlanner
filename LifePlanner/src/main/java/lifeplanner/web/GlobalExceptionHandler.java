@@ -1,7 +1,10 @@
 package lifeplanner.web;
 
 import jakarta.servlet.http.HttpServletRequest;
-import lifeplanner.exception.*;
+import lifeplanner.exception.user.AdminDeletionException;
+import lifeplanner.exception.user.CloudinaryUploadException;
+import lifeplanner.exception.user.EmailAlreadyExistsException;
+import lifeplanner.exception.user.UsernameAlreadyExistsException;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.web.authentication.session.SessionAuthenticationException;
