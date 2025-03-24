@@ -148,7 +148,7 @@ public class GlobalExceptionHandler {
     // RECIPES
 
     // TRAVEL
-    
+
     // GOALS
 
 }
