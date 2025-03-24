@@ -37,7 +37,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -47,19 +46,14 @@ public class IndexController {
 
     private final UserService userService;
     private final BookService bookService;
-    private final BookLikesService bookLikesService;
     private final BookFavoriteService bookFavoriteService;
     private final MediaService mediaService;
-    private final MediaLikesService mediaLikesService;
     private final MediaFavoriteService mediaFavoriteService;
     private final RecipeService recipeService;
-    private final RecipeLikesService recipeLikesService;
     private final RecipeFavoriteService recipeFavoriteService;
     private final TravelService travelService;
-    private final TripLikesService tripLikesService;
     private final TripFavoriteService tripFavoriteService;
     private final GoalService goalService;
-    private final GoalLikesService goalLikesService;
     private final GoalFavoriteService goalFavoriteService;
     private final DateAndTimeScheduler dateAndTimeScheduler;
 
@@ -67,36 +61,26 @@ public class IndexController {
     @Autowired
     public IndexController(UserService userService,
                            BookService bookService,
-                           BookLikesService bookLikesService,
                            BookFavoriteService bookFavoriteService,
                            MediaService mediaService,
-                           MediaLikesService mediaLikesService,
                            MediaFavoriteService mediaFavoriteService,
                            RecipeService recipeService,
-                           RecipeLikesService recipeLikesService,
                            RecipeFavoriteService recipeFavoriteService,
                            TravelService travelService,
-                           TripLikesService tripLikesService,
                            TripFavoriteService tripFavoriteService,
                            GoalService goalService,
-                           GoalLikesService goalLikesService,
                            GoalFavoriteService goalFavoriteService,
                            DateAndTimeScheduler dateAndTimeScheduler) {
         this.userService = userService;
         this.bookService = bookService;
-        this.bookLikesService = bookLikesService;
         this.bookFavoriteService = bookFavoriteService;
         this.mediaService = mediaService;
-        this.mediaLikesService = mediaLikesService;
         this.mediaFavoriteService = mediaFavoriteService;
         this.recipeService = recipeService;
-        this.recipeLikesService = recipeLikesService;
         this.recipeFavoriteService = recipeFavoriteService;
         this.travelService = travelService;
-        this.tripLikesService = tripLikesService;
         this.tripFavoriteService = tripFavoriteService;
         this.goalService = goalService;
-        this.goalLikesService = goalLikesService;
         this.goalFavoriteService = goalFavoriteService;
         this.dateAndTimeScheduler = dateAndTimeScheduler;
     }
