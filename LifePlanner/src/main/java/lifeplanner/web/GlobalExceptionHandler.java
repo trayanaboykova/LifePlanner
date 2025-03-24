@@ -141,13 +141,5 @@ public class GlobalExceptionHandler {
         return "redirect:/books/" + ex.getBookId() + "/edit"; // Go directly to edit page
     }
 
-    @ExceptionHandler(DomainException.class)
-    public String handleGenericDomainException(DomainException ex,
-                                               RedirectAttributes redirectAttributes,
-                                               HttpServletRequest request) {
-        redirectAttributes.addFlashAttribute("inlineError", ex.getMessage());
-
-        String referer = request.getHeader("Referer");
-        return "redirect:" + (referer != null ? referer : "/books");
-    }
+    
 }
