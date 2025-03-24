@@ -83,6 +83,7 @@ public class UserController {
 
         return new ModelAndView("redirect:/home");
     }
+    
     @GetMapping("all-users")
     @PreAuthorize("hasRole('ADMIN')")
     public ModelAndView getAllUsers(@AuthenticationPrincipal AuthenticationMetadata authenticationMetadata) {
