@@ -1,6 +1,8 @@
 package lifeplanner.web;
 
 import jakarta.servlet.http.HttpServletRequest;
+import lifeplanner.exception.DomainException;
+import lifeplanner.exception.books.*;
 import lifeplanner.exception.user.AdminDeletionException;
 import lifeplanner.exception.user.CloudinaryUploadException;
 import lifeplanner.exception.user.EmailAlreadyExistsException;
@@ -88,5 +90,64 @@ public class GlobalExceptionHandler {
         modelAndView.setViewName("server-error");
         modelAndView.addObject("errorMessage", "An unexpected error occurred. Please try again later.");
         return modelAndView;
+    }
+
+    @ExceptionHandler(BookNotFoundException.class)
+    public ModelAndView handleBookNotFound(BookNotFoundException ex, Model model) {
+        model.addAttribute("pageTitle", "Book Not Found");
+        model.addAttribute("errorMessage", ex.getMessage());
+        model.addAttribute("bookId", ex.getBookId());
+        return new ModelAndView("book-not-found");
+    }
+
+    @ExceptionHandler(BookAlreadySharedException.class)
+    public String handleAlreadyShared(BookAlreadySharedException ex, RedirectAttributes redirectAttributes) {
+        redirectAttributes.addFlashAttribute("error", ex.getMessage());
+        return "redirect:/books/" + ex.getBookId();
+    }
+
+    @ExceptionHandler(BookNotSharedException.class)
+    public String handleNotShared(BookNotSharedException ex, RedirectAttributes redirectAttributes) {
+        redirectAttributes.addFlashAttribute("warning", "This book isn't shared yet. Use the Share button to proceed.");
+        return "redirect:/books/" + ex.getBookId();
+    }
+
+    @ExceptionHandler(BookRejectedException.class)
+    public String handleRejectedBook(BookRejectedException ex, RedirectAttributes redirectAttributes) {
+        redirectAttributes.addFlashAttribute("error",
+                "Cannot share rejected book. " + ex.getMessage());
+        return "redirect:/books/" + ex.getBookId() + "/edit";
+    }
+
+    @ExceptionHandler(BookPendingApprovalException.class)
+    public String handlePendingApproval(BookPendingApprovalException ex, RedirectAttributes redirectAttributes) {
+        redirectAttributes.addFlashAttribute("info",
+                "Book pending approval. " + ex.getMessage());
+        return "redirect:/books/my-books";
+    }
+
+    @ExceptionHandler(BookAlreadyApprovedException.class)
+    public String handleAlreadyApproved(BookAlreadyApprovedException ex,
+                                        RedirectAttributes redirectAttributes) {
+        redirectAttributes.addFlashAttribute("inlineError", ex.getMessage());
+        return "redirect:/books/" + ex.getBookId(); // Stay on current book page
+    }
+
+    @ExceptionHandler(BookAlreadyRejectedException.class)
+    public String handleAlreadyRejected(BookAlreadyRejectedException ex,
+                                        RedirectAttributes redirectAttributes) {
+        redirectAttributes.addFlashAttribute("inlineWarning",
+                ex.getMessage() + " Please edit the book and resubmit for approval.");
+        return "redirect:/books/" + ex.getBookId() + "/edit"; // Go directly to edit page
+    }
+
+    @ExceptionHandler(DomainException.class)
+    public String handleGenericDomainException(DomainException ex,
+                                               RedirectAttributes redirectAttributes,
+                                               HttpServletRequest request) {
+        redirectAttributes.addFlashAttribute("inlineError", ex.getMessage());
+
+        String referer = request.getHeader("Referer");
+        return "redirect:" + (referer != null ? referer : "/books");
     }
 }

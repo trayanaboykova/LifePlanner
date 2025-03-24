@@ -3,6 +3,7 @@ package lifeplanner.books.service;
 import lifeplanner.books.model.Book;
 import lifeplanner.books.repository.BookRepository;
 import lifeplanner.exception.DomainException;
+import lifeplanner.exception.books.*;
 import lifeplanner.user.model.ApprovalStatus;
 import lifeplanner.user.model.User;
 import lifeplanner.web.dto.AddBookRequest;
@@ -68,7 +69,7 @@ public class BookService {
 
     public Book getBookById(UUID bookId) {
         return bookRepository.findById(bookId)
-                .orElseThrow(() -> new DomainException("Book with id [" + bookId + "] does not exist."));
+                .orElseThrow(() -> new BookNotFoundException(bookId));
     }
 
     public Map<UUID, Long> getLikeCountsForBooks(List<Book> books) {
@@ -89,8 +90,18 @@ public class BookService {
 
     public void shareBook(UUID bookId) {
         Book book = bookRepository.findById(bookId)
-                .orElseThrow(() -> new DomainException("Book not found"));
+                .orElseThrow(() -> new BookNotFoundException(bookId));
+        if (book.isVisible()) {
+            throw new BookAlreadySharedException(bookId);
+        }
 
+        if (book.getApprovalStatus() == ApprovalStatus.REJECTED) {
+            throw new BookRejectedException(bookId);
+        }
+
+        if (book.getApprovalStatus() == ApprovalStatus.PENDING) {
+            throw new BookPendingApprovalException(bookId);
+        }
         book.setVisible(true);
         bookRepository.save(book);
     }
@@ -114,7 +125,11 @@ public class BookService {
 
     public void removeSharing(UUID bookId) {
         Book book = bookRepository.findById(bookId)
-                .orElseThrow(() -> new DomainException("Book not found"));
+                .orElseThrow(() -> new BookNotFoundException(bookId));
+
+        if (!book.isVisible()) {
+            throw new BookNotSharedException(bookId);
+        }
         book.setVisible(false);
         bookRepository.save(book);
     }
@@ -129,12 +144,22 @@ public class BookService {
 
     public void approveBook(UUID bookId) {
         Book book = getBookById(bookId);
+
+        if (book.getApprovalStatus() == ApprovalStatus.APPROVED) {
+            throw new BookAlreadyApprovedException(bookId);
+        }
+
         book.setApprovalStatus(ApprovalStatus.APPROVED);
         bookRepository.save(book);
     }
 
     public void rejectBook(UUID bookId) {
         Book book = getBookById(bookId);
+
+        if (book.getApprovalStatus() == ApprovalStatus.REJECTED) {
+            throw new BookAlreadyRejectedException(bookId);
+        }
+
         book.setApprovalStatus(ApprovalStatus.REJECTED);
         bookRepository.save(book);
     }
