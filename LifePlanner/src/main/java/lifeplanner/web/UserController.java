@@ -17,6 +17,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 import java.util.UUID;
@@ -35,9 +36,7 @@ public class UserController {
 
     @GetMapping("/{id}/profile")
     public ModelAndView getProfileMenu(@PathVariable UUID id, Model model) {
-
         model.addAttribute("pageTitle", "Edit Profile");
-
         User user = userService.getById(id);
 
         ModelAndView modelAndView = new ModelAndView();
@@ -52,12 +51,12 @@ public class UserController {
     public ModelAndView updateUserProfile(@PathVariable UUID id,
                                           @Valid UserEditRequest userEditRequest,
                                           BindingResult bindingResult,
-                                          @RequestParam(name="profilePictureFile", required=false) MultipartFile profilePictureFile) {
+                                          @RequestParam(name="profilePictureFile", required=false) MultipartFile profilePictureFile,
+                                          RedirectAttributes redirectAttributes) {
 
         if (bindingResult.hasErrors()) {
             User user = userService.getById(id);
-            ModelAndView modelAndView = new ModelAndView();
-            modelAndView.setViewName("edit-profile");
+            ModelAndView modelAndView = new ModelAndView("edit-profile");
             modelAndView.addObject("user", user);
             modelAndView.addObject("userEditRequest", userEditRequest);
             return modelAndView;
@@ -65,66 +64,57 @@ public class UserController {
 
         // Handle profile picture upload
         if (profilePictureFile != null && !profilePictureFile.isEmpty()) {
-            try {
-                String uploadedUrl = cloudinaryService.uploadFile(profilePictureFile);
-                userEditRequest.setProfilePicture(uploadedUrl); // Set the profilePicture URL
-            } catch (Exception e) {
-                bindingResult.rejectValue("profilePicture", "uploadError", "Could not upload image. Please try again.");
-                return new ModelAndView("edit-profile");
-            }
+            String uploadedUrl = cloudinaryService.uploadFile(profilePictureFile);
+            userEditRequest.setProfilePicture(uploadedUrl);
         }
 
         // Handle remove profile picture checkbox
         if (userEditRequest.isRemoveProfilePic()) {
-            userEditRequest.setProfilePicture(null); // Set profilePicture to null if checkbox is checked
+            userEditRequest.setProfilePicture(null);
         }
 
         userService.editUserDetails(id, userEditRequest);
-
+        redirectAttributes.addFlashAttribute("successMessage", "Profile updated successfully!");
         return new ModelAndView("redirect:/home");
     }
-    
-    @GetMapping("all-users")
+
+    @GetMapping("/all-users")
     @PreAuthorize("hasRole('ADMIN')")
-    public ModelAndView getAllUsers(@AuthenticationPrincipal AuthenticationMetadata authenticationMetadata) {
-
+    public ModelAndView getAllUsers() {
         List<User> users = userService.getAllUsers();
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("all-users");
+        ModelAndView modelAndView = new ModelAndView("all-users");
         modelAndView.addObject("users", users);
-
         return modelAndView;
     }
 
     @DeleteMapping("/{id}/deactivate")
     public ModelAndView deactivateUserProfile(@PathVariable UUID id,
                                               @AuthenticationPrincipal AuthenticationMetadata currentUser) {
-        if (!currentUser.getUserId().equals(id)) {
-            throw new DomainException("You are not authorized to delete this profile.");
-        }
         userService.deactivateUserProfile(id);
         return new ModelAndView("redirect:/logout");
     }
 
-
     @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/{id}/role")
-    public String switchUserRole(@PathVariable UUID id) {
+    public String switchUserRole(@PathVariable UUID id, RedirectAttributes redirectAttributes) {
         userService.switchRole(id);
+        redirectAttributes.addFlashAttribute("successMessage", "User role updated successfully!");
         return "redirect:/users/all-users";
     }
 
     @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/{id}/status")
-    public String switchUserStatus(@PathVariable UUID id) {
+    public String switchUserStatus(@PathVariable UUID id, RedirectAttributes redirectAttributes) {
         userService.switchStatus(id);
+        redirectAttributes.addFlashAttribute("successMessage", "User status updated successfully!");
         return "redirect:/users/all-users";
     }
 
     @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/{id}")
-    public String deleteUser(@PathVariable UUID id) {
+    public String deleteUser(@PathVariable UUID id, RedirectAttributes redirectAttributes) {
         userService.deleteUserById(id);
+        redirectAttributes.addFlashAttribute("successMessage", "User deleted successfully!");
         return "redirect:/users/all-users";
     }
 }

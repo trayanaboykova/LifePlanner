@@ -2,6 +2,7 @@ package lifeplanner.service;
 
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
+import lifeplanner.exception.CloudinaryUploadException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -19,9 +20,13 @@ public class CloudinaryService {
         this.cloudinary = cloudinary;
     }
 
-    public String uploadFile(MultipartFile file) throws IOException {
-        Map<?, ?> uploadResult = cloudinary.uploader()
-                .upload(file.getBytes(), ObjectUtils.emptyMap());
-        return (String) uploadResult.get("secure_url");
+    public String uploadFile(MultipartFile file) {
+        try {
+            Map<?, ?> uploadResult = cloudinary.uploader()
+                    .upload(file.getBytes(), ObjectUtils.emptyMap());
+            return (String) uploadResult.get("secure_url");
+        } catch (IOException e) {
+            throw new CloudinaryUploadException("Failed to upload file to Cloudinary", e);
+        }
     }
 }

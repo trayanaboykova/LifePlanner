@@ -495,3 +495,32 @@
     display: flex;
     justify-content: center;
 }
+
+.error-container {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.error-container p {
+    margin-bottom: 1em;
+}
+
+/* Back to Home Link */
+.back-home {
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    text-decoration: none;
+    font-size: 20px;
+    color: #006891;
+}
+
+.back-home:hover {
+    text-decoration: none;
+    font-weight: bold;
+}

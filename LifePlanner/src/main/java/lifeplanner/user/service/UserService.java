@@ -1,7 +1,10 @@
 package lifeplanner.user.service;
 
 import jakarta.validation.Valid;
+import lifeplanner.exception.AdminDeletionException;
 import lifeplanner.exception.DomainException;
+import lifeplanner.exception.PasswordChangeException;
+import lifeplanner.exception.UsernameAlreadyExistsException;
 import lifeplanner.security.AuthenticationMetadata;
 import lifeplanner.user.model.User;
 import lifeplanner.user.model.UserRole;
@@ -41,12 +44,12 @@ public class UserService implements UserDetailsService {
         Optional<User> optionalUser = userRepository.findByUsername(registerRequest.getUsername());
 
         if (optionalUser.isPresent()) {
-            throw new DomainException("Username [%s] already exists.".formatted(registerRequest.getUsername()));
+            throw new UsernameAlreadyExistsException("Username [%s] already exists.".formatted(registerRequest.getUsername()));
         }
 
         // Validate password and confirmPassword
         if (!registerRequest.getPassword().equals(registerRequest.getConfirmPassword())) {
-            throw new DomainException("Password and confirm password do not match.");
+            throw new PasswordChangeException("Password and confirm password do not match.");
         }
 
         // Use the role from the RegisterRequest, default to USER if not provided
@@ -88,16 +91,16 @@ public class UserService implements UserDetailsService {
         if (userEditRequest.getNewPassword() != null && !userEditRequest.getNewPassword().isBlank()) {
             // Ensure that the user has entered the current password
             if (userEditRequest.getCurrentPassword() == null || userEditRequest.getCurrentPassword().isBlank()) {
-                throw new DomainException("Current password is required to change your password.");
+                throw new PasswordChangeException("Current password is required to change your password.");
             }
             // Validate current password
             if (!passwordEncoder.matches(userEditRequest.getCurrentPassword(), user.getPassword())) {
-                throw new DomainException("Current password is incorrect.");
+                throw new PasswordChangeException("Current password is incorrect.");
             }
             // Validate that the new password and confirmation match
             if (userEditRequest.getConfirmNewPassword() == null ||
                     !userEditRequest.getNewPassword().equals(userEditRequest.getConfirmNewPassword())) {
-                throw new DomainException("New password and confirm new password do not match.");
+                throw new PasswordChangeException("New password and confirm new password do not match.");
             }
             // Update the password
             user.setPassword(passwordEncoder.encode(userEditRequest.getNewPassword()));
@@ -154,7 +157,7 @@ public class UserService implements UserDetailsService {
     public void deleteUserById(UUID id) {
         User user = getById(id);
         if(user.getRole() == UserRole.ADMIN) {
-            throw new DomainException("Cannot delete admin user.");
+            throw new AdminDeletionException("Cannot delete admin user.");
         }
         userRepository.deleteById(id);
     }
