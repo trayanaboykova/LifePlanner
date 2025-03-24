@@ -25,6 +25,7 @@ import org.springframework.web.servlet.resource.NoResourceFoundException;
 @ControllerAdvice
 public class GlobalExceptionHandler {
 
+    // USERS
     @ExceptionHandler({UsernameAlreadyExistsException.class, EmailAlreadyExistsException.class})
     public String handleRegistrationErrors(RedirectAttributes redirectAttributes,
                                            RuntimeException exception) {
@@ -92,6 +93,7 @@ public class GlobalExceptionHandler {
         return modelAndView;
     }
 
+    // BOOKS
     @ExceptionHandler(BookNotFoundException.class)
     public ModelAndView handleBookNotFound(BookNotFoundException ex, Model model) {
         model.addAttribute("pageTitle", "Book Not Found");
@@ -141,5 +143,12 @@ public class GlobalExceptionHandler {
         return "redirect:/books/" + ex.getBookId() + "/edit"; // Go directly to edit page
     }
 
+    // MEDIA
+
+    // RECIPES
+
+    // TRAVEL
     
+    // GOALS
+
 }
