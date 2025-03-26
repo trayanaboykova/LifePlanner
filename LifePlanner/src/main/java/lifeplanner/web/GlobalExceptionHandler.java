@@ -1,15 +1,13 @@
 package lifeplanner.web;
 
 import jakarta.servlet.http.HttpServletRequest;
+import lifeplanner.exception.DomainException;
 import lifeplanner.exception.books.*;
 import lifeplanner.exception.goals.*;
 import lifeplanner.exception.media.*;
 import lifeplanner.exception.recipes.*;
 import lifeplanner.exception.trips.*;
-import lifeplanner.exception.user.AdminDeletionException;
-import lifeplanner.exception.user.CloudinaryUploadException;
-import lifeplanner.exception.user.EmailAlreadyExistsException;
-import lifeplanner.exception.user.UsernameAlreadyExistsException;
+import lifeplanner.exception.user.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.web.authentication.session.SessionAuthenticationException;
@@ -38,6 +36,13 @@ public class GlobalExceptionHandler {
 
         redirectAttributes.addFlashAttribute(attributeName, exception.getMessage());
         return "redirect:/register";
+    }
+
+    @ExceptionHandler(PasswordChangeException.class)
+    public String handlePasswordChangeException(RedirectAttributes redirectAttributes,
+                                                PasswordChangeException ex) {
+        redirectAttributes.addFlashAttribute("passwordChangeError", ex.getMessage());
+        return "redirect:/profile/edit";
     }
 
     @ExceptionHandler({CloudinaryUploadException.class, MaxUploadSizeExceededException.class})
@@ -93,6 +98,12 @@ public class GlobalExceptionHandler {
         modelAndView.setViewName("server-error");
         modelAndView.addObject("errorMessage", "An unexpected error occurred. Please try again later.");
         return modelAndView;
+    }
+
+    @ExceptionHandler(DomainException.class)
+    public String handleDomainException(RedirectAttributes redirectAttributes, DomainException ex) {
+        redirectAttributes.addFlashAttribute("error", ex.getMessage());
+        return "redirect:/home";
     }
 
     // BOOKS

@@ -160,6 +160,7 @@ public class UserService implements UserDetailsService {
     }
 
     @CacheEvict(value = "users", allEntries = true)
+    @Transactional
     public void deleteUserById(UUID id) {
         User user = getById(id);
         if(user.getRole() == UserRole.ADMIN) {

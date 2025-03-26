@@ -1,7 +1,7 @@
 package lifeplanner.recipes.service;
 
 import jakarta.validation.Valid;
-import lifeplanner.exception.DomainException;
+import lifeplanner.exception.recipes.*;
 import lifeplanner.recipes.model.Recipe;
 import lifeplanner.recipes.model.RecipeIngredient;
 import lifeplanner.recipes.repository.RecipeRepository;
@@ -11,6 +11,7 @@ import lifeplanner.web.dto.AddRecipeRequest;
 import lifeplanner.web.dto.EditRecipeRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,6 +37,7 @@ public class RecipeService {
         return recipeRepository.findAllByOwner(user);
     }
 
+    @Transactional
     public void addRecipe(@Valid AddRecipeRequest addRecipeRequest, User user) {
         List<RecipeIngredient> ingredients = new ArrayList<>();
         List<String> ingredientNames = addRecipeRequest.getIngredient();
@@ -73,9 +75,10 @@ public class RecipeService {
 
     public Recipe getRecipeById(UUID recipeId) {
         return recipeRepository.findById(recipeId)
-                .orElseThrow(() -> new DomainException("Recipe with id [" + recipeId + "] does not exist."));
+                .orElseThrow(() -> new RecipeNotFoundException(recipeId));
     }
 
+    @Transactional
     public void editRecipe(UUID recipeId, EditRecipeRequest editRecipeRequest) {
         Recipe recipe = getRecipeById(recipeId);
 
@@ -109,9 +112,22 @@ public class RecipeService {
         recipeRepository.save(recipe);
     }
 
+    @Transactional
     public void shareRecipe(UUID recipeId) {
         Recipe recipe = recipeRepository.findById(recipeId)
-                .orElseThrow(() -> new DomainException("Recipe not found"));
+                .orElseThrow(() -> new RecipeNotFoundException(recipeId));
+
+        if (recipe.isVisible()) {
+            throw new RecipeAlreadySharedException(recipeId);
+        }
+
+        if (recipe.getApprovalStatus() == ApprovalStatus.REJECTED) {
+            throw new RecipeRejectedException(recipeId);
+        }
+
+        if (recipe.getApprovalStatus() == ApprovalStatus.PENDING) {
+            throw new RecipePendingApprovalException(recipeId);
+        }
 
         recipe.setVisible(true);
         recipeRepository.save(recipe);
@@ -152,13 +168,15 @@ public class RecipeService {
                 .toList();
     }
 
+    @Transactional
     public void removeSharing(UUID recipeId) {
         Recipe recipe = recipeRepository.findById(recipeId)
-                .orElseThrow(() -> new DomainException("Recipe not found"));
+                .orElseThrow(() -> new RecipeNotFoundException(recipeId));
         recipe.setVisible(false);
         recipeRepository.save(recipe);
     }
 
+    @Transactional
     public void deleteRecipeById(UUID id) {
         recipeRepository.deleteById(id);
     }
@@ -167,14 +185,22 @@ public class RecipeService {
         return recipeRepository.findAllByApprovalStatus(ApprovalStatus.PENDING);
     }
 
+    @Transactional
     public void approveRecipe(UUID recipeId) {
         Recipe recipe = getRecipeById(recipeId);
+        if (recipe.getApprovalStatus() == ApprovalStatus.APPROVED) {
+            throw new RecipeAlreadyApprovedException(recipeId);
+        }
         recipe.setApprovalStatus(ApprovalStatus.APPROVED);
         recipeRepository.save(recipe);
     }
 
+    @Transactional
     public void rejectRecipe(UUID recipeId) {
         Recipe recipe = getRecipeById(recipeId);
+        if (recipe.getApprovalStatus() == ApprovalStatus.REJECTED) {
+            throw new RecipeAlreadyRejectedException(recipeId);
+        }
         recipe.setApprovalStatus(ApprovalStatus.REJECTED);
         recipeRepository.save(recipe);
     }

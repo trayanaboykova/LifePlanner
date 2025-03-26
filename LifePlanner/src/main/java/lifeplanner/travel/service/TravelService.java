@@ -1,6 +1,5 @@
 package lifeplanner.travel.service;
 
-import lifeplanner.exception.DomainException;
 import lifeplanner.exception.trips.*;
 import lifeplanner.travel.model.Travel;
 import lifeplanner.travel.repository.TravelRepository;
@@ -10,6 +9,7 @@ import lifeplanner.web.dto.AddTripRequest;
 import lifeplanner.web.dto.EditTripRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Map;
@@ -34,6 +34,7 @@ public class TravelService {
         return travelRepository.findAllByOwner(user);
     }
 
+    @Transactional
     public void addTrip(AddTripRequest addTripRequest, User user) {
         Travel travel = Travel.builder()
                 .tripStatus(addTripRequest.getTripStatus())
@@ -55,7 +56,7 @@ public class TravelService {
 
     public Travel getTripById(UUID tripId) {
         return travelRepository.findById(tripId)
-                .orElseThrow(() -> new DomainException("Trip with id [" + tripId + "] does not exist."));
+                .orElseThrow(() -> new TripNotFoundException(tripId));
     }
 
     public void editTrip(UUID id, EditTripRequest editTripRequest) {
@@ -73,6 +74,7 @@ public class TravelService {
         travelRepository.save(trip);
     }
 
+    @Transactional
     public void shareTrip(UUID tripId) {
         Travel trip = travelRepository.findById(tripId)
                 .orElseThrow(() -> new TripNotFoundException(tripId));
@@ -128,13 +130,15 @@ public class TravelService {
                 .toList();
     }
 
+    @Transactional
     public void removeSharing(UUID tripId) {
         Travel trip = travelRepository.findById(tripId)
-                .orElseThrow(() -> new DomainException("Trip not found"));
+                .orElseThrow(() -> new TripNotFoundException(tripId));
         trip.setVisible(false);
         travelRepository.save(trip);
     }
 
+    @Transactional
     public void deleteTripById(UUID id) {
         travelRepository.deleteById(id);
     }
@@ -143,6 +147,7 @@ public class TravelService {
         return travelRepository.findAllByApprovalStatus(ApprovalStatus.PENDING);
     }
 
+    @Transactional
     public void approveTrip(UUID tripId) {
         Travel trip = getTripById(tripId);
 
@@ -154,6 +159,7 @@ public class TravelService {
         travelRepository.save(trip);
     }
 
+    @Transactional
     public void rejectTrip(UUID tripId) {
         Travel trip = getTripById(tripId);
 

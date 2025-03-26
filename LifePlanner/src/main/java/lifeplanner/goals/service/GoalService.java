@@ -1,6 +1,6 @@
 package lifeplanner.goals.service;
 
-import lifeplanner.exception.DomainException;
+import lifeplanner.exception.goals.*;
 import lifeplanner.goals.model.Goal;
 import lifeplanner.goals.repository.GoalRepository;
 import lifeplanner.user.model.ApprovalStatus;
@@ -10,6 +10,7 @@ import lifeplanner.web.dto.AddGoalRequest;
 import lifeplanner.web.dto.EditGoalRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Map;
@@ -42,6 +43,7 @@ public class GoalService {
         return goals;
     }
 
+    @Transactional
     public void addGoal(AddGoalRequest addGoalRequest, User user) {
         Goal goal = Goal.builder()
                 .goalName(addGoalRequest.getGoalName())
@@ -62,9 +64,10 @@ public class GoalService {
 
     public Goal getGoalById(UUID goalId) {
         return goalRepository.findById(goalId)
-                .orElseThrow(() -> new DomainException("Goal with id [" + goalId + "] does not exist."));
+                .orElseThrow(() -> new GoalNotFoundException(goalId));
     }
 
+    @Transactional
     public void editGoal(UUID goalId, EditGoalRequest editGoalRequest) {
         Goal goal = getGoalById(goalId);
         goal.setGoalName(editGoalRequest.getGoalName());
@@ -79,9 +82,22 @@ public class GoalService {
         goalRepository.save(goal);
     }
 
+    @Transactional
     public void shareGoal(UUID goalId) {
         Goal goal = goalRepository.findById(goalId)
-                .orElseThrow(() -> new DomainException("Goal not found"));
+                .orElseThrow(() -> new GoalNotFoundException(goalId));
+
+        if (goal.isVisible()) {
+            throw new GoalAlreadySharedException(goalId);
+        }
+
+        if (goal.getApprovalStatus() == ApprovalStatus.REJECTED) {
+            throw new GoalRejectedException(goalId);
+        }
+
+        if (goal.getApprovalStatus() == ApprovalStatus.PENDING) {
+            throw new GoalPendingApprovalException(goalId);
+        }
 
         goal.setVisible(true);
         goalRepository.save(goal);
@@ -122,13 +138,15 @@ public class GoalService {
                 .toList();
     }
 
+    @Transactional
     public void removeSharing(UUID goalId) {
         Goal goal = goalRepository.findById(goalId)
-                .orElseThrow(() -> new DomainException("Goal not found"));
+                .orElseThrow(() -> new GoalNotFoundException(goalId));
         goal.setVisible(false);
         goalRepository.save(goal);
     }
 
+    @Transactional
     public void deleteGoalById(UUID id) {
         goalRepository.deleteById(id);
     }
@@ -137,14 +155,26 @@ public class GoalService {
         return goalRepository.findAllByApprovalStatus(ApprovalStatus.PENDING);
     }
 
+    @Transactional
     public void approveGoal(UUID goalId) {
         Goal goal = getGoalById(goalId);
+
+        if (goal.getApprovalStatus() == ApprovalStatus.APPROVED) {
+            throw new GoalAlreadyApprovedException(goalId);
+        }
+
         goal.setApprovalStatus(ApprovalStatus.APPROVED);
         goalRepository.save(goal);
     }
 
+    @Transactional
     public void rejectGoal(UUID goalId) {
         Goal goal = getGoalById(goalId);
+
+        if (goal.getApprovalStatus() == ApprovalStatus.REJECTED) {
+            throw new GoalAlreadyRejectedException(goalId);
+        }
+
         goal.setApprovalStatus(ApprovalStatus.REJECTED);
         goalRepository.save(goal);
     }

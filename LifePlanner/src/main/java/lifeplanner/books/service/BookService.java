@@ -10,8 +10,8 @@ import lifeplanner.web.dto.AddBookRequest;
 import lifeplanner.web.dto.EditBookRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -32,9 +32,13 @@ public class BookService {
     }
 
     public List<Book> getBooksByUser(User user) {
+        if (user == null) {
+            throw new DomainException("User must be provided");
+        }
         return bookRepository.findAllByOwner(user);
     }
 
+    @Transactional
     public void addBook(AddBookRequest addBookRequest, User user) {
         Book book = Book.builder()
                 .bookStatus(addBookRequest.getBookStatus())
@@ -51,6 +55,7 @@ public class BookService {
         bookRepository.save(book);
     }
 
+    @Transactional
     public void editBook(UUID bookId, EditBookRequest editBookRequest) {
         Book book = getBookById(bookId);
         book.setTitle(editBookRequest.getTitle());
@@ -88,6 +93,7 @@ public class BookService {
                 ));
     }
 
+    @Transactional
     public void shareBook(UUID bookId) {
         Book book = bookRepository.findById(bookId)
                 .orElseThrow(() -> new BookNotFoundException(bookId));
@@ -123,6 +129,7 @@ public class BookService {
                 .toList();
     }
 
+    @Transactional
     public void removeSharing(UUID bookId) {
         Book book = bookRepository.findById(bookId)
                 .orElseThrow(() -> new BookNotFoundException(bookId));
@@ -134,6 +141,7 @@ public class BookService {
         bookRepository.save(book);
     }
 
+    @Transactional
     public void deleteBookById(UUID id) {
         bookRepository.deleteById(id);
     }
@@ -142,6 +150,7 @@ public class BookService {
         return bookRepository.findAllByApprovalStatus(ApprovalStatus.PENDING);
     }
 
+    @Transactional
     public void approveBook(UUID bookId) {
         Book book = getBookById(bookId);
 
@@ -153,6 +162,7 @@ public class BookService {
         bookRepository.save(book);
     }
 
+    @Transactional
     public void rejectBook(UUID bookId) {
         Book book = getBookById(bookId);
 
