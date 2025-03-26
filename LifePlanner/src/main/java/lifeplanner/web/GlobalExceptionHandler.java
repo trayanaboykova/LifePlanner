@@ -1,7 +1,6 @@
 package lifeplanner.web;
 
 import jakarta.servlet.http.HttpServletRequest;
-import lifeplanner.exception.DomainException;
 import lifeplanner.exception.books.*;
 import lifeplanner.exception.media.*;
 import lifeplanner.exception.user.AdminDeletionException;
@@ -130,7 +129,7 @@ public class GlobalExceptionHandler {
     public String handleAlreadyApproved(BookAlreadyApprovedException ex,
                                         RedirectAttributes redirectAttributes) {
         redirectAttributes.addFlashAttribute("inlineError", ex.getMessage());
-        return "redirect:/books/" + ex.getBookId(); // Stay on current book page
+        return "redirect:/books/" + ex.getBookId();
     }
 
     @ExceptionHandler(BookAlreadyRejectedException.class)
@@ -138,7 +137,7 @@ public class GlobalExceptionHandler {
                                         RedirectAttributes redirectAttributes) {
         redirectAttributes.addFlashAttribute("inlineWarning",
                 ex.getMessage() + " Please edit the book and resubmit for approval.");
-        return "redirect:/books/" + ex.getBookId() + "/edit"; // Go directly to edit page
+        return "redirect:/books/" + ex.getBookId() + "/edit";
     }
 
     // MEDIA
@@ -178,7 +177,7 @@ public class GlobalExceptionHandler {
     public String handleMediaAlreadyApproved(MediaAlreadyApprovedException ex,
                                              RedirectAttributes redirectAttributes) {
         redirectAttributes.addFlashAttribute("inlineError", ex.getMessage());
-        return "redirect:/media/" + ex.getMediaId(); // Stay on current media page
+        return "redirect:/media/" + ex.getMediaId();
     }
 
     @ExceptionHandler(MediaAlreadyRejectedException.class)
@@ -186,7 +185,7 @@ public class GlobalExceptionHandler {
                                              RedirectAttributes redirectAttributes) {
         redirectAttributes.addFlashAttribute("inlineWarning",
                 ex.getMessage() + " Please edit the media and resubmit for approval.");
-        return "redirect:/media/" + ex.getMediaId() + "/edit"; // Go directly to edit page
+        return "redirect:/media/" + ex.getMediaId() + "/edit";
     }
 
     // RECIPES
