@@ -2,6 +2,7 @@ package lifeplanner.web;
 
 import jakarta.servlet.http.HttpServletRequest;
 import lifeplanner.exception.books.*;
+import lifeplanner.exception.goals.*;
 import lifeplanner.exception.media.*;
 import lifeplanner.exception.recipes.*;
 import lifeplanner.exception.trips.*;
@@ -305,5 +306,56 @@ public class GlobalExceptionHandler {
     }
 
     // GOALS
+    @ExceptionHandler(GoalNotFoundException.class)
+    public String handleGoalNotFound(GoalNotFoundException ex, RedirectAttributes redirectAttributes) {
+        redirectAttributes.addFlashAttribute("error", "Goal not found: " + ex.getMessage());
+        return "redirect:/goals/my-goals";
+    }
 
+    @ExceptionHandler(GoalAlreadySharedException.class)
+    public String handleGoalAlreadyShared(GoalAlreadySharedException ex, RedirectAttributes redirectAttributes) {
+        redirectAttributes.addFlashAttribute("error", ex.getMessage());
+        return "redirect:/goals/" + ex.getGoalId();
+    }
+
+    @ExceptionHandler(GoalNotSharedException.class)
+    public String handleGoalNotShared(GoalNotSharedException ex, RedirectAttributes redirectAttributes) {
+        redirectAttributes.addFlashAttribute("warning", "This goal isn't shared yet. Use the Share button to proceed.");
+        return "redirect:/goals/" + ex.getGoalId();
+    }
+
+    @ExceptionHandler(GoalRejectedException.class)
+    public String handleRejectedGoal(GoalRejectedException ex, RedirectAttributes redirectAttributes) {
+        redirectAttributes.addFlashAttribute("error",
+                "Cannot share rejected goal. " + ex.getMessage());
+        return "redirect:/goals/" + ex.getGoalId() + "/edit";
+    }
+
+    @ExceptionHandler(GoalPendingApprovalException.class)
+    public String handleGoalPendingApproval(GoalPendingApprovalException ex, RedirectAttributes redirectAttributes) {
+        redirectAttributes.addFlashAttribute("info",
+                "Goal pending approval. " + ex.getMessage());
+        return "redirect:/goals/my-goals";
+    }
+
+    @ExceptionHandler(GoalAlreadyApprovedException.class)
+    public String handleGoalAlreadyApproved(GoalAlreadyApprovedException ex,
+                                            RedirectAttributes redirectAttributes) {
+        redirectAttributes.addFlashAttribute("inlineError", ex.getMessage());
+        return "redirect:/goals/" + ex.getGoalId();
+    }
+
+    @ExceptionHandler(GoalAlreadyRejectedException.class)
+    public String handleGoalAlreadyRejected(GoalAlreadyRejectedException ex,
+                                            RedirectAttributes redirectAttributes) {
+        redirectAttributes.addFlashAttribute("inlineWarning",
+                ex.getMessage() + " Please edit the goal and resubmit for approval.");
+        return "redirect:/goals/" + ex.getGoalId() + "/edit";
+    }
+
+    @ExceptionHandler(InvalidGoalDatesException.class)
+    public String handleInvalidGoalDates(InvalidGoalDatesException ex, RedirectAttributes redirectAttributes) {
+        redirectAttributes.addFlashAttribute("error", ex.getMessage());
+        return "redirect:/goals/new";
+    }
 }
