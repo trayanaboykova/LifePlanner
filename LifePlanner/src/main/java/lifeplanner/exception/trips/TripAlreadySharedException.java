@@ -8,7 +8,7 @@ import java.util.UUID;
 public class TripAlreadySharedException extends RuntimeException {
     private final UUID tripId;
     public TripAlreadySharedException(UUID tripId) {
-        super("tRIP " + tripId + " is already shared");
+        super("Trip " + tripId + " is already shared");
         this.tripId = tripId;
     }
 }
