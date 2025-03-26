@@ -143,38 +143,11 @@ public class IndexController {
         Map<UUID, Long> bookLikeCounts = bookService.getLikeCountsForBooks(sharedBooks);
         Map<UUID, Long> bookFavoriteCounts = bookService.getFavoriteCountsForBooks(sharedBooks);
 
-//        // For each book, retrieve its like count
-//        Map<UUID, Long> bookLikeCounts = new HashMap<>();
-//        for (Book b : sharedBooks) {
-//            long count = bookLikesService.getLikeCount(b.getId());
-//            bookLikeCounts.put(b.getId(), count);
-//        }
-//        // For each book, retrieve its favorite count
-//        Map<UUID, Long> bookFavoriteCounts = new HashMap<>();
-//        for (Book b : sharedBooks) {
-//            long favoriteCount = bookFavoriteService.getFavoriteCount(b.getId());
-//            bookFavoriteCounts.put(b.getId(), favoriteCount);
-//        }
-
         // MEDIA
         List<Media> allMedia = mediaService.getAllMedia();
         List<Media> sharedMedia = mediaService.getApprovedSharedMedia(user);
         Map<UUID, Long> mediaLikeCounts = mediaService.getLikeCountsForMedia(sharedMedia);
         Map<UUID, Long> mediaFavoriteCounts = mediaService.getFavoriteCountsForMedia(sharedMedia);
-
-//        // For each book, retrieve its like count
-//        Map<UUID, Long> mediaLikeCounts = new HashMap<>();
-//        for (Media m : sharedMedia) {
-//            long count = mediaLikesService.getLikeCount(m.getId());
-//            mediaLikeCounts.put(m.getId(), count);
-//        }
-//
-//        // For each book, retrieve its favorite count
-//        Map<UUID, Long> mediaFavoriteCounts = new HashMap<>();
-//        for (Media m : sharedMedia) {
-//            long favoriteCount = mediaFavoriteService.getFavoriteCount(m.getId());
-//            mediaFavoriteCounts.put(m.getId(), favoriteCount);
-//        }
 
         // RECIPES
         List<Recipe> allRecipes = recipeService.getAllRecipes();
@@ -182,60 +155,17 @@ public class IndexController {
         Map<UUID, Long> recipeLikeCounts = recipeService.getLikeCountsForRecipes(allRecipes);
         Map<UUID, Long> recipeFavoriteCounts = recipeService.getFavoriteCountsForRecipes(sharedRecipes);
 
-//        // For each recipe, retrieve its like count
-//        Map<UUID, Long> recipeLikeCounts = new HashMap<>();
-//        for (Recipe r : sharedRecipes) {
-//            long count = recipeLikesService.getLikeCount(r.getId());
-//            recipeLikeCounts.put(r.getId(), count);
-//        }
-//
-//        // For each recipe, retrieve its favorite count
-//        Map<UUID, Long> recipeFavoriteCounts = new HashMap<>();
-//        for (Recipe r : sharedRecipes) {
-//            long count = recipeFavoriteService.getFavoriteCount(r.getId());
-//            recipeFavoriteCounts.put(r.getId(), count);
-//        }
-
         // TRIPS
         List<Travel> allTrips = travelService.getAllTrips();
         List<Travel> sharedTrips = travelService.getApprovedSharedTrips(user);
         Map<UUID, Long> tripLikeCounts = travelService.getLikeCountsForTrips(sharedTrips);
         Map<UUID, Long> tripFavoriteCounts = travelService.getFavoriteCountsForTrips(sharedTrips);
 
-//        // For each trip, retrieve its like count
-//        Map<UUID, Long> tripLikeCounts = new HashMap<>();
-//        for (Travel t : sharedTrips) {
-//            long count = tripLikesService.getLikeCount(t.getId());
-//            tripLikeCounts.put(t.getId(), count);
-//        }
-//
-//        // For each trip, retrieve its favorite count
-//        Map<UUID, Long> tripFavoriteCounts = new HashMap<>();
-//        for (Travel t : sharedTrips) {
-//            long count = tripFavoriteService.getFavoriteCount(t.getId());
-//            tripFavoriteCounts.put(t.getId(), count);
-//        }
-
         // GOALS
         List<Goal> allGoals = goalService.getAllGoals();
         List<Goal> sharedGoals = goalService.getApprovedSharedGoals(user);
         Map<UUID, Long> goalLikeCounts = goalService.getLikeCountsForGoals(allGoals);
         Map<UUID, Long> goalFavoriteCounts = goalService.getFavoriteCountsForGoals(sharedGoals);
-
-
-//        // For each goal, retrieve its like count
-//        Map<UUID, Long> goalLikeCounts = new HashMap<>();
-//        for (Goal g : sharedGoals) {
-//            long count = goalLikesService.getLikeCount(g.getId());
-//            goalLikeCounts.put(g.getId(), count);
-//        }
-//
-//        // For each goal, retrieve its favorite count
-//        Map<UUID, Long> goalFavoriteCounts = new HashMap<>();
-//        for (Goal g : sharedGoals) {
-//            long count = goalFavoriteService.getFavoriteCount(g.getId());
-//            goalFavoriteCounts.put(g.getId(), count);
-//        }
 
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("home");
