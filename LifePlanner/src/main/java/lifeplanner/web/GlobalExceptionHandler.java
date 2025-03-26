@@ -3,6 +3,7 @@ package lifeplanner.web;
 import jakarta.servlet.http.HttpServletRequest;
 import lifeplanner.exception.books.*;
 import lifeplanner.exception.media.*;
+import lifeplanner.exception.recipes.*;
 import lifeplanner.exception.user.AdminDeletionException;
 import lifeplanner.exception.user.CloudinaryUploadException;
 import lifeplanner.exception.user.EmailAlreadyExistsException;
@@ -189,6 +190,60 @@ public class GlobalExceptionHandler {
     }
 
     // RECIPES
+    @ExceptionHandler(RecipeNotFoundException.class)
+    public String handleRecipeNotFound(RecipeNotFoundException ex, RedirectAttributes redirectAttributes,
+                                       HttpServletRequest request) {
+        redirectAttributes.addFlashAttribute("error", "Recipe not found: " + ex.getMessage());
+
+        return "redirect:/recipes/all-recipes";
+    }
+
+    @ExceptionHandler(RecipeAlreadySharedException.class)
+    public String handleRecipeAlreadyShared(RecipeAlreadySharedException ex, RedirectAttributes redirectAttributes) {
+        redirectAttributes.addFlashAttribute("error", ex.getMessage());
+        return "redirect:/recipes/" + ex.getRecipeId();
+    }
+
+    @ExceptionHandler(RecipeNotSharedException.class)
+    public String handleRecipeNotShared(RecipeNotSharedException ex, RedirectAttributes redirectAttributes) {
+        redirectAttributes.addFlashAttribute("warning", "This recipe isn't shared yet. Use the Share button to proceed.");
+        return "redirect:/recipes/" + ex.getRecipeId();
+    }
+
+    @ExceptionHandler(RecipeRejectedException.class)
+    public String handleRejectedRecipe(RecipeRejectedException ex, RedirectAttributes redirectAttributes) {
+        redirectAttributes.addFlashAttribute("error",
+                "Cannot share rejected recipe. " + ex.getMessage());
+        return "redirect:/recipes/" + ex.getRecipeId() + "/edit";
+    }
+
+    @ExceptionHandler(RecipePendingApprovalException.class)
+    public String handleRecipePendingApproval(RecipePendingApprovalException ex, RedirectAttributes redirectAttributes) {
+        redirectAttributes.addFlashAttribute("info",
+                "Recipe pending approval. " + ex.getMessage());
+        return "redirect:/recipes/all-recipes";
+    }
+
+    @ExceptionHandler(RecipeAlreadyApprovedException.class)
+    public String handleRecipeAlreadyApproved(RecipeAlreadyApprovedException ex,
+                                              RedirectAttributes redirectAttributes) {
+        redirectAttributes.addFlashAttribute("inlineError", ex.getMessage());
+        return "redirect:/recipes/" + ex.getRecipeId();
+    }
+
+    @ExceptionHandler(RecipeAlreadyRejectedException.class)
+    public String handleRecipeAlreadyRejected(RecipeAlreadyRejectedException ex,
+                                              RedirectAttributes redirectAttributes) {
+        redirectAttributes.addFlashAttribute("inlineWarning",
+                ex.getMessage() + " Please edit the recipe and resubmit for approval.");
+        return "redirect:/recipes/" + ex.getRecipeId() + "/edit";
+    }
+
+    @ExceptionHandler(InvalidIngredientException.class)
+    public String handleInvalidIngredient(InvalidIngredientException ex, RedirectAttributes redirectAttributes) {
+        redirectAttributes.addFlashAttribute("error", ex.getMessage());
+        return "redirect:/recipes/new";
+    }
 
     // TRAVEL
 
