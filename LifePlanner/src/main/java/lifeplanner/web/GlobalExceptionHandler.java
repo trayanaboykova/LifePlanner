@@ -3,6 +3,7 @@ package lifeplanner.web;
 import jakarta.servlet.http.HttpServletRequest;
 import lifeplanner.exception.DomainException;
 import lifeplanner.exception.books.*;
+import lifeplanner.exception.media.*;
 import lifeplanner.exception.user.AdminDeletionException;
 import lifeplanner.exception.user.CloudinaryUploadException;
 import lifeplanner.exception.user.EmailAlreadyExistsException;
@@ -47,7 +48,6 @@ public class GlobalExceptionHandler {
 
         redirectAttributes.addFlashAttribute("uploadError", errorMessage);
 
-        // Redirect back to the profile edit page
         String referer = request.getHeader("Referer");
         return "redirect:" + (referer != null ? referer : "/home");
     }
@@ -95,11 +95,9 @@ public class GlobalExceptionHandler {
 
     // BOOKS
     @ExceptionHandler(BookNotFoundException.class)
-    public ModelAndView handleBookNotFound(BookNotFoundException ex, Model model) {
-        model.addAttribute("pageTitle", "Book Not Found");
-        model.addAttribute("errorMessage", ex.getMessage());
-        model.addAttribute("bookId", ex.getBookId());
-        return new ModelAndView("book-not-found");
+    public String handleBookNotFound(BookNotFoundException ex, RedirectAttributes redirectAttributes) {
+        redirectAttributes.addFlashAttribute("error", "Book not found: " + ex.getMessage());
+        return "redirect:/books/my-books";
     }
 
     @ExceptionHandler(BookAlreadySharedException.class)
@@ -144,6 +142,52 @@ public class GlobalExceptionHandler {
     }
 
     // MEDIA
+    @ExceptionHandler(MediaNotFoundException.class)
+    public String handleMediaNotFound(MediaNotFoundException ex, RedirectAttributes redirectAttributes) {
+        redirectAttributes.addFlashAttribute("error", "Media not found: " + ex.getMessage());
+        return "redirect:/media/all-media";
+    }
+
+    @ExceptionHandler(MediaAlreadySharedException.class)
+    public String handleMediaAlreadyShared(MediaAlreadySharedException ex, RedirectAttributes redirectAttributes) {
+        redirectAttributes.addFlashAttribute("error", ex.getMessage());
+        return "redirect:/media/" + ex.getMediaId();
+    }
+
+    @ExceptionHandler(MediaNotSharedException.class)
+    public String handleMediaNotShared(MediaNotSharedException ex, RedirectAttributes redirectAttributes) {
+        redirectAttributes.addFlashAttribute("warning", "This media isn't shared yet. Use the Share button to proceed.");
+        return "redirect:/media/" + ex.getMediaId();
+    }
+
+    @ExceptionHandler(MediaRejectedException.class)
+    public String handleRejectedMedia(MediaRejectedException ex, RedirectAttributes redirectAttributes) {
+        redirectAttributes.addFlashAttribute("error",
+                "Cannot share rejected media. " + ex.getMessage());
+        return "redirect:/media/" + ex.getMediaId() + "/edit";
+    }
+
+    @ExceptionHandler(MediaPendingApprovalException.class)
+    public String handleMediaPendingApproval(MediaPendingApprovalException ex, RedirectAttributes redirectAttributes) {
+        redirectAttributes.addFlashAttribute("info",
+                "Media pending approval. " + ex.getMessage());
+        return "redirect:/media/my-media";
+    }
+
+    @ExceptionHandler(MediaAlreadyApprovedException.class)
+    public String handleMediaAlreadyApproved(MediaAlreadyApprovedException ex,
+                                             RedirectAttributes redirectAttributes) {
+        redirectAttributes.addFlashAttribute("inlineError", ex.getMessage());
+        return "redirect:/media/" + ex.getMediaId(); // Stay on current media page
+    }
+
+    @ExceptionHandler(MediaAlreadyRejectedException.class)
+    public String handleMediaAlreadyRejected(MediaAlreadyRejectedException ex,
+                                             RedirectAttributes redirectAttributes) {
+        redirectAttributes.addFlashAttribute("inlineWarning",
+                ex.getMessage() + " Please edit the media and resubmit for approval.");
+        return "redirect:/media/" + ex.getMediaId() + "/edit"; // Go directly to edit page
+    }
 
     // RECIPES
 
