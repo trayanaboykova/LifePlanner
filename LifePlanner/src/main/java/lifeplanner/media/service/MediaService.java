@@ -1,6 +1,7 @@
 package lifeplanner.media.service;
 
 import jakarta.validation.Valid;
+import lifeplanner.exception.DomainException;
 import lifeplanner.exception.media.*;
 import lifeplanner.media.model.Media;
 import lifeplanner.media.repository.MediaRepository;
@@ -32,6 +33,9 @@ public class MediaService {
     }
 
     public List<Media> getMediaByUser(User user) {
+        if (user == null) {
+            throw new DomainException("User must be provided");
+        }
         return mediaRepository.findAllByOwner(user);
     }
 
@@ -130,6 +134,9 @@ public class MediaService {
     public void removeSharing(UUID mediaId) {
         Media media = mediaRepository.findById(mediaId)
                 .orElseThrow(() -> new MediaNotFoundException(mediaId));
+        if (!media.isVisible()) {
+            throw new MediaNotSharedException(mediaId);
+        }
         media.setVisible(false);
         mediaRepository.save(media);
     }

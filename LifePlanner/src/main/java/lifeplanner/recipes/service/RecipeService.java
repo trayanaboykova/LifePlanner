@@ -1,6 +1,7 @@
 package lifeplanner.recipes.service;
 
 import jakarta.validation.Valid;
+import lifeplanner.exception.DomainException;
 import lifeplanner.exception.recipes.*;
 import lifeplanner.recipes.model.Recipe;
 import lifeplanner.recipes.model.RecipeIngredient;
@@ -34,6 +35,9 @@ public class RecipeService {
     }
 
     public List<Recipe> getRecipeByUser(User user) {
+        if (user == null) {
+            throw new DomainException("User must be provided");
+        }
         return recipeRepository.findAllByOwner(user);
     }
 
@@ -154,17 +158,20 @@ public class RecipeService {
     }
 
     public List<Recipe> getApprovedSharedRecipes(User currentUser) {
-        List<Recipe> approvedRecipes= recipeRepository.findAllByVisibleTrueAndApprovalStatus(ApprovalStatus.APPROVED);
-        return approvedRecipes
-                .stream()
-                .filter(recipe -> !recipe.getOwner().getId().equals(currentUser.getId()))
+        List<Recipe> approvedRecipes = recipeRepository.findAllByVisibleTrueAndApprovalStatus(ApprovalStatus.APPROVED);
+        return approvedRecipes.stream()
+                .filter(recipe -> recipe.getOwner() != null
+                        && recipe.getOwner().getId() != null
+                        && !recipe.getOwner().getId().equals(currentUser.getId()))
                 .toList();
     }
 
     public List<Recipe> getMySharedRecipes(User currentUser) {
         return recipeRepository.findAllByVisibleTrue()
                 .stream()
-                .filter(recipe -> recipe.getOwner().getId().equals(currentUser.getId()))
+                .filter(recipe -> recipe.getOwner() != null
+                        && recipe.getOwner().getId() != null
+                        && recipe.getOwner().getId().equals(currentUser.getId()))
                 .toList();
     }
 
