@@ -4,6 +4,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import lifeplanner.exception.books.*;
 import lifeplanner.exception.media.*;
 import lifeplanner.exception.recipes.*;
+import lifeplanner.exception.trips.*;
 import lifeplanner.exception.user.AdminDeletionException;
 import lifeplanner.exception.user.CloudinaryUploadException;
 import lifeplanner.exception.user.EmailAlreadyExistsException;
@@ -246,6 +247,62 @@ public class GlobalExceptionHandler {
     }
 
     // TRAVEL
+    @ExceptionHandler(TripNotFoundException.class)
+    public String handleTripNotFound(TripNotFoundException ex, RedirectAttributes redirectAttributes,
+                                     HttpServletRequest request) {
+        redirectAttributes.addFlashAttribute("error", "Trip not found: " + ex.getMessage());
+
+        // Smarter redirect based on referer
+        String referer = request.getHeader("Referer");
+        return "redirect:" + (referer != null ? referer : "/trips/travel");
+    }
+
+    @ExceptionHandler(TripAlreadySharedException.class)
+    public String handleTripAlreadyShared(TripAlreadySharedException ex, RedirectAttributes redirectAttributes) {
+        redirectAttributes.addFlashAttribute("error", ex.getMessage());
+        return "redirect:/trips/" + ex.getTripId();
+    }
+
+    @ExceptionHandler(TripNotSharedException.class)
+    public String handleTripNotShared(TripNotSharedException ex, RedirectAttributes redirectAttributes) {
+        redirectAttributes.addFlashAttribute("warning", "This trip isn't shared yet. Use the Share button to proceed.");
+        return "redirect:/trips/" + ex.getTripId();
+    }
+
+    @ExceptionHandler(TripRejectedException.class)
+    public String handleRejectedTrip(TripRejectedException ex, RedirectAttributes redirectAttributes) {
+        redirectAttributes.addFlashAttribute("error",
+                "Cannot share rejected trip. " + ex.getMessage());
+        return "redirect:/trips/" + ex.getTripId() + "/edit";
+    }
+
+    @ExceptionHandler(TripPendingApprovalException.class)
+    public String handleTripPendingApproval(TripPendingApprovalException ex, RedirectAttributes redirectAttributes) {
+        redirectAttributes.addFlashAttribute("info",
+                "Trip pending approval. " + ex.getMessage());
+        return "redirect:/trips/travel";
+    }
+
+    @ExceptionHandler(TripAlreadyApprovedException.class)
+    public String handleTripAlreadyApproved(TripAlreadyApprovedException ex,
+                                            RedirectAttributes redirectAttributes) {
+        redirectAttributes.addFlashAttribute("inlineError", ex.getMessage());
+        return "redirect:/trips/" + ex.getTripId();
+    }
+
+    @ExceptionHandler(TripAlreadyRejectedException.class)
+    public String handleTripAlreadyRejected(TripAlreadyRejectedException ex,
+                                            RedirectAttributes redirectAttributes) {
+        redirectAttributes.addFlashAttribute("inlineWarning",
+                ex.getMessage() + " Please edit the trip and resubmit for approval.");
+        return "redirect:/trips/" + ex.getTripId() + "/edit";
+    }
+
+    @ExceptionHandler(InvalidTripDatesException.class)
+    public String handleInvalidTripDates(InvalidTripDatesException ex, RedirectAttributes redirectAttributes) {
+        redirectAttributes.addFlashAttribute("error", ex.getMessage());
+        return "redirect:/trips/new";
+    }
 
     // GOALS
 

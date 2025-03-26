@@ -1,6 +1,7 @@
 package lifeplanner.travel.service;
 
 import lifeplanner.exception.DomainException;
+import lifeplanner.exception.trips.*;
 import lifeplanner.travel.model.Travel;
 import lifeplanner.travel.repository.TravelRepository;
 import lifeplanner.user.model.ApprovalStatus;
@@ -74,7 +75,19 @@ public class TravelService {
 
     public void shareTrip(UUID tripId) {
         Travel trip = travelRepository.findById(tripId)
-                .orElseThrow(() -> new DomainException("Trip not found"));
+                .orElseThrow(() -> new TripNotFoundException(tripId));
+
+        if (trip.isVisible()) {
+            throw new TripAlreadySharedException(tripId);
+        }
+
+        if (trip.getApprovalStatus() == ApprovalStatus.REJECTED) {
+            throw new TripRejectedException(tripId);
+        }
+
+        if (trip.getApprovalStatus() == ApprovalStatus.PENDING) {
+            throw new TripPendingApprovalException(tripId);
+        }
 
         trip.setVisible(true);
         travelRepository.save(trip);
@@ -132,12 +145,22 @@ public class TravelService {
 
     public void approveTrip(UUID tripId) {
         Travel trip = getTripById(tripId);
+
+        if (trip.getApprovalStatus() == ApprovalStatus.APPROVED) {
+            throw new TripAlreadyApprovedException(tripId);
+        }
+
         trip.setApprovalStatus(ApprovalStatus.APPROVED);
         travelRepository.save(trip);
     }
 
     public void rejectTrip(UUID tripId) {
         Travel trip = getTripById(tripId);
+
+        if (trip.getApprovalStatus() == ApprovalStatus.REJECTED) {
+            throw new TripAlreadyRejectedException(tripId);
+        }
+
         trip.setApprovalStatus(ApprovalStatus.REJECTED);
         travelRepository.save(trip);
     }
