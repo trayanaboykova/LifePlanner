@@ -120,9 +120,10 @@ public class IndexControllerApiTest {
 
     @Test
     void registerNewUser_ShouldRedirectToLogin_WhenValid() throws Exception {
-        // Perform the registration with only the parameters that are used
+        // Perform the registration with all required parameters including username
         mockMvc.perform(post("/register")
                         .with(csrf())
+                        .param("username", "johnDoe")
                         .param("email", "john.doe@example.com")
                         .param("password", "Password123")
                         .param("confirmPassword", "Password123")
@@ -132,7 +133,8 @@ public class IndexControllerApiTest {
 
         // Verify that registerUser was called with the correct values.
         verify(userService).registerUser(org.mockito.ArgumentMatchers.argThat(req ->
-                "john.doe@example.com".equals(req.getEmail()) &&
+                "johnDoe".equals(req.getUsername()) &&
+                        "john.doe@example.com".equals(req.getEmail()) &&
                         "Password123".equals(req.getPassword()) &&
                         "Password123".equals(req.getConfirmPassword())
         ));
@@ -164,9 +166,15 @@ public class IndexControllerApiTest {
 
         when(userService.getById(userId)).thenReturn(user);
 
+        // Create a dummy owner for books so that book.owner.username is not null.
+        User dummyOwner = new User();
+        dummyOwner.setUsername("dummyOwner");
+
         // BOOKS
         List<Book> allBooks = Arrays.asList(new Book(), new Book());
         List<Book> sharedBooks = Arrays.asList(new Book());
+        // set dummy owner on shared books
+        sharedBooks.forEach(book -> book.setOwner(dummyOwner));
         Map<UUID, Long> bookLikeCounts = Map.of();
         Map<UUID, Long> bookFavoriteCounts = Map.of();
         when(bookService.getAllBooks()).thenReturn(allBooks);
@@ -295,7 +303,14 @@ public class IndexControllerApiTest {
 
         when(userService.getById(userId)).thenReturn(user);
 
+        // Create a dummy owner for books in the shared posts page.
+        User dummyOwner = new User();
+        dummyOwner.setUsername("dummyOwner");
+
         List<Book> sharedBooks = Arrays.asList(new Book());
+        // set dummy owner on each book
+        sharedBooks.forEach(book -> book.setOwner(dummyOwner));
+
         List<Media> sharedMedia = Arrays.asList(new Media());
         List<Recipe> sharedRecipes = Arrays.asList(new Recipe());
         List<Travel> sharedTrips = Arrays.asList(new Travel());
