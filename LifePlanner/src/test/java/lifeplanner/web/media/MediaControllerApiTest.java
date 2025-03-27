@@ -114,7 +114,6 @@ public class MediaControllerApiTest {
         testUser.setId(userId);
         when(userService.getById(userId)).thenReturn(testUser);
 
-        // Pass all required parameters: "status", "type", "title", and "director"
         mockMvc.perform(post("/media")
                         .with(user(getAuth()))
                         .with(csrf())
@@ -133,7 +132,6 @@ public class MediaControllerApiTest {
         testUser.setId(userId);
         when(userService.getById(userId)).thenReturn(testUser);
 
-        // Omitting the "title" parameter to trigger a validation error.
         mockMvc.perform(post("/media")
                         .with(user(getAuth()))
                         .with(csrf())
@@ -157,7 +155,6 @@ public class MediaControllerApiTest {
 
     @Test
     void updateMedia_WithValidRequest_ShouldRedirect() throws Exception {
-        // Provide all required parameters so that binding passes.
         mockMvc.perform(post("/media/{id}/edit", mediaId)
                         .with(user(getAuth()))
                         .with(csrf())

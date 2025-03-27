@@ -80,11 +80,11 @@ public class RecipesController {
         return "redirect:/recipes/all-recipes";
     }
 
-    @GetMapping("/edit-recipe")
-    public String getEditRecipePage(Model model) {
-        model.addAttribute("pageTitle", "Edit Recipe");
-        return "edit-recipe";
-    }
+//    @GetMapping("/edit-recipe")
+//    public String getEditRecipePage(Model model) {
+//        model.addAttribute("pageTitle", "Edit Recipe");
+//        return "edit-recipe";
+//    }
 
     @GetMapping("/{id}/edit")
     public ModelAndView showEditRecipeRequest(@PathVariable("id") UUID id, Model model) {
