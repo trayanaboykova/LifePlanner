@@ -1,7 +1,6 @@
 package lifeplanner.web;
 
 import jakarta.validation.Valid;
-import lifeplanner.exception.DomainException;
 import lifeplanner.security.AuthenticationMetadata;
 import lifeplanner.service.CloudinaryService;
 import lifeplanner.user.model.User;
