@@ -26,7 +26,7 @@ public class CloudinaryService {
                     .upload(file.getBytes(), ObjectUtils.emptyMap());
             return (String) uploadResult.get("secure_url");
         } catch (IOException e) {
-            throw new CloudinaryUploadException("Failed to upload file to Cloudinary", e);
+            throw new CloudinaryUploadException("Failed to upload file to Cloudinary");
         }
     }
 }
