@@ -18,6 +18,7 @@ import lifeplanner.books.model.Book;
 import lifeplanner.books.service.BookFavoriteService;
 import lifeplanner.books.service.BookService;
 import lifeplanner.goals.model.Goal;
+import lifeplanner.goals.model.GoalStatus;
 import lifeplanner.goals.service.GoalFavoriteService;
 import lifeplanner.goals.service.GoalService;
 import lifeplanner.media.model.Media;
@@ -72,11 +73,10 @@ public class IndexControllerApiTest {
     private GoalFavoriteService goalFavoriteService;
     @MockitoBean
     private DateAndTimeScheduler dateAndTimeScheduler;
-
     @MockitoBean
     private CustomAccessDeniedHandler customAccessDeniedHandler;
 
-    // Helper to simulate an authenticated user
+    // Helper to simulate an authenticated user.
     private AuthenticationMetadata getAdminAuth() {
         return new AuthenticationMetadata(UUID.randomUUID(), "admin", "password", UserRole.ADMIN, true);
     }
@@ -120,7 +120,6 @@ public class IndexControllerApiTest {
 
     @Test
     void registerNewUser_ShouldRedirectToLogin_WhenValid() throws Exception {
-        // Perform the registration with all required parameters including username
         mockMvc.perform(post("/register")
                         .with(csrf())
                         .param("username", "johnDoe")
@@ -131,7 +130,6 @@ public class IndexControllerApiTest {
                 .andExpect(status().is3xxRedirection())
                 .andExpect(redirectedUrl("/login"));
 
-        // Verify that registerUser was called with the correct values.
         verify(userService).registerUser(org.mockito.ArgumentMatchers.argThat(req ->
                 "johnDoe".equals(req.getUsername()) &&
                         "john.doe@example.com".equals(req.getEmail()) &&
@@ -142,7 +140,6 @@ public class IndexControllerApiTest {
 
     @Test
     void registerNewUser_ShouldReturnRegisterView_WhenBindingErrors() throws Exception {
-        // Provide an invalid email to trigger a binding error (assuming @Email is applied).
         mockMvc.perform(post("/register")
                         .with(csrf())
                         .param("firstName", "John")
@@ -166,65 +163,120 @@ public class IndexControllerApiTest {
 
         when(userService.getById(userId)).thenReturn(user);
 
-        // Create a dummy owner for books so that book.owner.username is not null.
+        // Create a dummy owner for all shared objects.
         User dummyOwner = new User();
         dummyOwner.setUsername("dummyOwner");
 
         // BOOKS
-        List<Book> allBooks = Arrays.asList(new Book(), new Book());
-        List<Book> sharedBooks = Arrays.asList(new Book());
-        // set dummy owner on shared books
-        sharedBooks.forEach(book -> book.setOwner(dummyOwner));
-        Map<UUID, Long> bookLikeCounts = Map.of();
-        Map<UUID, Long> bookFavoriteCounts = Map.of();
+        Book book1 = new Book();
+        book1.setId(UUID.randomUUID());
+        book1.setOwner(dummyOwner);
+        Book book2 = new Book();
+        book2.setId(UUID.randomUUID());
+        book2.setOwner(dummyOwner);
+        List<Book> allBooks = Arrays.asList(book1, book2);
+
+        Book sharedBook = new Book();
+        sharedBook.setId(UUID.randomUUID());
+        sharedBook.setOwner(dummyOwner);
+        List<Book> sharedBooks = Arrays.asList(sharedBook);
+
+        Map<UUID, Long> bookLikeCounts = Map.of(sharedBook.getId(), 1L);
+        Map<UUID, Long> bookFavoriteCounts = Map.of(sharedBook.getId(), 2L);
         when(bookService.getAllBooks()).thenReturn(allBooks);
         when(bookService.getApprovedSharedBooks(user)).thenReturn(sharedBooks);
         when(bookService.getLikeCountsForBooks(sharedBooks)).thenReturn(bookLikeCounts);
         when(bookService.getFavoriteCountsForBooks(sharedBooks)).thenReturn(bookFavoriteCounts);
 
         // MEDIA
-        List<Media> allMedia = Arrays.asList(new Media());
-        List<Media> sharedMedia = Arrays.asList(new Media(), new Media());
-        Map<UUID, Long> mediaLikeCounts = Map.of();
-        Map<UUID, Long> mediaFavoriteCounts = Map.of();
+        Media media1 = new Media();
+        media1.setId(UUID.randomUUID());
+        List<Media> allMedia = Arrays.asList(media1);
+
+        Media media2 = new Media();
+        media2.setId(UUID.randomUUID());
+        media2.setOwner(dummyOwner);
+        Media media3 = new Media();
+        media3.setId(UUID.randomUUID());
+        media3.setOwner(dummyOwner);
+        List<Media> sharedMedia = Arrays.asList(media2, media3);
+
+        Map<UUID, Long> mediaLikeCounts = Map.of(media2.getId(), 3L, media3.getId(), 4L);
+        Map<UUID, Long> mediaFavoriteCounts = Map.of(media2.getId(), 5L, media3.getId(), 6L);
         when(mediaService.getAllMedia()).thenReturn(allMedia);
         when(mediaService.getApprovedSharedMedia(user)).thenReturn(sharedMedia);
         when(mediaService.getLikeCountsForMedia(sharedMedia)).thenReturn(mediaLikeCounts);
         when(mediaService.getFavoriteCountsForMedia(sharedMedia)).thenReturn(mediaFavoriteCounts);
 
         // RECIPES
-        List<Recipe> allRecipes = Arrays.asList(new Recipe());
-        List<Recipe> sharedRecipes = Arrays.asList(new Recipe(), new Recipe());
-        Map<UUID, Long> recipeLikeCounts = Map.of();
-        Map<UUID, Long> recipeFavoriteCounts = Map.of();
+        Recipe recipe1 = new Recipe();
+        recipe1.setId(UUID.randomUUID());
+        List<Recipe> allRecipes = Arrays.asList(recipe1);
+
+        Recipe recipe2 = new Recipe();
+        recipe2.setId(UUID.randomUUID());
+        recipe2.setOwner(dummyOwner);
+        Recipe recipe3 = new Recipe();
+        recipe3.setId(UUID.randomUUID());
+        recipe3.setOwner(dummyOwner);
+        List<Recipe> sharedRecipes = Arrays.asList(recipe2, recipe3);
+
+        Map<UUID, Long> recipeLikeCounts = Map.of(recipe2.getId(), 7L, recipe3.getId(), 8L);
+        Map<UUID, Long> recipeFavoriteCounts = Map.of(recipe2.getId(), 9L, recipe3.getId(), 10L);
         when(recipeService.getAllRecipes()).thenReturn(allRecipes);
         when(recipeService.getApprovedSharedRecipes(user)).thenReturn(sharedRecipes);
         when(recipeService.getLikeCountsForRecipes(allRecipes)).thenReturn(recipeLikeCounts);
         when(recipeService.getFavoriteCountsForRecipes(sharedRecipes)).thenReturn(recipeFavoriteCounts);
 
         // TRIPS
-        List<Travel> allTrips = Arrays.asList(new Travel());
-        List<Travel> sharedTrips = Arrays.asList(new Travel(), new Travel());
-        Map<UUID, Long> tripLikeCounts = Map.of();
-        Map<UUID, Long> tripFavoriteCounts = Map.of();
+        Travel travel1 = new Travel();
+        travel1.setId(UUID.randomUUID());
+        travel1.setOwner(dummyOwner);
+        List<Travel> allTrips = Arrays.asList(travel1);
+
+        Travel travel2 = new Travel();
+        travel2.setId(UUID.randomUUID());
+        travel2.setOwner(dummyOwner);
+        Travel travel3 = new Travel();
+        travel3.setId(UUID.randomUUID());
+        travel3.setOwner(dummyOwner);
+        List<Travel> sharedTrips = Arrays.asList(travel2, travel3);
+
+        Map<UUID, Long> tripLikeCounts = Map.of(travel2.getId(), 11L, travel3.getId(), 12L);
+        Map<UUID, Long> tripFavoriteCounts = Map.of(travel2.getId(), 13L, travel3.getId(), 14L);
         when(travelService.getAllTrips()).thenReturn(allTrips);
         when(travelService.getApprovedSharedTrips(user)).thenReturn(sharedTrips);
         when(travelService.getLikeCountsForTrips(sharedTrips)).thenReturn(tripLikeCounts);
         when(travelService.getFavoriteCountsForTrips(sharedTrips)).thenReturn(tripFavoriteCounts);
 
         // GOALS
-        List<Goal> allGoals = Arrays.asList(new Goal());
-        List<Goal> sharedGoals = Arrays.asList(new Goal(), new Goal());
-        Map<UUID, Long> goalLikeCounts = Map.of();
-        Map<UUID, Long> goalFavoriteCounts = Map.of();
+        Goal goal1 = new Goal();
+        goal1.setId(UUID.randomUUID());
+        goal1.setOwner(dummyOwner);
+        goal1.setStatus(GoalStatus.NOT_STARTED);
+        List<Goal> allGoals = Arrays.asList(goal1);
+
+        Goal goal2 = new Goal();
+        goal2.setId(UUID.randomUUID());
+        goal2.setOwner(dummyOwner);
+        goal2.setStatus(GoalStatus.IN_PROGRESS);
+        Goal goal3 = new Goal();
+        goal3.setId(UUID.randomUUID());
+        goal3.setOwner(dummyOwner);
+        goal3.setStatus(GoalStatus.COMPLETED);
+        List<Goal> sharedGoals = Arrays.asList(goal2, goal3);
+
+        Map<UUID, Long> goalLikeCounts = Map.of(goal2.getId(), 15L, goal3.getId(), 16L);
+        Map<UUID, Long> goalFavoriteCounts = Map.of(goal2.getId(), 17L, goal3.getId(), 18L);
         when(goalService.getAllGoals()).thenReturn(allGoals);
         when(goalService.getApprovedSharedGoals(user)).thenReturn(sharedGoals);
         when(goalService.getLikeCountsForGoals(allGoals)).thenReturn(goalLikeCounts);
         when(goalService.getFavoriteCountsForGoals(sharedGoals)).thenReturn(goalFavoriteCounts);
 
-        // Scheduler
-        String currentDateTime = "2025-03-27T00:00:00";
-        when(dateAndTimeScheduler.getCurrentDateTime()).thenReturn(LocalDateTime.parse(currentDateTime));
+        // Scheduler: the controller returns the LocalDateTime.toString() which produces "2025-03-27T00:00"
+        String expectedCurrentDateTime = "2025-03-27T00:00";
+        when(dateAndTimeScheduler.getCurrentDateTime())
+                .thenReturn(LocalDateTime.parse("2025-03-27T00:00:00"));
 
         mockMvc.perform(get("/home").with(user(authMeta)))
                 .andExpect(status().isOk())
@@ -256,8 +308,21 @@ public class IndexControllerApiTest {
                 .andExpect(model().attribute("sharedGoals", sharedGoals))
                 .andExpect(model().attribute("goalLikeCounts", goalLikeCounts))
                 .andExpect(model().attribute("goalFavoriteCounts", goalFavoriteCounts))
-                // Scheduler
-                .andExpect(model().attribute("currentDateTime", currentDateTime));
+                // Scheduler: Use hasToString to convert LocalDateTime to string and compare ignoring whitespace.
+                .andExpect(model().attribute("currentDateTime",
+                        org.hamcrest.Matchers.hasToString(org.hamcrest.Matchers.equalToIgnoringWhiteSpace(expectedCurrentDateTime))));
+    }
+
+    @Test
+    void getHomePage_ShouldRedirectToLogin_WhenUserNotFound() throws Exception {
+        UUID userId = UUID.randomUUID();
+        AuthenticationMetadata authMeta = new AuthenticationMetadata(userId, "user", "pass", UserRole.USER, true);
+
+        when(userService.getById(userId)).thenReturn(null);
+
+        mockMvc.perform(get("/home").with(user(authMeta)))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(view().name("redirect:/login"));
     }
 
     @Test
@@ -303,18 +368,39 @@ public class IndexControllerApiTest {
 
         when(userService.getById(userId)).thenReturn(user);
 
-        // Create a dummy owner for books in the shared posts page.
+        // Create a dummy owner for shared posts.
         User dummyOwner = new User();
         dummyOwner.setUsername("dummyOwner");
 
-        List<Book> sharedBooks = Arrays.asList(new Book());
-        // set dummy owner on each book
-        sharedBooks.forEach(book -> book.setOwner(dummyOwner));
+        // BOOKS
+        Book sharedBook = new Book();
+        sharedBook.setId(UUID.randomUUID());
+        sharedBook.setOwner(dummyOwner);
+        List<Book> sharedBooks = Arrays.asList(sharedBook);
 
-        List<Media> sharedMedia = Arrays.asList(new Media());
-        List<Recipe> sharedRecipes = Arrays.asList(new Recipe());
-        List<Travel> sharedTrips = Arrays.asList(new Travel());
-        List<Goal> sharedGoals = Arrays.asList(new Goal());
+        // MEDIA
+        Media sharedMediaItem = new Media();
+        sharedMediaItem.setId(UUID.randomUUID());
+        sharedMediaItem.setOwner(dummyOwner);
+        List<Media> sharedMedia = Arrays.asList(sharedMediaItem);
+
+        // RECIPES
+        Recipe sharedRecipe = new Recipe();
+        sharedRecipe.setId(UUID.randomUUID());
+        sharedRecipe.setOwner(dummyOwner);
+        List<Recipe> sharedRecipes = Arrays.asList(sharedRecipe);
+
+        // TRIPS
+        Travel sharedTrip = new Travel();
+        sharedTrip.setId(UUID.randomUUID());
+        sharedTrip.setOwner(dummyOwner);
+        List<Travel> sharedTrips = Arrays.asList(sharedTrip);
+
+        // GOALS - Create a goal with a dummy owner.
+        Goal sharedGoal = new Goal();
+        sharedGoal.setId(UUID.randomUUID());
+        sharedGoal.setOwner(dummyOwner);
+        List<Goal> sharedGoals = Arrays.asList(sharedGoal);
 
         when(bookService.getMySharedBooks(user)).thenReturn(sharedBooks);
         when(mediaService.getMySharedMedia(user)).thenReturn(sharedMedia);
