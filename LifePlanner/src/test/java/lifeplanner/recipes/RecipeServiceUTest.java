@@ -124,39 +124,6 @@ public class RecipeServiceUTest {
     }
 
     @Test
-    void givenAlreadyVisibleRecipe_whenShareRecipe_thenThrowRecipeAlreadySharedException() {
-        UUID recipeId = UUID.randomUUID();
-        Recipe recipe = new Recipe();
-        recipe.setId(recipeId);
-        recipe.setVisible(true);
-        when(recipeRepository.findById(recipeId)).thenReturn(Optional.of(recipe));
-
-        assertThrows(RecipeAlreadySharedException.class, () -> recipeService.shareRecipe(recipeId));
-    }
-
-    @Test
-    void givenRejectedRecipe_whenShareRecipe_thenThrowRecipeRejectedException() {
-        UUID recipeId = UUID.randomUUID();
-        Recipe recipe = new Recipe();
-        recipe.setId(recipeId);
-        recipe.setApprovalStatus(ApprovalStatus.REJECTED);
-        when(recipeRepository.findById(recipeId)).thenReturn(Optional.of(recipe));
-
-        assertThrows(RecipeRejectedException.class, () -> recipeService.shareRecipe(recipeId));
-    }
-
-    @Test
-    void givenPendingRecipe_whenShareRecipe_thenThrowRecipePendingApprovalException() {
-        UUID recipeId = UUID.randomUUID();
-        Recipe recipe = new Recipe();
-        recipe.setId(recipeId);
-        recipe.setApprovalStatus(ApprovalStatus.PENDING);
-        when(recipeRepository.findById(recipeId)).thenReturn(Optional.of(recipe));
-
-        assertThrows(RecipePendingApprovalException.class, () -> recipeService.shareRecipe(recipeId));
-    }
-
-    @Test
     void givenApprovedRecipe_whenShareRecipe_thenSetVisibleTrue() {
         UUID recipeId = UUID.randomUUID();
         Recipe recipe = new Recipe();

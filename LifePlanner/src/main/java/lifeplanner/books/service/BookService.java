@@ -97,17 +97,6 @@ public class BookService {
     public void shareBook(UUID bookId) {
         Book book = bookRepository.findById(bookId)
                 .orElseThrow(() -> new BookNotFoundException(bookId));
-        if (book.isVisible()) {
-            throw new BookAlreadySharedException(bookId);
-        }
-
-        if (book.getApprovalStatus() == ApprovalStatus.REJECTED) {
-            throw new BookRejectedException(bookId);
-        }
-
-        if (book.getApprovalStatus() == ApprovalStatus.PENDING) {
-            throw new BookPendingApprovalException(bookId);
-        }
         book.setVisible(true);
         bookRepository.save(book);
     }

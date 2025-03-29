@@ -120,19 +120,6 @@ public class RecipeService {
     public void shareRecipe(UUID recipeId) {
         Recipe recipe = recipeRepository.findById(recipeId)
                 .orElseThrow(() -> new RecipeNotFoundException(recipeId));
-
-        if (recipe.isVisible()) {
-            throw new RecipeAlreadySharedException(recipeId);
-        }
-
-        if (recipe.getApprovalStatus() == ApprovalStatus.REJECTED) {
-            throw new RecipeRejectedException(recipeId);
-        }
-
-        if (recipe.getApprovalStatus() == ApprovalStatus.PENDING) {
-            throw new RecipePendingApprovalException(recipeId);
-        }
-
         recipe.setVisible(true);
         recipeRepository.save(recipe);
     }

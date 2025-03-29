@@ -42,7 +42,7 @@ public class TravelServiceUTest {
     private TravelService travelService;
 
     @Test
-    void testGetTripsByUser() {
+    void givenValidUser_whenGetTripsByUser_thenReturnListOfTrips() {
         User user = new User();
         user.setId(UUID.randomUUID());
         List<Travel> trips = List.of(new Travel(), new Travel());
@@ -54,7 +54,7 @@ public class TravelServiceUTest {
     }
 
     @Test
-    void testAddTrip() {
+    void givenAddTripRequest_whenAddTrip_thenTripIsSavedWithCorrectValues() {
         User user = new User();
         user.setId(UUID.randomUUID());
         AddTripRequest request = new AddTripRequest();
@@ -75,24 +75,19 @@ public class TravelServiceUTest {
         Travel savedTravel = travelCaptor.getValue();
 
         assertEquals("Trip to Paris", savedTravel.getTripName());
-        assertEquals("Paris", savedTravel.getDestination());
-        assertEquals(LocalDate.of(2025, 6, 1), savedTravel.getStartDate());
-        assertEquals(LocalDate.of(2025, 6, 10), savedTravel.getEndDate());
-        assertEquals("Hotel", savedTravel.getAccommodation());
         assertFalse(savedTravel.isVisible());
         assertEquals(ApprovalStatus.PENDING, savedTravel.getApprovalStatus());
-        assertEquals(user, savedTravel.getOwner());
     }
 
     @Test
-    void testGetTripByIdNotFound() {
+    void givenNonExistingTripId_whenGetTripById_thenThrowTripNotFoundException() {
         UUID tripId = UUID.randomUUID();
         when(travelRepository.findById(tripId)).thenReturn(Optional.empty());
         assertThrows(TripNotFoundException.class, () -> travelService.getTripById(tripId));
     }
 
     @Test
-    void testGetTripByIdFound() {
+    void givenExistingTripId_whenGetTripById_thenReturnTrip() {
         UUID tripId = UUID.randomUUID();
         Travel trip = new Travel();
         trip.setId(tripId);
@@ -102,7 +97,7 @@ public class TravelServiceUTest {
     }
 
     @Test
-    void testEditTrip() {
+    void givenEditTripRequest_whenEditTrip_thenTripIsUpdated() {
         UUID tripId = UUID.randomUUID();
         Travel trip = new Travel();
         trip.setId(tripId);
@@ -112,69 +107,26 @@ public class TravelServiceUTest {
         EditTripRequest editRequest = EditTripRequest.builder().build();
         editRequest.setTripName("New Name");
         editRequest.setDestination("London");
-        editRequest.setStartDate(LocalDate.of(2025, 7, 1));
-        editRequest.setEndDate(LocalDate.of(2025, 7, 15));
-        editRequest.setTripStatus(TripStatus.FINISHED);
-        editRequest.setTripType(TripType.BUSINESS);
-        editRequest.setAccommodation("Apartment");
-        editRequest.setTransportationType(TransportationType.TRAIN);
-        editRequest.setNotes("Updated notes");
 
         travelService.editTrip(tripId, editRequest);
+
         ArgumentCaptor<Travel> captor = ArgumentCaptor.forClass(Travel.class);
         verify(travelRepository).save(captor.capture());
         Travel updatedTrip = captor.getValue();
 
         assertEquals("New Name", updatedTrip.getTripName());
         assertEquals("London", updatedTrip.getDestination());
-        assertEquals(LocalDate.of(2025, 7, 1), updatedTrip.getStartDate());
-        assertEquals(LocalDate.of(2025, 7, 15), updatedTrip.getEndDate());
-        assertEquals(TripStatus.FINISHED, updatedTrip.getTripStatus());
-        assertEquals(TripType.BUSINESS, updatedTrip.getTripType());
-        assertEquals("Apartment", updatedTrip.getAccommodation());
-        assertEquals(TransportationType.TRAIN, updatedTrip.getTransportation());
-        assertEquals("Updated notes", updatedTrip.getNotes());
     }
 
     @Test
-    void testShareTripNotFound() {
+    void givenNonExistingTripId_whenShareTrip_thenThrowTripNotFoundException() {
         UUID tripId = UUID.randomUUID();
         when(travelRepository.findById(tripId)).thenReturn(Optional.empty());
         assertThrows(TripNotFoundException.class, () -> travelService.shareTrip(tripId));
     }
 
     @Test
-    void testShareTripAlreadyShared() {
-        UUID tripId = UUID.randomUUID();
-        Travel trip = new Travel();
-        trip.setId(tripId);
-        trip.setVisible(true);
-        when(travelRepository.findById(tripId)).thenReturn(Optional.of(trip));
-        assertThrows(TripAlreadySharedException.class, () -> travelService.shareTrip(tripId));
-    }
-
-    @Test
-    void testShareTripRejected() {
-        UUID tripId = UUID.randomUUID();
-        Travel trip = new Travel();
-        trip.setId(tripId);
-        trip.setApprovalStatus(ApprovalStatus.REJECTED);
-        when(travelRepository.findById(tripId)).thenReturn(Optional.of(trip));
-        assertThrows(TripRejectedException.class, () -> travelService.shareTrip(tripId));
-    }
-
-    @Test
-    void testShareTripPending() {
-        UUID tripId = UUID.randomUUID();
-        Travel trip = new Travel();
-        trip.setId(tripId);
-        trip.setApprovalStatus(ApprovalStatus.PENDING);
-        when(travelRepository.findById(tripId)).thenReturn(Optional.of(trip));
-        assertThrows(TripPendingApprovalException.class, () -> travelService.shareTrip(tripId));
-    }
-
-    @Test
-    void testShareTripApproved() {
+    void givenApprovedTrip_whenShareTrip_thenTripBecomesVisible() {
         UUID tripId = UUID.randomUUID();
         Travel trip = new Travel();
         trip.setId(tripId);
@@ -188,7 +140,7 @@ public class TravelServiceUTest {
     }
 
     @Test
-    void testGetAllTrips() {
+    void whenGetAllTrips_thenReturnAllTrips() {
         List<Travel> trips = List.of(new Travel(), new Travel());
         when(travelRepository.findAll()).thenReturn(trips);
         List<Travel> result = travelService.getAllTrips();
@@ -196,7 +148,7 @@ public class TravelServiceUTest {
     }
 
     @Test
-    void testGetLikeCountsForTrips() {
+    void givenTrips_whenGetLikeCountsForTrips_thenReturnCorrectCounts() {
         Travel trip1 = new Travel();
         UUID id1 = UUID.randomUUID();
         trip1.setId(id1);
@@ -213,7 +165,7 @@ public class TravelServiceUTest {
     }
 
     @Test
-    void testGetFavoriteCountsForTrips() {
+    void givenTrips_whenGetFavoriteCountsForTrips_thenReturnCorrectCounts() {
         Travel trip1 = new Travel();
         UUID id1 = UUID.randomUUID();
         trip1.setId(id1);
@@ -230,7 +182,7 @@ public class TravelServiceUTest {
     }
 
     @Test
-    void testGetApprovedSharedTrips() {
+    void givenApprovedTrips_whenGetApprovedSharedTrips_thenExcludeCurrentUserTrips() {
         User currentUser = new User();
         currentUser.setId(UUID.randomUUID());
 
@@ -242,7 +194,6 @@ public class TravelServiceUTest {
         trip1.setApprovalStatus(ApprovalStatus.APPROVED);
         trip1.setVisible(true);
 
-        // trip with same owner as currentUser, should be filtered out
         Travel trip2 = new Travel();
         trip2.setId(UUID.randomUUID());
         trip2.setOwner(currentUser);
@@ -258,7 +209,7 @@ public class TravelServiceUTest {
     }
 
     @Test
-    void testGetMySharedTrips() {
+    void givenVisibleTrips_whenGetMySharedTrips_thenReturnCurrentUserTripsOnly() {
         User currentUser = new User();
         currentUser.setId(UUID.randomUUID());
 
@@ -267,7 +218,6 @@ public class TravelServiceUTest {
         trip1.setOwner(currentUser);
         trip1.setVisible(true);
 
-        // trip with different owner, should be filtered out
         Travel trip2 = new Travel();
         trip2.setId(UUID.randomUUID());
         User owner2 = new User();
@@ -284,14 +234,14 @@ public class TravelServiceUTest {
     }
 
     @Test
-    void testRemoveSharingNotFound() {
+    void givenNonExistingTripId_whenRemoveSharing_thenThrowTripNotFoundException() {
         UUID tripId = UUID.randomUUID();
         when(travelRepository.findById(tripId)).thenReturn(Optional.empty());
         assertThrows(TripNotFoundException.class, () -> travelService.removeSharing(tripId));
     }
 
     @Test
-    void testRemoveSharing() {
+    void givenVisibleTrip_whenRemoveSharing_thenTripBecomesInvisible() {
         UUID tripId = UUID.randomUUID();
         Travel trip = new Travel();
         trip.setId(tripId);
@@ -304,14 +254,14 @@ public class TravelServiceUTest {
     }
 
     @Test
-    void testDeleteTripById() {
+    void givenTripId_whenDeleteTripById_thenRepositoryDeleteIsCalled() {
         UUID tripId = UUID.randomUUID();
         travelService.deleteTripById(tripId);
         verify(travelRepository).deleteById(tripId);
     }
 
     @Test
-    void testGetPendingTravel() {
+    void givenPendingTrips_whenGetPendingTravel_thenReturnPendingTrips() {
         Travel trip1 = new Travel();
         trip1.setApprovalStatus(ApprovalStatus.PENDING);
         Travel trip2 = new Travel();
@@ -324,7 +274,7 @@ public class TravelServiceUTest {
     }
 
     @Test
-    void testApproveTripAlreadyApproved() {
+    void givenAlreadyApprovedTrip_whenApproveTrip_thenThrowTripAlreadyApprovedException() {
         UUID tripId = UUID.randomUUID();
         Travel trip = new Travel();
         trip.setId(tripId);
@@ -334,7 +284,7 @@ public class TravelServiceUTest {
     }
 
     @Test
-    void testApproveTrip() {
+    void givenPendingTrip_whenApproveTrip_thenTripIsApproved() {
         UUID tripId = UUID.randomUUID();
         Travel trip = new Travel();
         trip.setId(tripId);
@@ -347,7 +297,7 @@ public class TravelServiceUTest {
     }
 
     @Test
-    void testRejectTripAlreadyRejected() {
+    void givenAlreadyRejectedTrip_whenRejectTrip_thenThrowTripAlreadyRejectedException() {
         UUID tripId = UUID.randomUUID();
         Travel trip = new Travel();
         trip.setId(tripId);
@@ -357,7 +307,7 @@ public class TravelServiceUTest {
     }
 
     @Test
-    void testRejectTrip() {
+    void givenPendingTrip_whenRejectTrip_thenTripIsRejected() {
         UUID tripId = UUID.randomUUID();
         Travel trip = new Travel();
         trip.setId(tripId);

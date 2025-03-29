@@ -78,19 +78,6 @@ public class MediaService {
     public void shareMedia(UUID mediaId) {
         Media media = mediaRepository.findById(mediaId)
                 .orElseThrow(() -> new MediaNotFoundException(mediaId));
-
-        if (media.isVisible()) {
-            throw new MediaAlreadySharedException(mediaId);
-        }
-
-        if (media.getApprovalStatus() == ApprovalStatus.REJECTED) {
-            throw new MediaRejectedException(mediaId);
-        }
-
-        if (media.getApprovalStatus() == ApprovalStatus.PENDING) {
-            throw new MediaPendingApprovalException(mediaId);
-        }
-
         media.setVisible(true);
         mediaRepository.save(media);
     }

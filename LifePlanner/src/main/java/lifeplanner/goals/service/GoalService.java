@@ -86,19 +86,6 @@ public class GoalService {
     public void shareGoal(UUID goalId) {
         Goal goal = goalRepository.findById(goalId)
                 .orElseThrow(() -> new GoalNotFoundException(goalId));
-
-        if (goal.isVisible()) {
-            throw new GoalAlreadySharedException(goalId);
-        }
-
-        if (goal.getApprovalStatus() == ApprovalStatus.REJECTED) {
-            throw new GoalRejectedException(goalId);
-        }
-
-        if (goal.getApprovalStatus() == ApprovalStatus.PENDING) {
-            throw new GoalPendingApprovalException(goalId);
-        }
-
         goal.setVisible(true);
         goalRepository.save(goal);
     }

@@ -78,19 +78,6 @@ public class TravelService {
     public void shareTrip(UUID tripId) {
         Travel trip = travelRepository.findById(tripId)
                 .orElseThrow(() -> new TripNotFoundException(tripId));
-
-        if (trip.isVisible()) {
-            throw new TripAlreadySharedException(tripId);
-        }
-
-        if (trip.getApprovalStatus() == ApprovalStatus.REJECTED) {
-            throw new TripRejectedException(tripId);
-        }
-
-        if (trip.getApprovalStatus() == ApprovalStatus.PENDING) {
-            throw new TripPendingApprovalException(tripId);
-        }
-
         trip.setVisible(true);
         travelRepository.save(trip);
     }

@@ -145,47 +145,6 @@ public class BooksServiceUTest {
     }
 
     @Test
-    void givenAlreadyVisibleBook_whenShareBook_thenThrowBookAlreadySharedException() {
-        // Given
-        UUID bookId = UUID.randomUUID();
-        Book book = new Book();
-        book.setId(bookId);
-        book.setVisible(true);
-        when(bookRepository.findById(bookId)).thenReturn(Optional.of(book));
-
-        // When & Then
-        assertThrows(BookAlreadySharedException.class, () -> bookService.shareBook(bookId));
-    }
-
-    @Test
-    void givenRejectedBook_whenShareBook_thenThrowBookRejectedException() {
-        // Given
-        UUID bookId = UUID.randomUUID();
-        Book book = new Book();
-        book.setId(bookId);
-        book.setApprovalStatus(ApprovalStatus.REJECTED);
-        book.setVisible(false);
-        when(bookRepository.findById(bookId)).thenReturn(Optional.of(book));
-
-        // When & Then
-        assertThrows(BookRejectedException.class, () -> bookService.shareBook(bookId));
-    }
-
-    @Test
-    void givenPendingBook_whenShareBook_thenThrowBookPendingApprovalException() {
-        // Given
-        UUID bookId = UUID.randomUUID();
-        Book book = new Book();
-        book.setId(bookId);
-        book.setApprovalStatus(ApprovalStatus.PENDING);
-        book.setVisible(false);
-        when(bookRepository.findById(bookId)).thenReturn(Optional.of(book));
-
-        // When & Then
-        assertThrows(BookPendingApprovalException.class, () -> bookService.shareBook(bookId));
-    }
-
-    @Test
     void givenApprovedAndNotVisibleBook_whenShareBook_thenSetVisibleTrueAndSave() {
         // Given
         UUID bookId = UUID.randomUUID();
