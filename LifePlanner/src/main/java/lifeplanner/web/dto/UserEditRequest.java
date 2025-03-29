@@ -34,4 +34,5 @@ public class UserEditRequest {
     private String newPassword;
 
     private String confirmNewPassword;
+
 }

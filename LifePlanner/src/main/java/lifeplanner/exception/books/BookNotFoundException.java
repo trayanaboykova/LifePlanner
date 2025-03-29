@@ -13,5 +13,4 @@ public class BookNotFoundException extends DomainException {
         super("Book not found with ID: " + bookId);
         this.bookId = bookId;
     }
-
 }

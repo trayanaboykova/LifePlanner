@@ -1,6 +1,5 @@
 package lifeplanner.exception.media;
 
-import lifeplanner.exception.DomainException;
 import lombok.Getter;
 
 import java.util.UUID;

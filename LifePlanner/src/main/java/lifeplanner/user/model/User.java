@@ -70,4 +70,5 @@ public class User {
     private List<SharedPosts> sharedPosts = new ArrayList<>();
 
     private String currentQuoteImageUrl;
+
 }

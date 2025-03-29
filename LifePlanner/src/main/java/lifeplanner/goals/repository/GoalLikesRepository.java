@@ -10,9 +10,8 @@ import java.util.UUID;
 @Repository
 public interface GoalLikesRepository extends JpaRepository<GoalLikes, GoalLikesId> {
 
-    // Count how many likes a goal has
     long countByGoalId(UUID bookId);
 
-    // Check if a user has already liked a goal
     boolean existsById(GoalLikesId id);
+
 }

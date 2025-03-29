@@ -19,4 +19,5 @@ public interface BookRepository extends JpaRepository<Book, UUID> {
     List<Book> findAllByApprovalStatus(ApprovalStatus pending);
 
     List<Book> findAllByVisibleTrueAndApprovalStatus(ApprovalStatus approvalStatus);
+
 }

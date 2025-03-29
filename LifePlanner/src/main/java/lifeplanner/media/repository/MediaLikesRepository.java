@@ -9,10 +9,9 @@ import java.util.UUID;
 
 @Repository
 public interface MediaLikesRepository extends JpaRepository<MediaLikes, MediaLikesId> {
-    // Count how many likes a media type has
+
     long countByMediaId(UUID bookId);
 
-    // Check if a user has already liked a type of media
     boolean existsById(MediaLikesId id);
 
 }
