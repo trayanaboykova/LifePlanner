@@ -1,17 +1,18 @@
 package lifeplanner.web.dto;
 
 import jakarta.persistence.Lob;
-import jakarta.validation.constraints.AssertTrue;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lifeplanner.travel.model.TransportationType;
 import lifeplanner.travel.model.TripStatus;
 import lifeplanner.travel.model.TripType;
+import lifeplanner.validation.ValidDateRange;
 import lombok.Data;
 
 import java.time.LocalDate;
 
 @Data
+@ValidDateRange
 public class AddTripRequest {
 
     @NotNull(message = "You must select status!")
@@ -38,12 +39,4 @@ public class AddTripRequest {
 
     @Lob
     private String notes;
-
-    @AssertTrue(message = "Start date must be before or equal to end date")
-    public boolean isDateRangeValid() {
-        if (startDate == null || endDate == null) {
-            return true; // or false if both dates are required
-        }
-        return !startDate.isAfter(endDate);
-    }
 }

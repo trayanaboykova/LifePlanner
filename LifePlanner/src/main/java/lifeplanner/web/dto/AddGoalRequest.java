@@ -37,7 +37,7 @@ public class AddGoalRequest {
     @AssertTrue(message = "Start date must be before or equal to end date")
     public boolean isDateRangeValid() {
         if (startDate == null || endDate == null) {
-            return true; 
+            return true;
         }
         return !startDate.isAfter(endDate);
     }
