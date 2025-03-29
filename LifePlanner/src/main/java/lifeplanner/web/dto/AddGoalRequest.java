@@ -7,11 +7,13 @@ import jakarta.validation.constraints.Size;
 import lifeplanner.goals.model.GoalCategory;
 import lifeplanner.goals.model.GoalPriority;
 import lifeplanner.goals.model.GoalStatus;
+import lifeplanner.validation.ValidGoalDateRange;
 import lombok.Data;
 
 import java.time.LocalDate;
 
 @Data
+@ValidGoalDateRange
 public class AddGoalRequest {
 
     @NotNull
