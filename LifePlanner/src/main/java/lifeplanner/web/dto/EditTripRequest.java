@@ -1,6 +1,7 @@
 package lifeplanner.web.dto;
 
 import jakarta.persistence.Lob;
+import jakarta.validation.constraints.AssertTrue;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lifeplanner.travel.model.TransportationType;
@@ -42,4 +43,11 @@ public class EditTripRequest {
     @Lob
     private String notes;
 
+    @AssertTrue(message = "Start date must be before or equal to end date")
+    public boolean isDateRangeValid() {
+        if (startDate == null || endDate == null) {
+            return true; // or false if both dates are required
+        }
+        return !startDate.isAfter(endDate);
+    }
 }
