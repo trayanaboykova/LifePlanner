@@ -14,16 +14,30 @@ LifePlanner is a multi-domain application designed to demonstrate robust object-
 - ☁️ Working with cloud APIs (e.g., Cloudinary)
 
 ## 🔧 Features
-- ✅ Manage books, goals, media, recipes, and travel plans with dedicated modules  
-- ✅ User registration, login, profile editing, and role switching (user/admin)  
-- ✅ Dynamic, interactive web pages with Thymeleaf templates  
-- ✅ Centralized exception handling to avoid white-label error pages  
-- ✅ Integration with a separate [Daily Quote microservice](https://github.com/trayanaboykova/Daily-Quotes-Service-LifePlanner)
+- ✅ Multi-Domain Management:
+  - Manage books, goals, media, recipes, and travel plans through dedicated modules.
+  - Perform domain-specific operations such as adding, editing, sharing, liking, and deleting records.
+- ✅ User Management & Security:
+  - User Capabilities:
+    - Register, log in, and edit their own profiles.
+    - Deactivate their own account when needed.
+  - Administrative Tools:
+    - Administrators can switch user roles, update user statuses, and delete users.
+    - Admins also review and approve shared posts submitted by users before they appear on LifeHub.
+  - Role-based access is enforced using Spring Security.
+- ✅ Responsive web pages built with Thymeleaf that provide real-time feedback and seamless navigation.
+- ✅ External Integrations:
+  - Cloudinary Integration:
+    - Handle file uploads for profile pictures and media content.
+  - [Daily Quote microservice](https://github.com/trayanaboykova/Daily-Quotes-Service-LifePlanner)
+    - Integrates with a separate microservice to deliver dynamic daily quotes.
 - ✅ Scheduled tasks for enhanced user experience and real-time updates
   - `DailyQuotesScheduler`: Automatically updates each user's daily quote image at regular intervals.
 
   - `DateAndTimeScheduler`: Continuously updates and provides the current date and time.
-- ✅ Comprehensive unit, integration, and API tests
+- ✅ Robust Exception Handling & Testing:
+  - Centralized exception handling ensures meaningful error messages and avoids white-label error pages.
+  - Comprehensive unit, integration, and API tests ensure the application's reliability and maintainability.
 
 ## 📂 Project Structure
 - **Models, Services & Repositories:**  
