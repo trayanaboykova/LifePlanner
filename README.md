@@ -3,7 +3,7 @@
 I built LifePlanner as part of my journey to master advanced Java and Spring development. This comprehensive web application empowers users to manage various aspects of their life—including books, goals, media, recipes, and travel plans—through an integrated platform that follows best practices in software design and security.
 
 ## 🚀 Project Overview
-LifePlanner is a multi-domain application designed to demonstrate robust object-oriented programming, clean layering, and secure user management. With over a dozen web pages (most of which are dynamic), the app includes features such as role-based access, validation, centralized exception handling, and even integration with an external microservice for daily quotes.
+LifePlanner is a multi-domain application designed to demonstrate robust object-oriented programming, clean layering, and secure user management. With over a dozen web pages (most of which are dynamic), the app includes features such as role-based access, validation, centralized exception handling, and even integration with an external microservice for daily quotes. Additionally, the application incorporates scheduled tasks that keep key data (like current date/time and user-specific daily quotes) updated in real time.
 
 ## 🎯 What I Learned
 - 🏗️ Advanced Java and Spring Boot fundamentals
@@ -19,7 +19,10 @@ LifePlanner is a multi-domain application designed to demonstrate robust object-
 - ✅ Dynamic, interactive web pages with Thymeleaf templates  
 - ✅ Centralized exception handling to avoid white-label error pages  
 - ✅ Integration with a separate [Daily Quote microservice](https://github.com/trayanaboykova/Daily-Quotes-Service-LifePlanner)
-- ✅ Scheduled tasks for enhanced user experience and real-time updates  
+- ✅ Scheduled tasks for enhanced user experience and real-time updates
+  - `DailyQuotesScheduler`: Automatically updates each user's daily quote image at regular intervals.
+
+  - `DateAndTimeScheduler`: Continuously updates and provides the current date and time.
 - ✅ Comprehensive unit, integration, and API tests
 
 ## 📂 Project Structure
@@ -44,10 +47,12 @@ LifePlanner is a multi-domain application designed to demonstrate robust object-
    cd lifeplanner
 2. **Configure the Database:** <br>
    Update the `application.properties` (or `application.yml`) with your database credentials.
-4. **Build and Run:**
+3. **Build and Run:**
    ```bash
    mvn clean install
    mvn spring-boot:run
+4. **Access the Application:** <br>
+Open your browser at http://localhost:8080 and enjoy LifePlanner!
    
 ## 📈 Learning Outcomes
 This project strengthened my skills in designing modular, secure web applications using Spring Boot. I deepened my understanding of advanced Java concepts, transaction management, and microservice communication—all while building a user-friendly platform.
