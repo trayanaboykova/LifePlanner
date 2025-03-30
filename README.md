@@ -42,10 +42,9 @@ LifePlanner is a multi-domain application designed to demonstrate robust object-
    ```bash
    git clone https://github.com/yourusername/lifeplanner.git
    cd lifeplanner
-2. **Configure the Database:**
-   ```bash
-   Update the application.properties (or application.yml) with your database credentials.
-3. **Build and Run:**
+2. **Configure the Database:** <br>
+   Update the `application.properties` (or `application.yml`) with your database credentials.
+4. **Build and Run:**
    ```bash
    mvn clean install
    mvn spring-boot:run
