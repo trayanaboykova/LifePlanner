@@ -18,7 +18,7 @@ LifePlanner is a multi-domain application designed to demonstrate robust object-
 - ✅ User registration, login, profile editing, and role switching (user/admin)  
 - ✅ Dynamic, interactive web pages with Thymeleaf templates  
 - ✅ Centralized exception handling to avoid white-label error pages  
-- ✅ Integration with a separate Daily Quote microservice  
+- ✅ Integration with a separate [Daily Quote microservice](https://github.com/trayanaboykova/Daily-Quotes-Service-LifePlanner)
 - ✅ Scheduled tasks for enhanced user experience and real-time updates  
 - ✅ Comprehensive unit, integration, and API tests
 
