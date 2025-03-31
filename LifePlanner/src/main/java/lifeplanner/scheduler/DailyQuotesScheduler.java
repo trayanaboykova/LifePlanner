@@ -26,8 +26,8 @@ public class DailyQuotesScheduler {
         this.dailyQuoteService = dailyQuoteService;
     }
 
-    // Run every 30 minutes
-    @Scheduled(cron = "15 * * * * *")
+    // Run every 15 minutes
+    @Scheduled(cron = "0 0/15 * * * *")
     public void updateUsersDailyQuote() {
         List<User> allUsers = userService.getAllUsers();
         for (User user : allUsers) {
