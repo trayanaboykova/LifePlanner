@@ -45,19 +45,38 @@ public class GlobalExceptionHandler {
         return "redirect:/profile/edit";
     }
 
+//    @ExceptionHandler({CloudinaryUploadException.class, MaxUploadSizeExceededException.class})
+//    public String handleFileUploadErrors(RedirectAttributes redirectAttributes,
+//                                         HttpServletRequest request,
+//                                         Exception exception) {
+//        String errorMessage = exception instanceof MaxUploadSizeExceededException
+//                ? "File size exceeds the maximum allowed limit"
+//                : exception.getMessage();
+//
+//        redirectAttributes.addFlashAttribute("uploadError", errorMessage);
+//
+//        String referer = request.getHeader("Referer");
+//        return "redirect:" + (referer != null ? referer : "/home");
+//    }
+
     @ExceptionHandler({CloudinaryUploadException.class, MaxUploadSizeExceededException.class})
     public String handleFileUploadErrors(RedirectAttributes redirectAttributes,
                                          HttpServletRequest request,
                                          Exception exception) {
+        // Log the exception for debugging
+        System.err.println("File upload error: " + exception.getMessage());
+
         String errorMessage = exception instanceof MaxUploadSizeExceededException
                 ? "File size exceeds the maximum allowed limit"
                 : exception.getMessage();
 
         redirectAttributes.addFlashAttribute("uploadError", errorMessage);
 
+        // Redirect using referer if available, otherwise fallback to /home
         String referer = request.getHeader("Referer");
         return "redirect:" + (referer != null ? referer : "/home");
     }
+
 
     @ExceptionHandler(SessionAuthenticationException.class)
     public String handleSessionExpired(RedirectAttributes redirectAttributes) {

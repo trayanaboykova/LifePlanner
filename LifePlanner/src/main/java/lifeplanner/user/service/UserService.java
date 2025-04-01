@@ -120,6 +120,17 @@ public class UserService implements UserDetailsService {
         return userRepository.findAll();
     }
 
+    public User getByUsername(String username) {
+        return userRepository.findByUsername(username)
+                .orElseThrow(() -> new DomainException("User with username [" + username + "] does not exist."));
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        User user = getByUsername(username);
+        return new AuthenticationMetadata(user.getId(), user.getUsername(), user.getPassword(), user.getRole(), user.isActive());
+    }
+
     @CacheEvict(value = "users", allEntries = true)
     public void switchRole(UUID userId) {
         User user = getById(userId);
@@ -138,14 +149,6 @@ public class UserService implements UserDetailsService {
         User user = getById(userId);
         user.setActive(!user.isActive());
         userRepository.save(user);
-    }
-
-    @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-
-        User user = userRepository.findByUsername(username).orElseThrow(() -> new DomainException("User with this username does not exist."));
-
-        return new AuthenticationMetadata(user.getId(), username, user.getPassword(), user.getRole(), user.isActive());
     }
 
     public void updateUser(User user) {
