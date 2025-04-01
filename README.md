@@ -51,8 +51,8 @@ LifePlanner is a multi-domain application designed to demonstrate robust object-
 - **External Integrations:**  
   Cloudinary for file uploads and a Feign Client for consuming microservices.
 
-## 🛠️ Technologies I Used
-[![Java](https://skillicons.dev/icons?i=java)](https://www.java.com/) [![Spring](https://skillicons.dev/icons?i=spring)](https://spring.io/) [![MySQL](https://skillicons.dev/icons?i=mysql)](https://www.mysql.com/)
+## 🛠️ Tech Stack
+[![Java](https://skillicons.dev/icons?i=java)](https://www.java.com/) [![Spring](https://skillicons.dev/icons?i=spring)](https://spring.io/) [![MySQL](https://skillicons.dev/icons?i=mysql)](https://www.mysql.com/) [![JavaScript](https://skillicons.dev/icons?i=javascript)](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
 
 ## 🤔 How to Run
 1. **Clone the Repository:**
