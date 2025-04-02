@@ -19,7 +19,7 @@ public class WebMvcConfiguration implements WebMvcConfigurer {
         http
                 .authorizeHttpRequests(matchers -> matchers
                         .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
-                        .requestMatchers("/", "/register").permitAll()
+                        .requestMatchers("/", "/register", "/about", "/privacy", "/terms-and-conditions", "/contact", "/faqs").permitAll()
                         .requestMatchers("/pending-approval", "/approve-selected").hasRole("ADMIN")
                         .anyRequest().authenticated()
                 )

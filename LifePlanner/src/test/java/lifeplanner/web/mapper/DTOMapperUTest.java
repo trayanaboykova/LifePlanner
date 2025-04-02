@@ -33,6 +33,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(MockitoExtension.class)
 public class DTOMapperUTest {
+
     @Test
     void mapUserToUserEditRequest() {
         User user = User.builder()

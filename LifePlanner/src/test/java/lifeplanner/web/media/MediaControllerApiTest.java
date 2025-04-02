@@ -38,7 +38,6 @@ public class MediaControllerApiTest {
     @MockitoBean
     private UserService userService;
 
-    // Required for security.
     @MockitoBean
     private CustomAccessDeniedHandler customAccessDeniedHandler;
 

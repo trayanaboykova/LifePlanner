@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/commons :: head}">
+  <title th:text="${pageTitle}"></title>
+</head>
+<body>
+<div class="error-container">
+  <header>
+    <h1>Terms of Service</h1>
+  </header>
+  <main>
+    <section>
+      <p>By accessing or using LifePlanner, you agree to be bound by these Terms of Service. Please read them carefully.</p>
+      <h2>Use of Our Services</h2>
+      <p>You agree to use our services only for lawful purposes and in a manner that does not infringe the rights of, or restrict the use of our services by, any third party.</p>
+      <h2>Account Responsibility</h2>
+      <p>You are responsible for maintaining the confidentiality of your account information and for all activities that occur under your account.</p>
+      <h2>Changes to Terms</h2>
+      <p>We reserve the right to modify these Terms at any time. Continued use of the service constitutes acceptance of the updated Terms.</p>
+    </section>
+  </main>
+  <a href="/home" class="back-home">
+    <img src="https://img.icons8.com/?size=100&id=42814&format=png&color=000000"
+         alt="Home Icon" width="45" height="45"/>
+    Back to Home
+  </a>
+</div>
+<footer th:replace="~{fragments/commons::footer}"></footer>
+</body>
+</html>

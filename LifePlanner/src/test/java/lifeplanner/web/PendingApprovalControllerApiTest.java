@@ -122,7 +122,6 @@ public class PendingApprovalControllerApiTest {
                 .andExpect(model().attribute("pendingGoals", Arrays.asList(dummyGoal)));
     }
 
-
     @Test
     void getPendingApprovalPage_ShouldRedirectToLogin_WhenUserIsNull() throws Exception {
         when(userService.getById(userId)).thenReturn(null);
@@ -219,7 +218,6 @@ public class PendingApprovalControllerApiTest {
                 .andExpect(status().is3xxRedirection())
                 .andExpect(redirectedUrl("/pending-approval"));
 
-        // Verify no service methods were called for unknown types
         verifyNoInteractions(bookService, mediaService, recipeService, travelService, goalService);
     }
 }

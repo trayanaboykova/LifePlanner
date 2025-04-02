@@ -512,7 +512,6 @@
 
 /* Back to Home Link */
 .back-home {
-    font-size: 18px;
     display: flex;
     align-items: center;
     gap: 8px;

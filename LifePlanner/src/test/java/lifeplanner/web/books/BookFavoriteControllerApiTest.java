@@ -27,7 +27,6 @@ class BookFavoriteControllerApiTest {
     @MockitoBean
     private BookFavoriteService bookFavoriteService;
 
-    // Add the missing dependency.
     @MockitoBean
     private CustomAccessDeniedHandler customAccessDeniedHandler;
 

@@ -244,4 +244,35 @@ public class IndexController {
 
         return "my-shared-posts";
     }
+
+    @GetMapping("/about")
+    public String about(Model model) {
+        model.addAttribute("pageTitle", "About Us");
+        return "about";
+    }
+
+    @GetMapping("/privacy")
+    public String privacy(Model model) {
+        model.addAttribute("pageTitle", "Privacy Policy");
+        return "privacy";
+    }
+
+    @GetMapping("/terms-and-conditions")
+    public String terms(Model model) {
+        model.addAttribute("pageTitle", "Terms and Conditions");
+        return "terms-and-conditions";
+    }
+
+    @GetMapping("/contact")
+    public String contact(Model model) {
+        model.addAttribute("pageTitle", "Contact");
+        return "contact";
+    }
+
+    @GetMapping("/faqs")
+    public String faq(Model model) {
+        model.addAttribute("pageTitle", "FAQ");
+        return "faqs";
+    }
+
 }

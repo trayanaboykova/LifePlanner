@@ -27,7 +27,6 @@ class BookLikesControllerApiTest {
     @MockitoBean
     private BookLikesService bookLikesService;
 
-    // Add the missing dependency (for security configuration).
     @MockitoBean
     private CustomAccessDeniedHandler customAccessDeniedHandler;
 

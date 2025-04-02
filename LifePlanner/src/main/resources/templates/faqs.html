@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/commons :: head}">
+  <title th:text="${pageTitle}"></title>
+</head>
+<body>
+<div class="error-container">
+  <header>
+    <h1>Frequently Asked Questions</h1>
+  </header>
+  <main>
+    <section>
+      <h2>What is LifePlanner?</h2>
+      <p>LifePlanner is a platform that helps you organize your daily tasks, plan your goals, and manage your time efficiently.</p>
+      <h2>How do I create an account?</h2>
+      <p>You can create an account by clicking on the "Register" link in the header and filling out the registration form.</p>
+      <h2>Is my data secure?</h2>
+      <p>
+        Yes, we take your privacy and data security seriously. Please refer to our
+        <a href="/privacy" class="content-link">Privacy Policy</a> for more details.
+      </p>
+      <h2>How can I contact support?</h2>
+      <p>
+        You can reach our support team by visiting the
+        <a href="/contact" class="content-link">Contact</a> page and sending us a message.
+      </p>
+    </section>
+  </main>
+  <a href="/home" class="back-home">
+    <img src="https://img.icons8.com/?size=100&id=42814&format=png&color=000000"
+         alt="Home Icon" width="45" height="45"/>
+    Back to Home
+  </a>
+</div>
+<footer th:replace="~{fragments/commons::footer}"></footer>
+</body>
+</html>

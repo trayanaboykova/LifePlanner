@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/commons :: head}">
+  <title th:text="${pageTitle}"></title>
+</head>
+<body>
+<div class="error-container">
+  <header>
+    <h1>Privacy Policy</h1>
+  </header>
+  <main>
+    <section>
+      <p>Your privacy is important to us. At LifePlanner, we are committed to protecting your personal information. This Privacy Policy outlines what data we collect, how we use it, and the measures we take to safeguard it.</p>
+      <h2>Information We Collect</h2>
+      <p>We may collect personal information such as your name, email address, and usage data when you register or use our services.</p>
+      <h2>How We Use Your Information</h2>
+      <p>We use your information to improve our services, personalize your experience, and communicate with you about updates or offers.</p>
+      <h2>Your Rights</h2>
+      <p>You have the right to access, modify, or delete your personal information. For any concerns regarding your data, please contact us.</p>
+    </section>
+  </main>
+  <a href="/home" class="back-home">
+    <img src="https://img.icons8.com/?size=100&id=42814&format=png&color=000000"
+         alt="Home Icon" width="45" height="45"/>
+    Back to Home
+  </a>
+</div>
+<footer th:replace="~{fragments/commons::footer}"></footer>
+</body>
+</html>

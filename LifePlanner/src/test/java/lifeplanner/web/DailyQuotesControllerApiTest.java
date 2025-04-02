@@ -72,7 +72,6 @@ public class DailyQuotesControllerApiTest {
     @Test
     void showDailyQuotesPage_ShouldReturnViewWithQuotes() {
         // Arrange
-
         when(authenticationMetadata.getUserId()).thenReturn(userId);
         when(userService.getById(userId)).thenReturn(testUser);
 
@@ -91,7 +90,6 @@ public class DailyQuotesControllerApiTest {
     @Test
     void showAddQuoteRequest_ShouldReturnAddQuoteView() {
         // Arrange
-
         when(authenticationMetadata.getUserId()).thenReturn(userId);
         when(userService.getById(userId)).thenReturn(testUser);
 
