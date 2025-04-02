@@ -71,6 +71,7 @@
 .profile img {
     width: 13em;
     height: 13em;
+    object-fit: cover;
     margin-right: 1.5em;
     border-radius: 3em;
 }
@@ -229,8 +230,8 @@
 
 /* Quote Image Styling */
 .quote-card img {
-    width: 15em;
-    height: 15em;
+    width: 25em;
+    height: 25em;
     object-fit: cover;
     border-radius: 8px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);

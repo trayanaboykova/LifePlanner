@@ -94,7 +94,7 @@
                         </ul>
                         <br>
                         <p>Instructions:</p>
-                        <p th:text="${recipe.instructions}"></p>
+                        <p style="white-space: pre-wrap; max-width: 300px; word-wrap: break-word;" th:text="${recipe.instructions}"></p>
                     </div>
                     <div class="post-actions">
                         <form th:action="@{'/favorites/recipes/' + ${recipe.id} + '/remove'}" method="post">
