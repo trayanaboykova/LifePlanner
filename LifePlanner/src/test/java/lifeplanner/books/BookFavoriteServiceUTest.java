@@ -27,6 +27,7 @@ import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 public class BookFavoriteServiceUTest {
+
     @Mock
     private BookFavoriteRepository bookFavoriteRepository;
 
@@ -161,7 +162,6 @@ public class BookFavoriteServiceUTest {
 
         when(bookFavoriteRepository.findByUserAndBookId(user, bookId)).thenReturn(Optional.empty());
 
-        // No exception should be thrown; simply nothing happens.
         bookFavoriteService.removeFavorite(user, bookId);
 
         verify(bookFavoriteRepository, never()).delete(any());

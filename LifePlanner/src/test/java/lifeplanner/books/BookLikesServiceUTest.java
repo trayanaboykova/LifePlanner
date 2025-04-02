@@ -23,6 +23,7 @@ import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 public class BookLikesServiceUTest {
+
     @Mock
     private BookLikesRepository bookLikesRepository;
 

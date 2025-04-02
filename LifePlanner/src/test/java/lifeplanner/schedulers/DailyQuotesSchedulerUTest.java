@@ -8,14 +8,19 @@ import lifeplanner.user.service.UserService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
+
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
 
-class DailyQuotesSchedulerUTest {
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.never;
+
+public class DailyQuotesSchedulerUTest {
 
     private UserService userService;
     private DailyQuoteService dailyQuoteService;
@@ -70,4 +75,3 @@ class DailyQuotesSchedulerUTest {
         verify(userService, never()).updateUser(any(User.class));
     }
 }
-

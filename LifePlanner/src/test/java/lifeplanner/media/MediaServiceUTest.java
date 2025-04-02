@@ -154,47 +154,6 @@ public class MediaServiceUTest {
         assertThrows(MediaNotFoundException.class, () -> mediaService.shareMedia(mediaId));
     }
 
-//    @Test
-//    void givenAlreadyVisibleMedia_whenShareMedia_thenThrowMediaAlreadySharedException() {
-//        // Given
-//        UUID mediaId = UUID.randomUUID();
-//        Media media = new Media();
-//        media.setId(mediaId);
-//        media.setVisible(true);
-//        when(mediaRepository.findById(mediaId)).thenReturn(Optional.of(media));
-//
-//        // When & Then
-//        assertThrows(MediaAlreadySharedException.class, () -> mediaService.shareMedia(mediaId));
-//    }
-
-//    @Test
-//    void givenRejectedMedia_whenShareMedia_thenThrowMediaRejectedException() {
-//        // Given
-//        UUID mediaId = UUID.randomUUID();
-//        Media media = new Media();
-//        media.setId(mediaId);
-//        media.setApprovalStatus(ApprovalStatus.REJECTED);
-//        media.setVisible(false);
-//        when(mediaRepository.findById(mediaId)).thenReturn(Optional.of(media));
-//
-//        // When & Then
-//        assertThrows(MediaRejectedException.class, () -> mediaService.shareMedia(mediaId));
-//    }
-
-//    @Test
-//    void givenPendingMedia_whenShareMedia_thenThrowMediaPendingApprovalException() {
-//        // Given
-//        UUID mediaId = UUID.randomUUID();
-//        Media media = new Media();
-//        media.setId(mediaId);
-//        media.setApprovalStatus(ApprovalStatus.PENDING);
-//        media.setVisible(false);
-//        when(mediaRepository.findById(mediaId)).thenReturn(Optional.of(media));
-//
-//        // When & Then
-//        assertThrows(MediaPendingApprovalException.class, () -> mediaService.shareMedia(mediaId));
-//    }
-
     @Test
     void givenApprovedAndNotVisibleMedia_whenShareMedia_thenSetVisibleTrueAndSave() {
         // Given
